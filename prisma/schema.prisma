@@ -14,19 +14,32 @@ datasource db {
 }
 
 model DiscordUser {
-  id               String         @id @default(uuid())
-  discordId        String         @unique
-  university       UniversityUser @relation(fields: [universityUserId], references: [id])
-  universityUserId String
+  id        String              @id @default(uuid())
+  discordId String              @unique
+  avatar    String
+  username  String
+  link      DiscordUniversity[]
+  Handover  Handover[]
+}
+
+model DiscordUniversity {
+  id               String          @id @default(uuid())
+  DiscordUser      DiscordUser?    @relation(fields: [discordUserId], references: [id])
+  discordUserId    String?
+  UniversityUser   UniversityUser? @relation(fields: [universityUserId], references: [id])
+  universityUserId String?
 }
 
 model UniversityUser {
-  id          String        @id @default(uuid())
-  email       String        @unique
-  name        String
-  DiscordUser DiscordUser[]
+  id    String              @id @default(uuid())
+  email String              @unique
+  name  String
+  link  DiscordUniversity[]
 }
 
 model Handover {
-
+  id            String       @id @default(uuid())
+  token         String       @default(uuid())
+  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
+  discordUserId String?
 }
