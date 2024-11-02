@@ -9,9 +9,7 @@ import { Card } from "@/app/_components/card/card";
 export const HandoverPage = () => {
   const params = useParams<{ handover: string }>();
   const handoverId = params.handover;
-  const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
-  const [id, setId] = useState("");
   const [avatar, setAvatar] = useState("");
   const router = useRouter();
 
@@ -40,47 +38,29 @@ export const HandoverPage = () => {
         isVerified: boolean;
       };
 
-      if (!data.isVerified) {
-        return router.push(`/verify/${handoverId}/authwall`);
+      if (data.isVerified) {
+        return router.push(`/verify/${handoverId}`);
       }
 
       setUsername(data.DiscordUser.username);
       setAvatar(data.DiscordUser.avatar);
-      setId(data.DiscordUser.discordId);
-      setLoading(false);
     })();
   }, []);
 
   return (
     <Card>
-      {!loading && (
-        <>
-          <h2>Let&apos;s link your account, {username}</h2>
-          <p>
-            To continue linking your Discord server profile to your University
-            of Westminster account, click Link.
-          </p>
-          <DiscordDisplay
-            username={username}
-            avatarUrl={avatar}
-            verified={false}
-          />
-        </>
-      )}
+      {username && <h2>Check your DMs, {username}</h2>}
+      {!username && <Skeleton height={16} width={170} />}
+      <p>
+        We&apos;ve sent you a direct message on Discord with a verification
+        code. Please enter it here to continue.
+        <br />
+        Alternatively, you can use <code>/verify</code> in any channel in the
+        server to skip this step.
+      </p>
+      <DiscordDisplay username={username} avatarUrl={avatar} verified={false} />
 
-      {loading && (
-        <>
-          <Skeleton width={"40%"} height={16}></Skeleton>
-          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-            <Skeleton width={"100%"} height={16} count={2}></Skeleton>
-          </div>
-          <DiscordDisplay
-            username={username}
-            avatarUrl={avatar}
-            verified={false}
-          />
-        </>
-      )}
+      <input type="text" placeholder={"Verification Code"} />
     </Card>
   );
 };

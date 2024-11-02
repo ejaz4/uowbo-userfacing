@@ -30,6 +30,7 @@ export const POST = async (req: NextRequest) => {
           avatar: true,
         },
       },
+      isVerified: true
     },
   });
 
