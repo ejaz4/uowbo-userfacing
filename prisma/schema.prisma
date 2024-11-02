@@ -42,4 +42,6 @@ model Handover {
   token         String       @default(uuid())
   DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
   discordUserId String?
+  isVerified    Boolean      @default(false)
+  code          String?
 }
