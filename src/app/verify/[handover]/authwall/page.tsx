@@ -4,6 +4,8 @@ import { useParams, useRouter } from "next/navigation";
 import { DiscordDisplay } from "@/app/_components/profileDisplay/discord";
 import { Skeleton } from "@/app/_components/skeleton/skeleton";
 import { Card } from "@/app/_components/card/card";
+import { Button } from "@/app/_components/button/button";
+import { ChevronRightIcon, LogInIcon } from "lucide-react";
 // import { Skeleton } from "@chakra-ui/skeleton";
 
 export const HandoverPage = () => {
@@ -11,7 +13,35 @@ export const HandoverPage = () => {
   const handoverId = params.handover;
   const [username, setUsername] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [code, setCode] = useState("");
   const router = useRouter();
+
+  const checkVerificationCode = async () => {
+    const verificationCode = code.trim();
+
+    const checkCode = await fetch("/api/manual/verify", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        handover: handoverId,
+        code,
+      }),
+    });
+
+    if (checkCode.status == 404) {
+      return router.push("/verify/not-exist");
+    }
+
+    if (checkCode.status == 403) {
+      return alert("That code isn't right.");
+    }
+
+    if (checkCode.status == 200) {
+      return router.push(`/verify/${handoverId}`);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -48,7 +78,15 @@ export const HandoverPage = () => {
   }, []);
 
   return (
-    <Card>
+    <Card
+      footerRight={
+        <Button
+          label={"Continue"}
+          onclick={checkVerificationCode}
+          image={<LogInIcon size={16} />}
+        />
+      }
+    >
       {username && <h2>Check your DMs, {username}</h2>}
       {!username && <Skeleton height={16} width={170} />}
       <p>
@@ -60,7 +98,17 @@ export const HandoverPage = () => {
       </p>
       <DiscordDisplay username={username} avatarUrl={avatar} verified={false} />
 
-      <input type="text" placeholder={"Verification Code"} />
+      <input
+        type="text"
+        onKeyUp={(e) => {
+          setCode(e.currentTarget.value);
+
+          if (e.key == "Enter") {
+            checkVerificationCode();
+          }
+        }}
+        placeholder={"Verification Code"}
+      />
     </Card>
   );
 };
