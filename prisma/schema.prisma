@@ -28,12 +28,13 @@ model DiscordUniversity {
   discordUserId    String?
   UniversityUser   UniversityUser? @relation(fields: [universityUserId], references: [id])
   universityUserId String?
+  isVerified       Boolean         @default(false)
+  code             String?
 }
 
 model UniversityUser {
   id    String              @id @default(uuid())
   email String              @unique
-  name  String
   link  DiscordUniversity[]
 }
 

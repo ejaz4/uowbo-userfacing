@@ -1,15 +1,20 @@
+import { LoaderCircleIcon } from "lucide-react";
+
 export const Button = ({
   label,
   image,
   onclick,
+  loading,
 }: {
   label: string;
   image?: React.ReactNode;
   onclick?: () => void;
+  loading?: boolean;
 }) => {
   return (
     <button onClick={onclick || (() => {})}>
-      {image}
+      {!loading && image}
+      {loading && <LoaderCircleIcon size={16} />}
       <p>{label}</p>
     </button>
   );

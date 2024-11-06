@@ -4,6 +4,9 @@ import { useParams, useRouter } from "next/navigation";
 import { DiscordDisplay } from "@/app/_components/profileDisplay/discord";
 import { Skeleton } from "@/app/_components/skeleton/skeleton";
 import { Card } from "@/app/_components/card/card";
+import Link from "next/link";
+import { Button } from "@/app/_components/button/button";
+import { LinkIcon } from "lucide-react";
 // import { Skeleton } from "@chakra-ui/skeleton";
 
 export const HandoverPage = () => {
@@ -49,10 +52,16 @@ export const HandoverPage = () => {
       setId(data.DiscordUser.discordId);
       setLoading(false);
     })();
-  }, []);
+  }, [handoverId, router]);
 
   return (
-    <Card>
+    <Card
+      footerRight={
+        <Link href={`/verify/${handoverId}/mail`}>
+          <Button image={<LinkIcon size={16} />} label="Link" />
+        </Link>
+      }
+    >
       {!loading && (
         <>
           <h2>Let&apos;s link your account, {username}</h2>
@@ -65,6 +74,11 @@ export const HandoverPage = () => {
             avatarUrl={avatar}
             verified={false}
           />
+          <p>
+            By linking, you agree to follow the rules of the Computer Science @
+            uow Discord server and also agree to how uowbo!{" "}
+            <Link href={"/privacy"}>processes your data</Link>.
+          </p>
         </>
       )}
 
@@ -79,6 +93,10 @@ export const HandoverPage = () => {
             avatarUrl={avatar}
             verified={false}
           />
+          <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+            <Skeleton width={"100%"} height={16} count={2}></Skeleton>
+            <Skeleton width={"60%"} height={16} count={1}></Skeleton>
+          </div>
         </>
       )}
     </Card>

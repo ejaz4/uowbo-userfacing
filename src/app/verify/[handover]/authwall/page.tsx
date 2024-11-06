@@ -5,7 +5,7 @@ import { DiscordDisplay } from "@/app/_components/profileDisplay/discord";
 import { Skeleton } from "@/app/_components/skeleton/skeleton";
 import { Card } from "@/app/_components/card/card";
 import { Button } from "@/app/_components/button/button";
-import { ChevronRightIcon, LogInIcon } from "lucide-react";
+import { LogInIcon } from "lucide-react";
 // import { Skeleton } from "@chakra-ui/skeleton";
 
 export const HandoverPage = () => {
@@ -26,7 +26,7 @@ export const HandoverPage = () => {
       },
       body: JSON.stringify({
         handover: handoverId,
-        code,
+        code: verificationCode,
       }),
     });
 
