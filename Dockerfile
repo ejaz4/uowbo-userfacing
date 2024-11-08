@@ -1,6 +1,6 @@
 FROM alpine:latest
 WORKDIR /app
-COPY ./bot .
+COPY . .
 RUN apk update
 RUN apk add --no-cache nodejs yarn
 RUN yarn
