@@ -58,6 +58,7 @@ export const MailInput = () => {
       return setError(reqData.error);
     }
 
+    return router.push(`/verify/${handoverId}/code`);
     setSubmitting(false);
   };
 

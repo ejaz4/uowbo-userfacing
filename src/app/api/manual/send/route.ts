@@ -279,7 +279,7 @@ Thanks, uowbo!`
 
 
     await transporter.sendMail({
-        from: '"uowbo!" <noreply@uowbo.ceccun.com>',
+        from: '"uowbo!" <uowbo@ceccun.com>',
         to: body.email,
         subject: "Continue linking your account",
         text: message,

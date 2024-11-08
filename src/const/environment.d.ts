@@ -7,8 +7,9 @@ declare global {
             SMTP_PORT: number;
             SMTP_USER: string;
             SMTP_PASSWORD: string;
+            DKIM_PRIVATE_KEY: string;
         }
-    }
+    }   
 }
 
 export { }

@@ -23,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {children}
-        <Link href={"/"}>Privacy</Link>
+        <div className="floating-strip">
+          <Link href={"/privacy"}>Privacy</Link>
+        </div>
       </body>
     </html>
   );

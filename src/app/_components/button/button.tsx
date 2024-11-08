@@ -14,7 +14,7 @@ export const Button = ({
   return (
     <button onClick={onclick || (() => {})}>
       {!loading && image}
-      {loading && <LoaderCircleIcon size={16} />}
+      {loading && <LoaderCircleIcon className="load" size={16} />}
       <p>{label}</p>
     </button>
   );

@@ -56,22 +56,6 @@ input[type="password"] {
   margin-top: 8px;
 }
 
-@media only screen and (max-width: 579px) {
-  body {
-    display: flex;
-    height: fit-content;
-    background-color: white;
-    background-image: none;
-  }
-  .card {
-    width: 100%;
-    border-radius: 0px;
-  }
-  .cardFooter {
-    width: 100%;
-  }
-}
-
 button {
   display: flex;
   justify-content: space-between;
@@ -87,7 +71,57 @@ button {
   text-decoration: none;
 }
 
+button:hover {
+  background-color: rgb(218, 218, 218);
+}
+
+button:active {
+  background-color: rgb(167, 167, 167);
+}
+
 a {
   text-decoration: none;
   color: black;
+}
+
+.floating-strip {
+  display: flex;
+  padding: 16px;
+  background-color: white;
+  border-radius: 16px;
+}
+
+.load {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 579px) {
+  body {
+    display: flex;
+    height: fit-content;
+    background-color: white;
+    background-image: none;
+  }
+  .card {
+    width: 100%;
+    border-radius: 0px;
+  }
+  .cardFooter {
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  button {
+    border: solid 1px rgba(0, 0, 0, 0.2);
+  }
 }
