@@ -15,7 +15,7 @@ export const DiscordDisplay = ({
   return (
     <div className={styles.container}>
       {avatarUrl && (
-        <Image width={64} height={64} src={avatarUrl} alt="Discord avatar" />
+        <img width={64} height={64} src={avatarUrl} alt="Discord avatar" />
       )}
       {!avatarUrl && <Skeleton width={64} height={64} borderRadius={4} />}
       <div className={styles.right}>
