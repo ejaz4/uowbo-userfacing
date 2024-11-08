@@ -8,7 +8,7 @@ import { Button } from "@/app/_components/button/button";
 import { LogInIcon } from "lucide-react";
 // import { Skeleton } from "@chakra-ui/skeleton";
 
-export const HandoverPage = () => {
+const HandoverPage = () => {
   const params = useParams<{ handover: string }>();
   const handoverId = params.handover;
   const [username, setUsername] = useState("");

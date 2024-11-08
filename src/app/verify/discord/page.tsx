@@ -8,7 +8,7 @@ import { useState } from "react";
 
 // import { Skeleton } from "@chakra-ui/skeleton";
 
-export const DiscordUsernamePage = () => {
+const DiscordUsernamePage = () => {
   const [username, setUsername] = useState("");
   const router = useRouter();
 

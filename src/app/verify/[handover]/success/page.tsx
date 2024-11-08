@@ -2,7 +2,7 @@
 
 import { Card } from "@/app/_components/card/card";
 
-export const SuccessPage = () => {
+const SuccessPage = () => {
   return (
     <Card>
       <h2>Verification complete</h2>

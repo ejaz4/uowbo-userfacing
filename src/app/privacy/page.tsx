@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card } from "../_components/card/card";
 
-export const PrivacyPage = () => {
+const PrivacyPage = () => {
   return (
     <Card>
       <h1 style={{ fontSize: 20, margin: 0 }}>uowbo Privacy Policy</h1>

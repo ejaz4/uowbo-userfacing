@@ -9,7 +9,7 @@ import { useState } from "react";
 
 // import { Skeleton } from "@chakra-ui/skeleton";
 
-export const MailInput = () => {
+const MailInput = () => {
   const params = useParams<{ handover: string }>();
   const [submitting, setSubmitting] = useState(false);
   const [email, setEmail] = useState("");

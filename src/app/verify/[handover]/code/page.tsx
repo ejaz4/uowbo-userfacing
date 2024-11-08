@@ -8,7 +8,7 @@ import { useState } from "react";
 
 // import { Skeleton } from "@chakra-ui/skeleton";
 
-export const CodeInput = () => {
+const CodeInput = () => {
   const params = useParams<{ handover: string }>();
   const [submitting, setSubmitting] = useState(false);
   const [code, setCode] = useState("");

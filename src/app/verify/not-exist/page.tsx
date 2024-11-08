@@ -7,7 +7,7 @@ import Link from "next/link";
 
 // import { Skeleton } from "@chakra-ui/skeleton";
 
-export const NotFoundVerifyPage = () => {
+const NotFoundVerifyPage = () => {
   return (
     <Card
       footerRight={
