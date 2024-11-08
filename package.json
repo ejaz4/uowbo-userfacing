@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "yarn prisma deploy && next start",
+    "start": "yarn prisma migrate deploy && next start",
     "lint": "next lint"
   },
   "dependencies": {
