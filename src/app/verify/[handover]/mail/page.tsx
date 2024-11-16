@@ -29,16 +29,18 @@ const MailInput = () => {
       return setError("Please enter a valid email address.");
     }
 
-    if (!email.endsWith("@westminster.ac.uk")) {
+    if (!email.endsWith("westminster.ac.uk")) {
       setSubmitting(false);
       return setError(
-        "You can only verify with your westminster.ac.uk email address."
+        "You can only verify with your westminster.ac.uk or my.westminster.ac.uk email address."
       );
     }
 
     if (!email.startsWith("w")) {
       setSubmitting(false);
-      return setError("Westminster staff accounts are not supported");
+      return setError(
+        "University of Westminster staff accounts are not supported."
+      );
     }
 
     const req = await fetch("/api/manual/send", {

@@ -28,9 +28,9 @@ export const POST = async (req: NextRequest) => {
         })
     }
 
-    if (!body.email.endsWith("@westminster.ac.uk")) {
+    if (!body.email.endsWith("westminster.ac.uk")) {
         return new NextResponse(JSON.stringify({
-            error: "You can only verify with your westminster.ac.uk email address."
+            error: "You can only verify with your westminster.ac.uk or my.westminster.ac.uk email address."
         }), {
             status: 400
         })
