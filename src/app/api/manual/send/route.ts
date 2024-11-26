@@ -4,122 +4,143 @@ import { transporter } from "@/libs/email";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
-    const body = await req.json() as {
-        handover: string;
-        email: string;
-    }
+  const body = (await req.json()) as {
+    handover: string;
+    email: string;
+  };
 
-    if (!body.handover || !body.email) {
-        return new NextResponse(JSON.stringify({
-            error: "Missing parameters"
-        }), {
-            status: 400
-        })
-    }
+  if (!body.handover || !body.email) {
+    return new NextResponse(
+      JSON.stringify({
+        error: "Missing parameters",
+      }),
+      {
+        status: 400,
+      }
+    );
+  }
 
+  const emailPassed = emailRegex.test(body.email);
 
-    const emailPassed = emailRegex.test(body.email);
+  if (!emailPassed) {
+    return new NextResponse(
+      JSON.stringify({
+        error: "Please enter a valid email address.",
+      }),
+      {
+        status: 400,
+      }
+    );
+  }
 
-    if (!emailPassed) {
-        return new NextResponse(JSON.stringify({
-            error: "Please enter a valid email address."
-        }), {
-            status: 400
-        })
-    }
+  if (!body.email.endsWith("westminster.ac.uk")) {
+    return new NextResponse(
+      JSON.stringify({
+        error:
+          "You can only verify with your westminster.ac.uk or my.westminster.ac.uk email address.",
+      }),
+      {
+        status: 400,
+      }
+    );
+  }
 
-    if (!body.email.endsWith("westminster.ac.uk")) {
-        return new NextResponse(JSON.stringify({
-            error: "You can only verify with your westminster.ac.uk or my.westminster.ac.uk email address."
-        }), {
-            status: 400
-        })
-    }
+  if (!body.email.startsWith("w")) {
+    return new NextResponse(
+      JSON.stringify({
+        error: "Westminster staff accounts are not supported",
+      }),
+      {
+        status: 400,
+      }
+    );
+  }
 
-    if (!body.email.startsWith("w")) {
-        return new NextResponse(JSON.stringify({
-            error: "Westminster staff accounts are not supported"
-        }), {
-            status: 400
-        })
-    }
-
-    // Get the handover ID
-    const handover = await db.handover.findFirst({
-        where: {
-            id: body.handover
+  // Get the handover ID
+  const handover = await db.handover.findFirst({
+    where: {
+      id: body.handover,
+    },
+    include: {
+      DiscordUser: {
+        select: {
+          username: true,
         },
-        include: {
-            DiscordUser: {
-                select: {
-                    username: true
-                }
-            }
-        }
-    });
+      },
+    },
+  });
 
-    if (!handover) {
-        return new NextResponse(JSON.stringify({
-            error: "Handover not found"
-        }), {
-            status: 404
-        })
-    }
+  if (!handover) {
+    return new NextResponse(
+      JSON.stringify({
+        error: "Handover not found",
+      }),
+      {
+        status: 404,
+      }
+    );
+  }
 
-    if (!handover.discordUserId) {
-        return new NextResponse(JSON.stringify({
-            error: "This interaction doesn't have a Discord account yet."
-        }), {
-            status: 404
-        })
-    }
+  if (!handover.discordUserId) {
+    return new NextResponse(
+      JSON.stringify({
+        error: "This interaction doesn't have a Discord account yet.",
+      }),
+      {
+        status: 404,
+      }
+    );
+  }
 
-    const code = Math.floor(100000 + Math.random() * 900000)
+  const code = Math.floor(100000 + Math.random() * 900000);
 
-    const createLink = await db.discordUniversity.create({
-        data: {
-            DiscordUser: {
-                connect: {
-                    id: handover.discordUserId
-                }
-            },
-            UniversityUser: {
-                connectOrCreate: {
-                    where: {
-                        email: body.email
-                    },
-                    create: {
-                        email: body.email,
-                    },
-                }
-            },
-            isVerified: false,
-            code: code.toString(),
-        }
-    })
+  const createLink = await db.discordUniversity.create({
+    data: {
+      DiscordUser: {
+        connect: {
+          id: handover.discordUserId,
+        },
+      },
+      UniversityUser: {
+        connectOrCreate: {
+          where: {
+            email: body.email,
+          },
+          create: {
+            email: body.email,
+          },
+        },
+      },
+      isVerified: false,
+      code: code.toString(),
+    },
+  });
 
-    if (!createLink) {
-        return new NextResponse(JSON.stringify({
-            error: "Failed to create link"
-        }), {
-            status: 500
-        })
-    }
+  if (!createLink) {
+    return new NextResponse(
+      JSON.stringify({
+        error: "Failed to create link",
+      }),
+      {
+        status: 500,
+      }
+    );
+  }
 
-    const message = `Hey {USER},
+  const message = `Hey ${handover.DiscordUser?.username},
 
 
 
 
 You're almost there!
 
-To continue linking your account, use the verification code: {CODE}
+To continue linking your account, use the verification code: ${code}
 
 
 
-Thanks, uowbo!`
+Thanks, uowbo!`;
 
-    const messageHTML = `<!doctype html>
+  const messageHTML = `<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
   <head>
     <title></title>
@@ -275,21 +296,22 @@ Thanks, uowbo!`
     
   </body>
 </html>
-  `
+  `;
 
+  await transporter.sendMail({
+    from: '"uowbo!" <uowbo@ceccun.com>',
+    to: body.email,
+    subject: "Continue linking your account",
+    text: message,
+    html: messageHTML,
+  });
 
-    await transporter.sendMail({
-        from: '"uowbo!" <uowbo@ceccun.com>',
-        to: body.email,
-        subject: "Continue linking your account",
-        text: message,
-        html: messageHTML
-    })
-
-    return new NextResponse(JSON.stringify({
-        success: true
-    }), {
-        status: 200
-    });
-
-}
+  return new NextResponse(
+    JSON.stringify({
+      success: true,
+    }),
+    {
+      status: 200,
+    }
+  );
+};
