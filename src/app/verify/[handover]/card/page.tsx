@@ -49,7 +49,8 @@ const CardExplainerPage = () => {
           height: 200,
           boxSizing: "border-box",
         }}
-        contentEditable={false}
+        readOnly
+        disabled
       ></textarea>
     </Card>
   );

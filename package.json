@@ -12,11 +12,14 @@
     "@next/font": "^14.2.15",
     "@prisma/client": "5.21.1",
     "@types/nodemailer": "^6.4.16",
+    "face-api.js": "^0.22.2",
     "lucide-react": "^0.454.0",
     "next": "15.0.2",
     "nodemailer": "^6.9.16",
+    "qr-code-styling": "^1.8.4",
     "react": "19.0.0-rc-02c0e824-20241028",
-    "react-dom": "19.0.0-rc-02c0e824-20241028"
+    "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "react-webcam": "^7.2.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
