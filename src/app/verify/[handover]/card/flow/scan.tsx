@@ -4,8 +4,10 @@ import { Card } from "@/app/_components/card/card";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   detectAllFaces,
+  detectSingleFace,
   FaceDetection,
   FaceLandmarks68,
+  FaceMatcher,
   loadFaceLandmarkModel,
   loadFaceRecognitionModel,
   loadSsdMobilenetv1Model,
@@ -15,9 +17,21 @@ import {
 import Quagga from "@ericblade/quagga2";
 import Webcam from "react-webcam";
 import { Button } from "@/app/_components/button/button";
-import { ScanFaceIcon } from "lucide-react";
+import {
+  HeartCrackIcon,
+  LoaderCircleIcon,
+  RotateCwIcon,
+  ScanFaceIcon,
+} from "lucide-react";
+import Link from "next/link";
 
-export const Scan = ({ set }: { set: (val: string) => void }) => {
+export const Scan = ({
+  set,
+  handoverId,
+}: {
+  set: (val: string) => void;
+  handoverId: string;
+}) => {
   const [screen, setScreen] = useState("preparing");
   const [started, setStarted] = useState(false);
   const [holdTitle, setholdTitle] = useState("Looking for your card...");
@@ -48,7 +62,14 @@ export const Scan = ({ set }: { set: (val: string) => void }) => {
   const lastScreenshotImgRef = useRef<HTMLImageElement>(null);
   const [scanningCard, startScanningCard] = useState(false);
 
+  const [scanningFace, startScanningFace] = useState(false);
+  const [lastFaceScreenshot, setLastFaceScreenshot] = useState("");
+  const lastFaceScreenshotImgRef = useRef<HTMLImageElement>(null);
   const facewebcamRef = useRef<Webcam>(null);
+  const [faceScanAttempt, setFaceScanAttempt] = useState(0);
+  const [goodFaceScans, setGoodFaceScans] = useState(0);
+  const [faceVerified, setFaceVerified] = useState(false);
+  const [faceMsg, setFaceMsg] = useState("Looking for your face...");
 
   useEffect(() => {
     if (started) return;
@@ -146,12 +167,102 @@ export const Scan = ({ set }: { set: (val: string) => void }) => {
     }, 10);
   }, [webcamRef]);
 
+  useEffect(() => {
+    setInterval(() => {
+      if (!facewebcamRef.current) return;
+
+      const portrait = window.innerHeight > window.innerWidth;
+
+      if (portrait) {
+        setDimensions({
+          width: 720,
+          height: 1280,
+        });
+      } else {
+        setDimensions({
+          width: 1280,
+          height: 720,
+        });
+      }
+
+      const wc = facewebcamRef.current.getScreenshot({
+        width: 720,
+        height: 1280,
+      });
+
+      if (!wc) return;
+
+      setLastFaceScreenshot(wc);
+      startScanningFace(true);
+    });
+  }, [facewebcamRef]);
+
+  useEffect(() => {
+    if (!lastFaceScreenshot) return;
+
+    const faceMatcher = new FaceMatcher(cardBiometricData);
+
+    (async () => {
+      if (!lastFaceScreenshotImgRef.current) return;
+      const result = await detectSingleFace(lastFaceScreenshotImgRef.current)
+        .withFaceLandmarks()
+        .withFaceDescriptor();
+
+      if (!result) {
+        return;
+      }
+
+      setHoldMsg("Stay still...");
+      const bestMatch = faceMatcher.findBestMatch(result.descriptor);
+      setFaceScanAttempt(faceScanAttempt + 1);
+      if (bestMatch.label == "person 1") {
+        setGoodFaceScans(goodFaceScans + 1);
+      }
+
+      if (goodFaceScans > 10) {
+        return setScreen("checking");
+      }
+
+      if (faceScanAttempt > 30) {
+        return setScreen("faceUnverified");
+      }
+    })();
+  }, [lastFaceScreenshot]);
+
+  useEffect(() => {
+    if (screen == "checking") {
+      (async () => {
+        const verifyReq = await fetch("/api/biometric", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            image: lastFaceScreenshot,
+            handover: handoverId,
+            code: barcodeId,
+          }),
+        });
+      })();
+    }
+  }, [screen]);
+
   return (
     <>
       {screen == "preparing" && (
         <Card>
-          <h2>Preparing...</h2>
-          <p>Downloading the required data...</p>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: 8,
+              alignItems: "center",
+            }}
+          >
+            <LoaderCircleIcon className="load" size={16} />
+            <h2>Downloading additional data...</h2>
+          </div>
+          <p>This shouldn&apos;t take longer than 5 seconds.</p>
         </Card>
       )}
       {screen == "hold" && (
@@ -213,6 +324,10 @@ export const Scan = ({ set }: { set: (val: string) => void }) => {
           <h2>Looking for your face...</h2>
           <p>Position your face in the centre of the camera feed.</p>
           <Webcam
+            style={{
+              width: "100%",
+              height: 650,
+            }}
             ref={facewebcamRef}
             audio={false}
             height={1280}
@@ -220,11 +335,65 @@ export const Scan = ({ set }: { set: (val: string) => void }) => {
             width={720}
             mirrored={true}
             videoConstraints={{
-              width: dimensions.width,
-              height: dimensions.height,
+              width: dimensions.height,
+              height: dimensions.width,
               facingMode: "user",
             }}
           />
+
+          {lastFaceScreenshot && (
+            <img src={lastFaceScreenshot} ref={lastFaceScreenshotImgRef} />
+          )}
+        </Card>
+      )}
+
+      {screen == "checking" && (
+        <Card>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: 8,
+              alignItems: "center",
+            }}
+          >
+            <LoaderCircleIcon className="load" size={16} />
+            <h2>Verifying</h2>
+          </div>
+          <p>
+            We&apos;re now verifying your card details to make sure it&apos;s
+            really you.
+          </p>
+          <p>This shouldn&apos;t take longer than 30 seconds.</p>
+        </Card>
+      )}
+
+      {screen == "faceUnverified" && (
+        <Card
+          footerRight={
+            <Link href={`/verify/${handoverId}`}>
+              <Button
+                image={<RotateCwIcon size={16} />}
+                label={"Try another way"}
+              />
+            </Link>
+          }
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: 8,
+              alignItems: "center",
+            }}
+          >
+            <HeartCrackIcon size={16} />
+            <h2>Not verified</h2>
+          </div>
+          <p>
+            You can&apos;t be verified this way. Choose an alternative method to
+            verify yourself.
+          </p>
         </Card>
       )}
     </>

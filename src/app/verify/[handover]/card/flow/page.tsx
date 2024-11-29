@@ -31,7 +31,7 @@ const CardVerificationPage = () => {
       )}
       {page == "unfasten" && <Unfasten set={setPage} />}
       {page == "scanPrepare" && <ScanPrepare set={setPage} />}
-      {page == "scan" && <Scan set={setPage} />}
+      {page == "scan" && <Scan handoverId={handoverId} set={setPage} />}
     </>
   );
 };
