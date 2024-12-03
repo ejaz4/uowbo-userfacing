@@ -5,14 +5,16 @@ export const Button = ({
   image,
   onclick,
   loading,
+  direction = "ltr",
 }: {
   label: string;
   image?: React.ReactNode;
   onclick?: () => void;
   loading?: boolean;
+  direction?: string;
 }) => {
   return (
-    <button onClick={onclick || (() => {})}>
+    <button dir={direction} onClick={onclick || (() => {})}>
       {!loading && image}
       {loading && <LoaderCircleIcon className="load" size={16} />}
       <p>{label}</p>

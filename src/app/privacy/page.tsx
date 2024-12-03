@@ -22,9 +22,21 @@ const PrivacyPage = () => {
           allow you to find your account
         </li>
         <li>Your Discord avatar - to display your avatar on the web UI</li>
+      </ul>
+
+      <p>If you choose email verification:</p>
+      <ul>
         <li>
           Your email address - to send you a verification code and keep you
           verified
+        </li>
+      </ul>
+      <p>If you choose card verification:</p>
+      <ul>
+        <li>Your student ID - to verify your profile</li>
+        <li>
+          An image of your card - to analyse the authenticity of it in a secure
+          environment, which is stored temporarily until an outcome.
         </li>
       </ul>
       <h2>Where your information is stored</h2>

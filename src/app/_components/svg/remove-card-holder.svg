@@ -1,0 +1,22 @@
+<svg width="350" height="200" viewBox="0 0 350 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="remove-card-holder">
+<rect width="350" height="200" fill="white" style="fill:white;fill-opacity:1;"/>
+<g class="card-holder">
+<rect x="104" y="59" width="142" height="89" rx="9" fill="#00EEFF" style="fill:#00EEFF;fill:color(display-p3 0.0000 0.9333 1.0000);fill-opacity:1;"/>
+<rect x="101.5" y="56.5" width="147" height="94" rx="11.5" stroke="#00FFF2" stroke-opacity="0.25" style="stroke:#00FFF2;stroke:color(display-p3 0.0000 1.0000 0.9500);stroke-opacity:0.25;" stroke-width="5"/>
+</g>
+<g class="card">
+<rect x="106.5" y="61.5" width="137" height="84" rx="6.5" fill="white" style="fill:white;fill-opacity:1;"/>
+<rect x="106.5" y="61.5" width="137" height="84" rx="6.5" stroke="black" style="stroke:black;stroke-opacity:1;" stroke-width="5"/>
+<g id="Frame 3">
+<path d="M109 68C109 65.7909 110.791 64 113 64H237C239.209 64 241 65.7909 241 68V83H109V68Z" fill="#FFF700" style="fill:#FFF700;fill:color(display-p3 1.0000 0.9667 0.0000);fill-opacity:1;"/>
+</g>
+<rect id="Rectangle 1" x="113" y="88" width="31" height="8" rx="1" fill="#E8E8E8" style="fill:#E8E8E8;fill:color(display-p3 0.9083 0.9083 0.9083);fill-opacity:1;"/>
+<rect id="Rectangle 6" x="202" y="88" width="31" height="39" rx="1" fill="#E8E8E8" style="fill:#E8E8E8;fill:color(display-p3 0.9083 0.9083 0.9083);fill-opacity:1;"/>
+<rect id="Rectangle 2" x="113" y="103" width="23" height="6" rx="1" fill="#E8E8E8" style="fill:#E8E8E8;fill:color(display-p3 0.9083 0.9083 0.9083);fill-opacity:1;"/>
+<rect id="Rectangle 3" x="113" y="111" width="31" height="6" rx="1" fill="#E8E8E8" style="fill:#E8E8E8;fill:color(display-p3 0.9083 0.9083 0.9083);fill-opacity:1;"/>
+<rect id="Rectangle 5" x="113" y="130" width="31" height="6" rx="1" fill="#E8E8E8" style="fill:#E8E8E8;fill:color(display-p3 0.9083 0.9083 0.9083);fill-opacity:1;"/>
+<rect id="Rectangle 4" x="113" y="119" width="51" height="9" rx="1" fill="#E8E8E8" style="fill:#E8E8E8;fill:color(display-p3 0.9083 0.9083 0.9083);fill-opacity:1;"/>
+</g>
+</g>
+</svg>

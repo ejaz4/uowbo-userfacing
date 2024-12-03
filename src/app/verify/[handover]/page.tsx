@@ -6,7 +6,8 @@ import { Skeleton } from "@/app/_components/skeleton/skeleton";
 import { Card } from "@/app/_components/card/card";
 import Link from "next/link";
 import { Button } from "@/app/_components/button/button";
-import { LinkIcon } from "lucide-react";
+import { IdCard, LinkIcon, MailIcon } from "lucide-react";
+import { ChooserContainer, ChooserOption } from "@/app/_components/chooser";
 // import { Skeleton } from "@chakra-ui/skeleton";
 
 const HandoverPage = () => {
@@ -55,25 +56,39 @@ const HandoverPage = () => {
   }, [handoverId, router]);
 
   return (
-    <Card
-      footerRight={
-        <Link href={`/verify/${handoverId}/mail`}>
-          <Button image={<LinkIcon size={16} />} label="Link" />
-        </Link>
-      }
-    >
+    <Card>
       {!loading && (
         <>
-          <h2>Let&apos;s link your account, {username}</h2>
+          <h2>Let&apos;s verify your account, {username}</h2>
           <p>
-            To continue linking your Discord server profile to your University
-            of Westminster account, click Link.
+            Link your Discord profile to your university ID to verify and gain
+            access to social features in servers that require it.
           </p>
           <DiscordDisplay
             username={username}
             avatarUrl={avatar}
             verified={false}
           />
+          <p>
+            If you verify here, you will also be automatically verified in other
+            servers that participate in the uowbo scheme.
+          </p>
+
+          <p>Choose how you want to verify</p>
+
+          <ChooserContainer>
+            <ChooserOption
+              label="Use your university email address"
+              image={<MailIcon size={16} />}
+              href={`/verify/${handoverId}/mail`}
+            />
+            <ChooserOption
+              label="Scan your university card"
+              image={<IdCard size={16} />}
+              href={`/verify/${handoverId}/card`}
+            />
+          </ChooserContainer>
+
           <p>
             By linking, you agree to follow the rules of the Computer Science @
             uow Discord server and also agree to how uowbo!{" "}

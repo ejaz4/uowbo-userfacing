@@ -14,12 +14,13 @@ datasource db {
 }
 
 model DiscordUser {
-  id        String              @id @default(uuid())
-  discordId String              @unique
-  avatar    String
-  username  String
-  link      DiscordUniversity[]
-  Handover  Handover[]
+  id               String              @id @default(uuid())
+  discordId        String              @unique
+  avatar           String
+  username         String
+  link             DiscordUniversity[]
+  Handover         Handover[]
+  DiscordBiometric DiscordBiometric[]
 }
 
 model DiscordUniversity {
@@ -30,6 +31,14 @@ model DiscordUniversity {
   universityUserId String?
   isVerified       Boolean         @default(false)
   code             String?
+}
+
+model DiscordBiometric {
+  id               String         @id @default(uuid())
+  DiscordUser      DiscordUser    @relation(fields: [discordUserId], references: [id])
+  discordUserId    String
+  BiometricEntry   BiometricEntry @relation(fields: [biometricEntryId], references: [id])
+  biometricEntryId String
 }
 
 model UniversityUser {
@@ -45,4 +54,12 @@ model Handover {
   discordUserId String?
   isVerified    Boolean      @default(false)
   code          String?
+}
+
+model BiometricEntry {
+  id               String             @id @default(uuid())
+  universityID     String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  DiscordBiometric DiscordBiometric[]
 }
