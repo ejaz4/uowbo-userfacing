@@ -12,15 +12,13 @@ const CardVerificationPage = () => {
   const params = useParams<{ handover: string }>();
   const handoverId = params.handover;
   const [page, setPage] = useState("switchToMobile");
-  const [mobileSkipped, setMobileSkipped] = useState(false);
   const query = useSearchParams();
 
   useEffect(() => {
     const skipMobile = query.get("skipMobile");
     if (skipMobile == "1") {
       setPage("unfasten");
-      alert("Continue verification on your mobile device.");
-      setMobileSkipped(true);
+      alert("Continue verification on this device.");
     }
   }, [query]);
 
@@ -31,7 +29,7 @@ const CardVerificationPage = () => {
       )}
       {page == "unfasten" && <Unfasten set={setPage} />}
       {page == "scanPrepare" && <ScanPrepare set={setPage} />}
-      {page == "scan" && <Scan handoverId={handoverId} set={setPage} />}
+      {page == "scan" && <Scan handoverId={handoverId} />}
     </>
   );
 };

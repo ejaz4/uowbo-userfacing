@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { Card } from "@/app/_components/card/card";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   detectAllFaces,
   detectSingleFace,
@@ -25,13 +25,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export const Scan = ({
-  set,
-  handoverId,
-}: {
-  set: (val: string) => void;
-  handoverId: string;
-}) => {
+export const Scan = ({ handoverId }: { handoverId: string }) => {
   const [screen, setScreen] = useState("preparing");
   const [started, setStarted] = useState(false);
   const [holdTitle, setholdTitle] = useState("Looking for your card...");
@@ -238,7 +232,7 @@ export const Scan = ({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            image: lastFaceScreenshot,
+            image: barcodeImage,
             handover: handoverId,
             code: barcodeId,
           }),

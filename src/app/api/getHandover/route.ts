@@ -1,5 +1,4 @@
 import { db } from "@/libs/db";
-import { Handover } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 type HandoverBody = {
