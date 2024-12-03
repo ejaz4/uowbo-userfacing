@@ -2,7 +2,7 @@ import { Button } from "@/app/_components/button/button";
 import { Card } from "@/app/_components/card/card";
 import { ChevronRight } from "lucide-react";
 import QRCodeStyling from "qr-code-styling";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const SwitchToMobile = ({
   set,
@@ -12,16 +12,20 @@ export const SwitchToMobile = ({
   handover: string;
 }) => {
   const qrRef = useRef<HTMLDivElement>(null);
+  const [generated, setGenerated] = useState(false);
 
   useEffect(() => {
     if (!handover) return;
     if (!qrRef.current) return;
+    if (generated) return;
+
+    setGenerated(true);
 
     const qrCode = new QRCodeStyling({
       width: 200,
       height: 200,
       dotsOptions: {
-        color: "#4267b2",
+        color: "black",
         type: "rounded",
       },
       imageOptions: {
@@ -34,8 +38,11 @@ export const SwitchToMobile = ({
       data: `${document.location.href}?skipMobile=1`,
     });
 
+    if (qrRef.current.firstChild) {
+      qrRef.current.removeChild(qrRef.current.firstChild);
+    }
     qrCode.append(qrRef.current);
-  }, [qrRef, handover]);
+  }, [qrRef, handover, generated]);
 
   return (
     <Card

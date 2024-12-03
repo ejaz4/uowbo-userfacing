@@ -1,11 +1,16 @@
 body {
   background-color: black;
   background-image: url("/images/verify-background.webp");
+  background-attachment: fixed;
   background-size: cover;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 200px;
+  padding-bottom: 200px;
+
+  box-sizing: border-box;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
   margin: 0;
 }
@@ -109,6 +114,8 @@ a {
     display: flex;
     height: fit-content;
     background-color: white;
+    padding-top: 0;
+    padding-bottom: 0;
     background-image: none;
   }
   .card {

@@ -61,6 +61,17 @@ export const POST = async (req: NextRequest) => {
     },
   });
 
+  if (!handoverChange) {
+    return new NextResponse(
+      JSON.stringify({
+        status: "Failed to verify handover",
+      }),
+      {
+        status: 500,
+      }
+    );
+  }
+
   return new NextResponse(
     JSON.stringify({
       status: "verified",

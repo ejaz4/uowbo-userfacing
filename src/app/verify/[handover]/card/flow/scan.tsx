@@ -24,6 +24,7 @@ import {
   ScanFaceIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export const Scan = ({ handoverId }: { handoverId: string }) => {
   const [screen, setScreen] = useState("preparing");
@@ -62,8 +63,8 @@ export const Scan = ({ handoverId }: { handoverId: string }) => {
   const facewebcamRef = useRef<Webcam>(null);
   const [faceScanAttempt, setFaceScanAttempt] = useState(0);
   const [goodFaceScans, setGoodFaceScans] = useState(0);
-  const [faceVerified, setFaceVerified] = useState(false);
   const [faceMsg, setFaceMsg] = useState("Looking for your face...");
+  const router = useRouter();
 
   useEffect(() => {
     if (started) return;
@@ -206,7 +207,7 @@ export const Scan = ({ handoverId }: { handoverId: string }) => {
         return;
       }
 
-      setHoldMsg("Stay still...");
+      setFaceMsg("Stay still...");
       const bestMatch = faceMatcher.findBestMatch(result.descriptor);
       setFaceScanAttempt(faceScanAttempt + 1);
       if (bestMatch.label == "person 1") {
@@ -237,6 +238,12 @@ export const Scan = ({ handoverId }: { handoverId: string }) => {
             code: barcodeId,
           }),
         });
+
+        if (verifyReq.status == 200) {
+          router.push(`/verify/${handoverId}/success`);
+        } else {
+          setScreen("unverified");
+        }
       })();
     }
   }, [screen]);
@@ -283,6 +290,7 @@ export const Scan = ({ handoverId }: { handoverId: string }) => {
 
           {lastScreenshot && (
             <img
+              style={{ display: "none" }}
               ref={lastScreenshotImgRef}
               src={lastScreenshot}
               alt={"Mirrored-feed"}
@@ -315,7 +323,7 @@ export const Scan = ({ handoverId }: { handoverId: string }) => {
 
       {screen == "faceScan" && (
         <Card>
-          <h2>Looking for your face...</h2>
+          <h2>{faceMsg}</h2>
           <p>Position your face in the centre of the camera feed.</p>
           <Webcam
             style={{
@@ -336,7 +344,12 @@ export const Scan = ({ handoverId }: { handoverId: string }) => {
           />
 
           {lastFaceScreenshot && (
-            <img src={lastFaceScreenshot} ref={lastFaceScreenshotImgRef} />
+            <img
+              src={lastFaceScreenshot}
+              style={{ display: "none" }}
+              ref={lastFaceScreenshotImgRef}
+              alt={"Face-feed"}
+            />
           )}
         </Card>
       )}
@@ -387,6 +400,36 @@ export const Scan = ({ handoverId }: { handoverId: string }) => {
           <p>
             You can&apos;t be verified this way. Choose an alternative method to
             verify yourself.
+          </p>
+        </Card>
+      )}
+
+      {screen == "cardUnverified" && (
+        <Card
+          footerRight={
+            <Link href={`/verify/${handoverId}/card/flow`}>
+              <Button image={<RotateCwIcon size={16} />} label={"Try again"} />
+            </Link>
+          }
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              gap: 8,
+              alignItems: "center",
+            }}
+          >
+            <HeartCrackIcon size={16} />
+            <h2>Not verified</h2>
+          </div>
+          <p>
+            Some details on your card could not be verified.
+            <br />
+            This can usually happen if the card is damaged or if the details are
+            obscured.
+            <br />
+            If this keeps occuring, verify another way.
           </p>
         </Card>
       )}
