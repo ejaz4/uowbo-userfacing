@@ -90,8 +90,8 @@ const HandoverPage = () => {
           </ChooserContainer>
 
           <p>
-            By linking, you agree to follow the rules of the Computer Science @
-            uow Discord server and also agree to how uowbo!{" "}
+            {/* TO DO */}
+            By linking, you agree to follow and also agree to how uowbo!{" "}
             <Link href={"/privacy"}>processes your data</Link>.
           </p>
         </>

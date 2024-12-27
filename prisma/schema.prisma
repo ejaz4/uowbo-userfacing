@@ -13,35 +13,81 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Guilds {
+  id              String          @id @default(uuid())
+  guildId         String          @unique
+  guildName       String
+  members         GuildUser[]
+  settings        GuildSettings[]
+  backgroundImage String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  guildSettingsId String
+}
+
+model GuildSettings {
+  id                   String  @id @default(uuid())
+  allowsEmailEntry     Boolean @default(false)
+  allowsBiometricEntry Boolean @default(false)
+
+  verifiedRoleId String?
+  usesUowboNet   Boolean @default(true)
+
+  Guilds   Guilds @relation(fields: [guildsId], references: [id])
+  guildsId String
+}
+
+model GuildUser {
+  id       String  @id @default(uuid())
+  Guilds   Guilds? @relation(fields: [guildsId], references: [id])
+  guildsId String?
+
+  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
+  discordUserId String?
+
+  isMod   Boolean @default(false)
+  isOwner Boolean @default(false)
+}
+
 model DiscordUser {
-  id               String              @id @default(uuid())
-  discordId        String              @unique
-  avatar           String
-  username         String
-  link             DiscordUniversity[]
-  Handover         Handover[]
-  DiscordBiometric DiscordBiometric[]
+  id        String              @id @default(uuid())
+  discordId String              @unique
+  avatar    String
+  username  String
+  guilds    GuildUser[]
+  link      DiscordUniversity[]
+  Handover  Handover[]
 }
 
 model DiscordUniversity {
-  id               String          @id @default(uuid())
-  DiscordUser      DiscordUser?    @relation(fields: [discordUserId], references: [id])
-  discordUserId    String?
-  UniversityUser   UniversityUser? @relation(fields: [universityUserId], references: [id])
-  universityUserId String?
-  isVerified       Boolean         @default(false)
-  code             String?
+  id String @id @default(uuid())
+
+  // The user
+  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
+  discordUserId String?
+
+  // Their email verification methods
+  emailVerification   EmailVerification? @relation(fields: [emailVerificationId], references: [id])
+  emailVerificationId String?
+  emailCode           String?
+
+  // Their biometric methods
+  BiometricEntry   BiometricEntry? @relation(fields: [biometricEntryId], references: [id])
+  biometricEntryId String?
+
+  studentId  String? @unique
+  isVerified Boolean @default(false)
 }
 
-model DiscordBiometric {
-  id               String         @id @default(uuid())
-  DiscordUser      DiscordUser    @relation(fields: [discordUserId], references: [id])
-  discordUserId    String
-  BiometricEntry   BiometricEntry @relation(fields: [biometricEntryId], references: [id])
-  biometricEntryId String
+model ModeratorLogs {
+  id        String   @id @default(uuid())
+  discordId String
+  action    String
+  reason    String
+  createdAt DateTime @default(now())
 }
 
-model UniversityUser {
+model EmailVerification {
   id    String              @id @default(uuid())
   email String              @unique
   link  DiscordUniversity[]
@@ -57,9 +103,9 @@ model Handover {
 }
 
 model BiometricEntry {
-  id               String             @id @default(uuid())
-  universityID     String
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  DiscordBiometric DiscordBiometric[]
+  id           String              @id @default(uuid())
+  universityID String
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  link         DiscordUniversity[]
 }
