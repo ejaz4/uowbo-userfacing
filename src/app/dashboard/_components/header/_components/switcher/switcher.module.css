@@ -1,0 +1,14 @@
+.switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+}
+
+.switcher img {
+  display: block;
+  width: 32px;
+  height: 32px;
+  border-radius: 0;
+  cursor: pointer;
+}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "uowbo!",
@@ -22,10 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
-        <div className="floating-strip">
-          <Link href={"/privacy"}>Privacy</Link>
-        </div>
+        <Suspense>{children}</Suspense>
       </body>
     </html>
   );

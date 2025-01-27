@@ -56,6 +56,8 @@ export const POST = async (req: NextRequest) => {
     );
   }
 
+  const studentId = body.email.split("@")[0].slice(1);
+
   // Get the handover ID
   const handover = await db.handover.findFirst({
     where: {
@@ -94,6 +96,39 @@ export const POST = async (req: NextRequest) => {
 
   const code = Math.floor(100000 + Math.random() * 900000);
 
+  const existingLink = await db.discordUniversity.findMany({
+    where: {
+      discordUserId: handover.discordUserId,
+    },
+    select: {
+      id: true,
+      isVerified: true,
+      emailCode: true,
+      emailVerification: true,
+    },
+  });
+
+  if (existingLink) {
+    for (const link of existingLink) {
+      if (link.isVerified) {
+        return new NextResponse(
+          JSON.stringify({
+            error: "This Discord account is already linked.",
+          }),
+          {
+            status: 403,
+          }
+        );
+      } else {
+        await db.discordUniversity.delete({
+          where: {
+            id: link.id,
+          },
+        });
+      }
+    }
+  }
+
   const createLink = await db.discordUniversity.create({
     data: {
       DiscordUser: {
@@ -101,7 +136,7 @@ export const POST = async (req: NextRequest) => {
           id: handover.discordUserId,
         },
       },
-      UniversityUser: {
+      emailVerification: {
         connectOrCreate: {
           where: {
             email: body.email,
@@ -111,8 +146,9 @@ export const POST = async (req: NextRequest) => {
           },
         },
       },
+      emailCode: code.toString(),
       isVerified: false,
-      code: code.toString(),
+      studentId: studentId,
     },
   });
 

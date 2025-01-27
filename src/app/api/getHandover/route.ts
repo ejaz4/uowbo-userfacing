@@ -27,9 +27,23 @@ export const POST = async (req: NextRequest) => {
           discordId: true,
           username: true,
           avatar: true,
+          guilds: {
+            select: {
+              Guilds: {
+                select: {
+                  guildId: true,
+                  guildName: true,
+                  guildIcon: true,
+                },
+              },
+              isOwner: true,
+              isMod: true,
+            },
+          },
         },
       },
-      isVerified: true
+
+      isVerified: true,
     },
   });
 
