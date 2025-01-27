@@ -32,6 +32,16 @@ export const POST = async (req: NextRequest) => {
               isVerified: true,
             },
           },
+          guilds: {
+            select: {
+              Guilds: {
+                select: {
+                  guildId: true,
+                  settings: true,
+                },
+              },
+            },
+          },
         },
       },
     },
@@ -96,6 +106,13 @@ export const POST = async (req: NextRequest) => {
     body: JSON.stringify({
       userId: discordUser.discordId,
       verified: true,
+      method: "emailEntry",
+      guilds: discordUser.guilds.map((guild) => {
+        return {
+          guildId: guild.Guilds?.guildId,
+          settings: guild.Guilds!!.settings,
+        };
+      }),
     }),
   });
 

@@ -24,6 +24,16 @@ export const POST = async (req: NextRequest) => {
         select: {
           id: true,
           discordId: true,
+          guilds: {
+            select: {
+              Guilds: {
+                select: {
+                  guildId: true,
+                  settings: true,
+                },
+              },
+            },
+          },
         },
       },
     },
@@ -125,6 +135,13 @@ export const POST = async (req: NextRequest) => {
     body: JSON.stringify({
       userId: handover.DiscordUser.discordId,
       verified: true,
+      method: "biometricEntry",
+      guilds: handover.DiscordUser.guilds.map((guild) => {
+        return {
+          guildId: guild.Guilds?.guildId,
+          settings: guild.Guilds!!.settings,
+        };
+      }),
     }),
   });
 

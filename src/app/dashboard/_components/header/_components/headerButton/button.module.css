@@ -1,0 +1,12 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 16px;
+}
+
+.active {
+  background-color: rgba(0, 0, 0, 0.1);
+}

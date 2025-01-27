@@ -8,6 +8,8 @@ import Link from "next/link";
 import { Button } from "@/app/_components/button/button";
 import { IdCard, LinkIcon, MailIcon } from "lucide-react";
 import { ChooserContainer, ChooserOption } from "@/app/_components/chooser";
+import { useGuild } from "../libs/useGuild";
+import { Guilds, GuildSettings } from "@prisma/client";
 // import { Skeleton } from "@chakra-ui/skeleton";
 
 const HandoverPage = () => {
@@ -18,6 +20,10 @@ const HandoverPage = () => {
   const [id, setId] = useState("");
   const [avatar, setAvatar] = useState("");
   const router = useRouter();
+  const guildId = useGuild();
+  const [guild, setGuild] = useState<Partial<
+    Guilds & { settings: GuildSettings[] }
+  > | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -55,14 +61,31 @@ const HandoverPage = () => {
     })();
   }, [handoverId, router]);
 
+  useEffect(() => {
+    if (!guildId) return;
+    console.log(guildId);
+    fetch(`/api/dashboard/${guildId}`).then((res) => {
+      if (!res.ok) {
+        return;
+      }
+
+      res.json().then((data) => {
+        setGuild(data);
+      });
+    });
+  }, [guildId]);
+
   return (
     <Card>
-      {!loading && (
+      {!loading && guild && (
         <>
-          <h2>Let&apos;s verify your account, {username}</h2>
+          <h2>
+            Get access to {guild.guildName}, {username}
+          </h2>
           <p>
             Link your Discord profile to your university ID to verify and gain
-            access to social features in servers that require it.
+            access to social features in {guild.guildName} and servers that
+            require it.
           </p>
           <DiscordDisplay
             username={username}
@@ -71,23 +94,47 @@ const HandoverPage = () => {
           />
           <p>
             If you verify here, you will also be automatically verified in other
-            servers that participate in the uowbo scheme.
+            servers that participate in the uowbo! scheme.
           </p>
 
           <p>Choose how you want to verify</p>
 
-          <ChooserContainer>
-            <ChooserOption
-              label="Use your university email address"
-              image={<MailIcon size={16} />}
-              href={`/verify/${handoverId}/mail`}
-            />
-            <ChooserOption
-              label="Scan your university card"
-              image={<IdCard size={16} />}
-              href={`/verify/${handoverId}/card`}
-            />
-          </ChooserContainer>
+          {guild.settings && (
+            <>
+              {guild.settings.length != 0 && (
+                <ChooserContainer>
+                  {!guild.settings[0].allowsBiometricEntry &&
+                    !guild.settings[0].allowsEmailEntry && (
+                      <div
+                        style={{
+                          padding: 16,
+                        }}
+                      >
+                        <p>
+                          {guild.guildName} is not accepting new members at the
+                          moment.
+                        </p>
+                      </div>
+                    )}
+                  {guild.settings[0].allowsEmailEntry && (
+                    <ChooserOption
+                      label="Use your university email address"
+                      image={<MailIcon size={16} />}
+                      href={`/verify/${handoverId}/mail`}
+                    />
+                  )}
+
+                  {guild.settings[0].allowsBiometricEntry && (
+                    <ChooserOption
+                      label="Scan your university card"
+                      image={<IdCard size={16} />}
+                      href={`/verify/${handoverId}/card`}
+                    />
+                  )}
+                </ChooserContainer>
+              )}
+            </>
+          )}
 
           <p>
             {/* TO DO */}

@@ -104,12 +104,13 @@ export const POST = async (req: NextRequest) => {
       id: true,
       isVerified: true,
       emailCode: true,
+      emailVerification: true,
     },
   });
 
   if (existingLink) {
     for (const link of existingLink) {
-      if (link?.isVerified) {
+      if (link.isVerified) {
         return new NextResponse(
           JSON.stringify({
             error: "This Discord account is already linked.",

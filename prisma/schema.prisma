@@ -17,21 +17,33 @@ model Guilds {
   id              String          @id @default(uuid())
   guildId         String          @unique
   guildName       String
+  guildIcon       String?
   members         GuildUser[]
   settings        GuildSettings[]
   backgroundImage String?
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
-  guildSettingsId String
+  authorityHits   AuthorityHit[]
+  GuildLog        GuildLog[]
+}
+
+model GuildLog {
+  id        String   @id @default(uuid())
+  message   String
+  createdAt DateTime @default(now())
+  Guilds    Guilds?  @relation(fields: [guildsId], references: [id])
+  guildsId  String?
 }
 
 model GuildSettings {
-  id                   String  @id @default(uuid())
+  id String @id @default(uuid())
+
   allowsEmailEntry     Boolean @default(false)
   allowsBiometricEntry Boolean @default(false)
 
-  verifiedRoleId String?
-  usesUowboNet   Boolean @default(true)
+  verifiedRoleId  String?
+  moderatorRoleId String?
+  usesUowboNet    Boolean @default(true)
 
   Guilds   Guilds @relation(fields: [guildsId], references: [id])
   guildsId String
@@ -39,58 +51,112 @@ model GuildSettings {
 
 model GuildUser {
   id       String  @id @default(uuid())
-  Guilds   Guilds? @relation(fields: [guildsId], references: [id])
+  Guilds   Guilds? @relation(fields: [guildsId], references: [id], onDelete: Cascade)
   guildsId String?
 
-  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
+  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id], onDelete: Cascade)
   discordUserId String?
 
   isMod   Boolean @default(false)
   isOwner Boolean @default(false)
+
+  messages GuildMessage[]
+
+  @@unique([guildsId, discordUserId])
+}
+
+model GuildMessage {
+  id String @id
+
+  message String?
+
+  mentions        GuildMessage[] @relation("mention")
+  parentMessage   GuildMessage?  @relation("mention", fields: [parentMessageId], references: [id])
+  parentMessageId String?
+
+  GuildUser   GuildUser? @relation(fields: [guildUserId], references: [id])
+  guildUserId String?
+
+  attachmentUrl String?
+
+  createdAt DateTime @default(now())
 }
 
 model DiscordUser {
   id        String              @id @default(uuid())
   discordId String              @unique
-  avatar    String
+  avatar    String?
   username  String
+  tokens    Token[]
   guilds    GuildUser[]
   link      DiscordUniversity[]
   Handover  Handover[]
+  createdAt DateTime            @default(now())
+}
+
+model Token {
+  id            String       @id @default(uuid())
+  token         String       @unique
+  createdAt     DateTime     @default(now())
+  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
+  discordUserId String?
 }
 
 model DiscordUniversity {
   id String @id @default(uuid())
 
   // The user
-  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
+  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id], onDelete: Cascade)
   discordUserId String?
 
   // Their email verification methods
-  emailVerification   EmailVerification? @relation(fields: [emailVerificationId], references: [id])
+  emailVerification   EmailVerification? @relation(fields: [emailVerificationId], references: [id], onDelete: SetNull)
   emailVerificationId String?
   emailCode           String?
 
   // Their biometric methods
-  BiometricEntry   BiometricEntry? @relation(fields: [biometricEntryId], references: [id])
+  BiometricEntry   BiometricEntry? @relation(fields: [biometricEntryId], references: [id], onDelete: SetNull)
   biometricEntryId String?
 
   studentId  String? @unique
   isVerified Boolean @default(false)
+
+  authorityHits AuthorityHit[]
 }
 
-model ModeratorLogs {
-  id        String   @id @default(uuid())
-  discordId String
-  action    String
-  reason    String
+model AuthorityHit {
+  id String @id @default(uuid())
+
+  DiscordUniversity   DiscordUniversity? @relation(fields: [discordUniversityId], references: [id], onDelete: Cascade)
+  discordUniversityId String?
+  Guilds              Guilds?            @relation(fields: [guildsId], references: [id], onDelete: SetNull)
+  guildsId            String?
+
+  federated Federated @default(NOT_FEDERATED)
+
+  reason String
+  type   HitType @default(STRIKE)
+
   createdAt DateTime @default(now())
 }
 
+enum Federated {
+  NOT_FEDERATED
+  SUBMITTED
+  ACCEPTED
+  REJECTED
+}
+
+enum HitType {
+  STRIKE
+  PARDON
+}
+
 model EmailVerification {
-  id    String              @id @default(uuid())
-  email String              @unique
-  link  DiscordUniversity[]
+  id         String              @id @default(uuid())
+  email      String              @unique
+  link       DiscordUniversity[]
+  isVerified Boolean             @default(true)
 }
 
 model Handover {
