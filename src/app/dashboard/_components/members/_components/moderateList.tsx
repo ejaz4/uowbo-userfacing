@@ -3,7 +3,7 @@ import styles from "./memberList.module.css";
 import popup from "../../../popups.module.css";
 import { useEffect, useState } from "react";
 import { useToken } from "@/app/dashboard/libs/useToken";
-import { GavelIcon, SmileIcon } from "lucide-react";
+import { GavelIcon, HeartIcon, SmileIcon } from "lucide-react";
 import {
   AuthorityHit,
   Federated,
@@ -41,8 +41,8 @@ export const ModerateList = ({
         </button>
       </div>
 
-      <div className={styles.messageList}>
-        {member.link[0] && (
+      {member.link[0].authorityHits.length > 0 && (
+        <div className={styles.messageList}>
           <>
             {member.link[0].authorityHits
               .filter((e) => {
@@ -68,8 +68,8 @@ export const ModerateList = ({
                 />
               ))}
           </>
-        )}
-      </div>
+        </div>
+      )}
 
       {striking && (
         <ConfirmStrike
@@ -109,24 +109,45 @@ const Hit = ({
 
   return (
     <div className={styles.hit}>
-      <div className={styles.hitInfo}>
-        <p className={styles.hitCreds}>
-          {hit.type == HitType.STRIKE ? "Strike" : "Pardon"} from{" "}
-          {guild?.guildName}
-        </p>
-        <p>
-          {date.toLocaleString()} - {hit.reason}
-        </p>
-        <p className={styles.hitCreds}>
-          uowbo!net status:{" "}
-          {hit.federated == Federated.NOT_FEDERATED
-            ? "Not submitted"
-            : hit.federated == Federated.SUBMITTED
-            ? "Submitted"
-            : hit.federated == Federated.REJECTED
-            ? "Rejected"
-            : "Federated"}
-        </p>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          gap: 8,
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {hit.type == HitType.STRIKE ? (
+            <GavelIcon color="red" size={16} />
+          ) : (
+            <HeartIcon color="rgba(31,150,219,1)" size={16} />
+          )}
+        </div>
+        <div className={styles.hitInfo}>
+          <p className={styles.hitCreds}>
+            {hit.type == HitType.STRIKE ? "Strike" : "Pardon"} from{" "}
+            {guild?.guildName}
+          </p>
+          <p>
+            {date.toLocaleString()} - {hit.reason}
+          </p>
+          <p className={styles.hitCreds}>
+            uowbo!net status:{" "}
+            {hit.federated == Federated.NOT_FEDERATED
+              ? "Not submitted"
+              : hit.federated == Federated.SUBMITTED
+              ? "Submitted"
+              : hit.federated == Federated.REJECTED
+              ? "Rejected"
+              : "Federated"}
+          </p>
+        </div>
       </div>
 
       {guildId == guild?.guildId && hit.type == HitType.STRIKE && (
@@ -197,7 +218,8 @@ const ConfirmStrike = ({
   };
 
   useEffect(() => {
-    console.log(federating);
+    if (pardon) return;
+
     setSubmitToUow(federating);
   }, [federating]);
 
@@ -222,7 +244,7 @@ const ConfirmStrike = ({
                 <p>This pardon will be submitted and federated immediately.</p>
               )}
 
-              {!submitToUow == true && <p>This pardon won&apos;t federate.</p>}
+              {submitToUow != true && <p>This pardon won&apos;t federate.</p>}
             </>
           )}
           {failReason && <p style={{ color: "red" }}>{failReason}</p>}

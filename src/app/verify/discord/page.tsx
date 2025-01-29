@@ -10,9 +10,13 @@ import { useState } from "react";
 
 const DiscordUsernamePage = () => {
   const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const submit = async () => {
+    if (loading) return;
+
+    setLoading(true);
     const check = await fetch("/api/manual/check", {
       method: "POST",
       headers: {
@@ -22,6 +26,8 @@ const DiscordUsernamePage = () => {
         username,
       }),
     });
+
+    setLoading(false);
 
     const checkJson = (await check.json()) as {
       error?: string;
@@ -37,6 +43,7 @@ const DiscordUsernamePage = () => {
         <Button
           label={"Verify"}
           onclick={submit}
+          loading={loading}
           image={<KeyIcon size={16} />}
         />
       }

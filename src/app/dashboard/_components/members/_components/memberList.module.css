@@ -15,8 +15,8 @@
   border-radius: 8px;
   font-size: 16px;
   font-family: var(--Inter);
-  background-color: rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--border-color);
+  border: 1px solid var(--border-color);
   box-sizing: border-box;
 }
 
@@ -29,7 +29,7 @@
   align-items: center;
 }
 .selected {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--border-color);
 }
 
 .memberImage {
@@ -40,7 +40,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--border-color);
 }
 
 .memberImage img {
@@ -60,7 +60,7 @@
 }
 
 .label {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--border-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,9 +100,9 @@
   align-items: center;
   padding: 16px;
   box-sizing: border-box;
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); */
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  /* box-shadow: 0px 4px 8px var(--border-color); */
   border-radius: 8px;
 }
 
@@ -146,13 +146,18 @@
 }
 
 .card {
-  background-color: rgba(0, 0, 0, 0.1);
+  /* background-color: var(--border-color); */
+  border: solid 1px var(--border-color);
   border-radius: 8px;
   padding: 16px;
   box-sizing: border-box;
   display: flex;
   gap: 16px;
   flex-direction: column;
+}
+
+.card button {
+  border: solid 1px var(--border-color);
 }
 
 .horizList {
@@ -166,12 +171,12 @@
   gap: 8px;
   flex-direction: column;
   text-align: left;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: var(--background-color);
   padding: 8px;
   padding-top: 16px;
   padding-bottom: 16px;
   box-sizing: border-box;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  border-bottom: solid 1px var(--border-color);
   animation: reveal 0.5s;
 }
 
@@ -181,7 +186,7 @@
 
 @keyframes shadow {
   from {
-    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px -4px 8px var(--opacity-layer);
   }
   to {
     box-shadow: 0px -4px 8px rgba(0, 0, 0, 0);
@@ -201,6 +206,7 @@
   display: flex;
   flex-direction: column;
   border-radius: 8px;
+  border: solid 1px var(--border-color);
   overflow: hidden;
 }
 
@@ -211,7 +217,7 @@
 
 .hitCreds {
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--text-opacity);
 }
 
 .hit {
@@ -219,11 +225,11 @@
   /* gap: 8px; */
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: var(--background-color);
   padding: 8px;
   padding-top: 16px;
   padding-bottom: 16px;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  border-bottom: solid 1px var(--border-color);
 }
 
 .hitInfo {
@@ -232,5 +238,5 @@
 }
 
 .hit button {
-  border: solid 1px rgba(0, 0, 0, 0.1);
+  border: solid 1px var(--border-color);
 }

@@ -38,7 +38,7 @@
 }
 
 .active {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--border-color);
 }
 
 .settings {
@@ -48,6 +48,8 @@
   padding: 16px;
   width: 100%;
   box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .settings h1 {
