@@ -1,5 +1,18 @@
 import { db } from "./db";
 
+export const customLog = async (message: string, guildId: string) => {
+  await db.guildLog.create({
+    data: {
+      message: `${message}`,
+      Guilds: {
+        connect: {
+          guildId: guildId,
+        },
+      },
+    },
+  });
+};
+
 export const logWithModerator = async (
   message: string,
   guildId: string,

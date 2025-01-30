@@ -1,4 +1,6 @@
 import { db } from "@/libs/db";
+import { customLog } from "@/libs/logging";
+import { updateModerators } from "@/libs/moderators";
 import {
   verifyToken,
   isAllowedOnGuild,
@@ -196,6 +198,10 @@ export const POST = async (
     delete body.guildsId;
   }
 
+  if (body.moderatorRoleId) {
+    updateModerators(guild, body.moderatorRoleId);
+  }
+
   if (existingSettings?.settings.length == 0) {
     await db.guildSettings.create({
       data: {
@@ -213,6 +219,9 @@ export const POST = async (
         usesUowboNet: body.usesUowboNet,
       },
     });
+
+    updateModerators(guild, body.moderatorRoleId!!);
+
     return new NextResponse(
       JSON.stringify({
         message: "Settings updated",
