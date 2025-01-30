@@ -14,17 +14,19 @@ datasource db {
 }
 
 model Guilds {
-  id              String          @id @default(uuid())
-  guildId         String          @unique
-  guildName       String
-  guildIcon       String?
-  members         GuildUser[]
-  settings        GuildSettings[]
-  backgroundImage String?
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  authorityHits   AuthorityHit[]
-  GuildLog        GuildLog[]
+  id                  String             @id @default(uuid())
+  guildId             String             @unique
+  guildName           String
+  guildIcon           String?
+  members             GuildUser[]
+  settings            GuildSettings[]
+  backgroundImage     String?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  authorityHits       AuthorityHit[]
+  GuildLog            GuildLog[]
+  DiscordUniversity   DiscordUniversity? @relation(fields: [discordUniversityId], references: [id])
+  discordUniversityId String?
 }
 
 model GuildLog {
@@ -40,6 +42,7 @@ model GuildSettings {
 
   allowsEmailEntry     Boolean @default(false)
   allowsBiometricEntry Boolean @default(false)
+  allowsExternalEntry  Boolean @default(true)
 
   verifiedRoleId  String?
   moderatorRoleId String?
@@ -118,10 +121,16 @@ model DiscordUniversity {
   BiometricEntry   BiometricEntry? @relation(fields: [biometricEntryId], references: [id], onDelete: SetNull)
   biometricEntryId String?
 
+  externalsHelped DiscordUniversity[] @relation("helper")
+  helper          DiscordUniversity?  @relation("helper", fields: [helperId], references: [id])
+  helperId        String?
+  helperCode      String?
+
   studentId  String? @unique
   isVerified Boolean @default(false)
 
   authorityHits AuthorityHit[]
+  Guilds        Guilds[]
 }
 
 model AuthorityHit {
