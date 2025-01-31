@@ -74,6 +74,8 @@ export const GET = async (
           isVerified: true,
           emailVerification: true,
           studentId: true,
+          fullName: true,
+          isExternal: true,
           BiometricEntry: true,
           authorityHits: {
             orderBy: {

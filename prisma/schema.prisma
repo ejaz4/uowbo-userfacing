@@ -121,10 +121,13 @@ model DiscordUniversity {
   BiometricEntry   BiometricEntry? @relation(fields: [biometricEntryId], references: [id], onDelete: SetNull)
   biometricEntryId String?
 
+  // Their external methods, if they help out or are an external
+  fullName        String?
+  isExternal      Boolean             @default(false)
   externalsHelped DiscordUniversity[] @relation("helper")
   helper          DiscordUniversity?  @relation("helper", fields: [helperId], references: [id])
   helperId        String?
-  helperCode      String?
+  helperCode      String?             @unique
 
   studentId  String? @unique
   isVerified Boolean @default(false)

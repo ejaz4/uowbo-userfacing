@@ -6,7 +6,7 @@ import { Skeleton } from "@/app/_components/skeleton/skeleton";
 import { Card } from "@/app/_components/card/card";
 import Link from "next/link";
 import { Button } from "@/app/_components/button/button";
-import { IdCard, LinkIcon, MailIcon } from "lucide-react";
+import { IdCard, LinkIcon, MailIcon, UsersIcon } from "lucide-react";
 import { ChooserContainer, ChooserOption } from "@/app/_components/chooser";
 import { useGuild } from "../libs/useGuild";
 import { Guilds, GuildSettings } from "@prisma/client";
@@ -129,6 +129,14 @@ const HandoverPage = () => {
                       label="Scan your university card"
                       image={<IdCard size={16} />}
                       href={`/verify/${handoverId}/card`}
+                    />
+                  )}
+
+                  {guild.settings[0].allowsExternalEntry && (
+                    <ChooserOption
+                      label="Claim external status"
+                      image={<UsersIcon size={16} />}
+                      href={`/verify/${handoverId}/external`}
                     />
                   )}
                 </ChooserContainer>

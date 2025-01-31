@@ -1,7 +1,12 @@
 import { MemberInGuild } from "@/app/dashboard/libs/useMember";
 import styles from "./memberList.module.css";
 import React, { useEffect, useState } from "react";
-import { IdCardIcon, MailIcon, VenetianMaskIcon } from "lucide-react";
+import {
+  IdCardIcon,
+  MailIcon,
+  UsersIcon,
+  VenetianMaskIcon,
+} from "lucide-react";
 import { Skeleton } from "@/app/_components/skeleton/skeleton";
 import { useGuildSettings } from "@/app/dashboard/libs/useGuild";
 import { Federated, GuildSettings, HitType } from "@prisma/client";
@@ -97,12 +102,20 @@ export const MemberOverview = ({
                   <IdCardIcon size={16} />
                 </div>
               )}
+              {member.link[0].isExternal && (
+                <div className={styles.label}>
+                  <UsersIcon size={16} />
+                </div>
+              )}
             </>
           )}
         </div>
         {member.link[0] && (
           <p>
-            w{member.link[0].studentId} - {strikes} strike
+            {member.link[0].isExternal
+              ? member.link[0].fullName
+              : `w${member.link[0].studentId}`}{" "}
+            - {strikes} strike
             {strikes == 1 ? "" : "s"}
           </p>
         )}

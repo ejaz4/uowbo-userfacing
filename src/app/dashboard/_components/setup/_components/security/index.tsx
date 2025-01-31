@@ -55,7 +55,6 @@ export const SecuritySection = ({
             type="checkbox"
             name="biometricEntry"
             id="biometricEntry"
-            // checked={settings.allowsBiometricEntry}
             checked={settings.allowsBiometricEntry}
             onChange={(e) => {
               setSettings({
@@ -64,6 +63,20 @@ export const SecuritySection = ({
             }}
           />
           <label htmlFor="biometricEntry">University card</label>
+        </div>
+        <div className={cStyles.checkbox}>
+          <input
+            type="checkbox"
+            name="externalEntry"
+            id="externalEntry"
+            checked={settings.allowsExternalEntry}
+            onChange={(e) => {
+              setSettings({
+                allowsExternalEntry: e.currentTarget.checked,
+              });
+            }}
+          />
+          <label htmlFor="externalEntry">External status</label>
         </div>
 
         <p>After verification, give the member the following role:</p>

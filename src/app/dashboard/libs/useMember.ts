@@ -29,6 +29,8 @@ export type MemberInGuild = {
         guildId: string;
       };
     }[];
+    isExternal: boolean;
+    fullName?: string;
   }[];
   guilds: {
     messages: GuildMessage[];
