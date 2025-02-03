@@ -8,6 +8,21 @@
   flex-direction: row;
 }
 
+.bannerOuter {
+  padding: 16px;
+}
+
+.warningBanner {
+  background-color: rgba(255, 0, 0, 0.1);
+  color: red;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .list {
   width: 400px;
   min-width: 400px;
