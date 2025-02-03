@@ -180,6 +180,10 @@
   animation: reveal 0.5s;
 }
 
+.message:last-child {
+  border: 0;
+}
+
 .message:nth-of-type(2) {
   animation: shadow 0.5s;
 }
@@ -239,4 +243,8 @@
 
 .hit button {
   border: solid 1px var(--border-color);
+}
+
+.hit:last-child {
+  border: 0;
 }
