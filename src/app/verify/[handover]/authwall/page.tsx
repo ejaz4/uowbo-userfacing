@@ -17,6 +17,7 @@ const HandoverPage = () => {
   const router = useRouter();
 
   const checkVerificationCode = async () => {
+    localStorage.removeItem("guildId");
     const verificationCode = code.trim();
 
     const checkCode = await fetch("/api/manual/verify", {

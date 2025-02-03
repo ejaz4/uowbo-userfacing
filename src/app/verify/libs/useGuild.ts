@@ -24,6 +24,7 @@ export const useGuild = () => {
     const param = searchParams.get("guildId");
 
     if (param) {
+      localStorage.setItem("guildId", param);
       return setGuildId(param);
     }
 

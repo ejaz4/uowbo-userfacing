@@ -80,12 +80,15 @@ const HandoverPage = () => {
       {!loading && guild && (
         <>
           <h2>
-            Get access to {guild.guildName}, {username}
+            Get access to{" "}
+            <Link href={`/verify/${handoverId}/guild`}>{guild.guildName}</Link>,{" "}
+            {username}
           </h2>
           <p>
             Link your Discord profile to your university ID to verify and gain
-            access to social features in {guild.guildName} and servers that
-            require it.
+            access to social features in{" "}
+            <Link href={`/verify/${handoverId}/guild`}>{guild.guildName}</Link>{" "}
+            and servers that require it.
           </p>
           <DiscordDisplay
             username={username}
