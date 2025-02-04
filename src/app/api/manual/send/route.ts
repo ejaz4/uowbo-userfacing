@@ -110,16 +110,41 @@ export const POST = async (req: NextRequest) => {
   if (existingLink) {
     if (existingLink.studentId == studentIdWithoutW) {
       if (existingLink.emailVerification) {
-        if (existingLink.emailVerification.email == body.email) {
-          return new NextResponse(
-            JSON.stringify({
-              error:
-                "This Discord account is already verified to this email address.",
-            }),
-            {
-              status: 403,
-            }
-          );
+        if (existingLink.emailVerification.isVerified) {
+          if (existingLink.emailVerification.email == body.email) {
+            return new NextResponse(
+              JSON.stringify({
+                error:
+                  "This Discord account is already verified to this email address.",
+              }),
+              {
+                status: 403,
+              }
+            );
+          }
+        } else {
+          existingLink = await db.discordUniversity.update({
+            where: {
+              id: existingLink.id,
+            },
+            data: {
+              emailVerification: {
+                update: {
+                  where: {
+                    id: existingLink.emailVerification.id,
+                  },
+                  data: {
+                    email: body.email,
+                    isVerified: false,
+                  },
+                },
+              },
+              emailCode: code.toString(),
+            },
+            include: {
+              emailVerification: true,
+            },
+          });
         }
       } else {
         existingLink = await db.discordUniversity.update({
