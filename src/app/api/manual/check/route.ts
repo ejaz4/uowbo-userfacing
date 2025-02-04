@@ -86,7 +86,6 @@ export const POST = async (req: NextRequest) => {
     }),
   });
 
-  console.log(await messageRequest.json());
   if (messageRequest.status == 403) {
     return new NextResponse(
       JSON.stringify({

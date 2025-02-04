@@ -110,6 +110,105 @@ export const POST = async (req: NextRequest) => {
         },
       });
     }
+
+    const discordUser = await db.discordUser.findUnique({
+      where: {
+        discordId: user.id,
+      },
+      include: {
+        guilds: {
+          include: {
+            Guilds: {
+              include: {
+                settings: true,
+              },
+            },
+          },
+        },
+        link: {
+          select: {
+            emailVerification: true,
+            BiometricEntry: true,
+            helper: true,
+            isExternal: true,
+            isVerified: true,
+          },
+        },
+      },
+    });
+
+    if (!discordUser) {
+      return new NextResponse(
+        JSON.stringify({ message: "Discord user not found" }),
+        { status: 404 }
+      );
+    }
+
+    if (discordUser.link.length != 0) {
+      const link = discordUser.link[0];
+
+      if (link.isVerified) {
+        if (link.helper) {
+          await fetch(`${process.env.BOT_HOST}/verifyUser`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: discordUser.discordId,
+              verified: true,
+              method: "externalEntry",
+              guilds: discordUser.guilds.map((guild) => {
+                return {
+                  guildId: guild.Guilds?.guildId,
+                  settings: guild.Guilds!!.settings,
+                };
+              }),
+            }),
+          });
+        }
+
+        if (link.BiometricEntry) {
+          await fetch(`${process.env.BOT_HOST}/verifyUser`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: discordUser.discordId,
+              verified: true,
+              method: "biometricEntry",
+              guilds: discordUser.guilds.map((guild) => {
+                return {
+                  guildId: guild.Guilds?.guildId,
+                  settings: guild.Guilds!!.settings,
+                };
+              }),
+            }),
+          });
+        }
+
+        if (link.emailVerification) {
+          await fetch(`${process.env.BOT_HOST}/verifyUser`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: discordUser.discordId,
+              verified: true,
+              method: "emailEntry",
+              guilds: discordUser.guilds.map((guild) => {
+                return {
+                  guildId: guild.Guilds?.guildId,
+                  settings: guild.Guilds!!.settings,
+                };
+              }),
+            }),
+          });
+        }
+      }
+    }
   }
   return new NextResponse(JSON.stringify({ message: "Success" }));
 };

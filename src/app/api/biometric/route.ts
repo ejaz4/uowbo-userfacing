@@ -69,7 +69,6 @@ export const POST = async (req: NextRequest) => {
 
   const buffer = Buffer.from(imageData, "base64");
 
-  // console.log(body.image)
   const {
     data: { text },
   } = await worker.recognize(buffer);
@@ -85,7 +84,6 @@ export const POST = async (req: NextRequest) => {
   }
 
   if (!found) {
-    console.log("Not valid");
     return new NextResponse(
       JSON.stringify({
         status: "Not valid",
@@ -93,30 +91,49 @@ export const POST = async (req: NextRequest) => {
     );
   }
 
-  const biometricDb = await db.biometricEntry.create({
-    data: {
-      universityID: clientDetectedCode.slice(0, 7),
-      link: {
-        connectOrCreate: {
-          where: {
-            studentId: clientDetectedCode.slice(0, 7),
-            discordUserId: handover.DiscordUser.id,
-          },
-          create: {
-            studentId: clientDetectedCode.slice(0, 7),
-            DiscordUser: {
-              connect: {
-                id: handover.DiscordUser.id,
-              },
-            },
-            isVerified: true,
-          },
-        },
+  let existingLink = await db.discordUniversity.findFirst({
+    where: {
+      DiscordUser: {
+        discordId: handover.DiscordUser.id,
       },
     },
   });
 
-  if (!biometricDb) {
+  if (existingLink) {
+    if (existingLink.studentId == clientDetectedCode.slice(0, 7)) {
+      existingLink = await db.discordUniversity.update({
+        where: {
+          id: existingLink.id,
+        },
+        data: {
+          BiometricEntry: {
+            create: {
+              universityID: clientDetectedCode.slice(0, 7),
+            },
+          },
+          isVerified: true,
+        },
+      });
+    } else {
+      return new NextResponse(JSON.stringify({ status: "Not valid" }), {
+        status: 403,
+      });
+    }
+  } else {
+    existingLink = await db.discordUniversity.create({
+      data: {
+        BiometricEntry: {
+          create: {
+            universityID: clientDetectedCode.slice(0, 7),
+          },
+        },
+        studentId: clientDetectedCode.slice(0, 7),
+        isVerified: true,
+      },
+    });
+  }
+
+  if (!existingLink) {
     return new NextResponse(
       JSON.stringify({
         status: "Failed to create biometric entry",

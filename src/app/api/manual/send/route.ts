@@ -96,63 +96,74 @@ export const POST = async (req: NextRequest) => {
 
   const code = Math.floor(100000 + Math.random() * 900000);
 
-  const existingLink = await db.discordUniversity.findMany({
+  let existingLink = await db.discordUniversity.findFirst({
     where: {
       discordUserId: handover.discordUserId,
     },
-    select: {
-      id: true,
-      isVerified: true,
-      emailCode: true,
+    include: {
       emailVerification: true,
     },
   });
 
+  const studentIdWithoutW = body.email.split("@")[0].slice(1).replace("w", "");
+
   if (existingLink) {
-    for (const link of existingLink) {
-      if (link.isVerified) {
-        return new NextResponse(
-          JSON.stringify({
-            error: "This Discord account is already linked.",
-          }),
-          {
-            status: 403,
-          }
-        );
+    if (existingLink.studentId == studentIdWithoutW) {
+      if (existingLink.emailVerification) {
+        if (existingLink.emailVerification.email == body.email) {
+          return new NextResponse(
+            JSON.stringify({
+              error:
+                "This Discord account is already verified to this email address.",
+            }),
+            {
+              status: 403,
+            }
+          );
+        }
       } else {
-        await db.discordUniversity.delete({
+        existingLink = await db.discordUniversity.update({
           where: {
-            id: link.id,
+            id: existingLink.id,
+          },
+          data: {
+            emailVerification: {
+              create: {
+                email: body.email,
+                isVerified: false,
+              },
+            },
+            emailCode: code.toString(),
+          },
+          include: {
+            emailVerification: true,
           },
         });
       }
+    } else {
+      return new NextResponse(JSON.stringify({ status: "Not valid" }), {
+        status: 403,
+      });
     }
-  }
-
-  const createLink = await db.discordUniversity.create({
-    data: {
-      DiscordUser: {
-        connect: {
-          id: handover.discordUserId,
-        },
-      },
-      emailVerification: {
-        connectOrCreate: {
-          where: {
-            email: body.email,
-          },
+  } else {
+    existingLink = await db.discordUniversity.create({
+      data: {
+        emailCode: code.toString(),
+        emailVerification: {
           create: {
             email: body.email,
+            isVerified: false,
           },
         },
+        isVerified: false,
       },
-      emailCode: code.toString(),
-      isVerified: false,
-      studentId: studentId,
-    },
-  });
+      include: {
+        emailVerification: true,
+      },
+    });
+  }
 
-  if (!createLink) {
+  if (!existingLink) {
     return new NextResponse(
       JSON.stringify({
         error: "Failed to create link",
