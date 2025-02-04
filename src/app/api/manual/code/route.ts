@@ -76,6 +76,16 @@ export const POST = async (req: NextRequest) => {
   }
 
   if (findCodeEntry.emailVerification) {
+    await db.discordUniversity.update({
+      where: {
+        id: findCodeEntry.id,
+      },
+      data: {
+        studentId: findCodeEntry.emailVerification.email
+          .split("@")[0]
+          .replace("w", ""),
+      },
+    });
     if (findCodeEntry.emailVerification.isVerified) {
       return new NextResponse(
         JSON.stringify({ error: "You're already verified." }),
