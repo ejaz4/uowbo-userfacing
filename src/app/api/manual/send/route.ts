@@ -107,7 +107,10 @@ export const POST = async (req: NextRequest) => {
 
   const studentIdWithoutW = body.email.split("@")[0].slice(1).replace("w", "");
 
+  console.log("BEFORE EXISTING LINK");
+
   if (existingLink) {
+    console.log("THIS IS THE EXISTING LINK", existingLink);
     if (existingLink.studentId == studentIdWithoutW) {
       if (existingLink.emailVerification) {
         if (existingLink.emailVerification.isVerified) {
@@ -171,13 +174,26 @@ export const POST = async (req: NextRequest) => {
       });
     }
   } else {
+    console.log("COOKING UP EXSITING LINK");
+
     existingLink = await db.discordUniversity.create({
       data: {
+        DiscordUser: {
+          connect: {
+            id: handover.discordUserId,
+          },
+        },
         emailCode: code.toString(),
         emailVerification: {
-          create: {
-            email: body.email,
-            isVerified: false,
+          connectOrCreate: {
+            where: {
+              email: body.email,
+              isVerified: false,
+            },
+            create: {
+              email: body.email,
+              isVerified: false,
+            },
           },
         },
         isVerified: false,
