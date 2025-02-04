@@ -11,9 +11,9 @@ export const GET = async (
   {
     params,
   }: {
-    params: {
+    params: Promise<{
       guild: string;
-    };
+    }>;
   }
 ) => {
   const token = req.headers.get("Authorization");
@@ -37,7 +37,7 @@ export const GET = async (
     );
   }
 
-  const guild = params.guild;
+  const guild = p.guild;
   const user = await getDiscordIdFromToken(token);
 
   if (!user) {

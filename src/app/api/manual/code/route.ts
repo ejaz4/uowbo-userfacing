@@ -27,8 +27,10 @@ export const POST = async (req: NextRequest) => {
               emailVerification: {
                 select: {
                   email: true,
+                  isVerified: true,
                 },
               },
+              studentId: true,
               isVerified: true,
             },
           },
@@ -73,11 +75,13 @@ export const POST = async (req: NextRequest) => {
     );
   }
 
-  if (findCodeEntry.isVerified) {
-    return new NextResponse(
-      JSON.stringify({ error: "This code has already been used." }),
-      { status: 403 }
-    );
+  if (findCodeEntry.emailVerification) {
+    if (findCodeEntry.emailVerification.isVerified) {
+      return new NextResponse(
+        JSON.stringify({ error: "You're already verified." }),
+        { status: 403 }
+      );
+    }
   }
 
   // Update the link
@@ -87,6 +91,11 @@ export const POST = async (req: NextRequest) => {
       id: findCodeEntry.id,
     },
     data: {
+      emailVerification: {
+        update: {
+          isVerified: true,
+        },
+      },
       isVerified: true,
     },
   });
