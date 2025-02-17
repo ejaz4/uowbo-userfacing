@@ -21,6 +21,7 @@ export const POST = async (
     reason: string;
     federate: boolean;
     type: HitType;
+    notify: boolean;
   };
 
   const token = req.headers.get("authorization") as string;
@@ -144,13 +145,18 @@ export const POST = async (
     "dox",
     "sex",
     "harassment",
+    "slur",
+    "offensive",
+    "illegal",
+    "hacking",
+    "word",
   ];
 
   if (body.federate) {
     federated = Federated.REJECTED;
 
     for (const r of reasons) {
-      if (body.reason.toLowerCase().includes(r)) {
+      if (body.reason.toLowerCase().includes(r.toLowerCase())) {
         federated = Federated.ACCEPTED;
         break;
       }
@@ -194,6 +200,30 @@ export const POST = async (
       }),
       {
         status: 500,
+      }
+    );
+  }
+
+  if (body.notify) {
+    const notify = await fetch(
+      `${process.env.BOT_HOST}/guild/${p.guild}/member/${p.member}/message`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-secret": process.env.SECRET as string,
+        },
+        body: JSON.stringify({
+          message:
+            `You have been ${
+              body.type == HitType.STRIKE ? "striked" : "pardoned"
+            } in %GUILDNAME for \`\`\`${body.reason}\`\`\`` +
+            (federated == Federated.ACCEPTED
+              ? `This ${
+                  body.type == HitType.STRIKE ? "strike" : "pardon"
+                } will be extended to all servers participating in the uowbo! scheme.`
+              : ""),
+        }),
       }
     );
   }

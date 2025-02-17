@@ -191,6 +191,7 @@ const ConfirmStrike = ({
   const [reason, setReason] = useState("");
   const [submitToUow, setSubmitToUow] = useState(federate);
   const [failReason, setFailReason] = useState("");
+  const [notifyMember, setNotifyMember] = useState(true);
   const token = useToken();
 
   const submit = async () => {
@@ -210,6 +211,7 @@ const ConfirmStrike = ({
           reason,
           federate: submitToUow,
           type: pardon ? HitType.PARDON : HitType.STRIKE,
+          notify: notifyMember,
         }),
       }
     );
@@ -247,6 +249,20 @@ const ConfirmStrike = ({
               {submitToUow != true && <p>This pardon won&apos;t federate.</p>}
             </>
           )}
+
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <input
+              onChange={(e) => {
+                setNotifyMember(e.target.checked);
+              }}
+              defaultChecked={notifyMember}
+              type="checkbox"
+              name="notifyMember"
+              id="notifyMember"
+            />
+            <label htmlFor="notifyMember">Notify member</label>
+          </div>
+
           {failReason && <p style={{ color: "red" }}>{failReason}</p>}
           <div style={{ display: "flex", justifyContent: "flex-end", gap: 4 }}>
             <button onClick={() => setStrike(false)}>Cancel</button>
@@ -280,11 +296,23 @@ const ConfirmStrike = ({
               name="submitToUow"
               id="submitToUow"
             />
-            <label htmlFor="submitToUow">
-              Also federate strike <a>(what&apos;s this?)</a>
-            </label>
+            <label htmlFor="submitToUow">Also federate strike</label>
           </div>
         )}
+
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <input
+            onChange={(e) => {
+              setNotifyMember(e.target.checked);
+            }}
+            defaultChecked={notifyMember}
+            type="checkbox"
+            name="notifyMember"
+            id="notifyMember"
+          />
+          <label htmlFor="notifyMember">Notify member</label>
+        </div>
+
         {failReason && <p style={{ color: "red" }}>{failReason}</p>}
         <div style={{ display: "flex", justifyContent: "flex-end", gap: 4 }}>
           <button onClick={() => setStrike(false)}>Cancel</button>
