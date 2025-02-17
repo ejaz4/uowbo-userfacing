@@ -100,6 +100,18 @@ export const POST = async (req: NextRequest) => {
   });
 
   if (existingLink) {
+    if (existingLink.isExternal) {
+      return new NextResponse(
+        JSON.stringify({
+          status:
+            "You can't verify this way as you told us you're an external.",
+        }),
+        {
+          status: 403,
+        }
+      );
+    }
+
     if (existingLink.studentId == clientDetectedCode.slice(0, 7)) {
       existingLink = await db.discordUniversity.update({
         where: {

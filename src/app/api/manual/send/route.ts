@@ -111,6 +111,28 @@ export const POST = async (req: NextRequest) => {
 
   if (existingLink) {
     console.log("THIS IS THE EXISTING LINK", existingLink);
+    if (existingLink.isExternal) {
+      if (existingLink.fullName) {
+        return new NextResponse(
+          JSON.stringify({
+            error: `You can't verify yourself, ${existingLink.fullName}, as you told us you're an external. If this is wrong, please contact uowbo support at tellus@ceccun.com`,
+          }),
+          {
+            status: 403,
+          }
+        );
+      }
+
+      return new NextResponse(
+        JSON.stringify({
+          error:
+            "You can't verify yourself, as you told us you're an external. If this is wrong, please contact uowbo support at tellus@ceccun.com",
+        }),
+        {
+          status: 403,
+        }
+      );
+    }
     if (existingLink.studentId == studentIdWithoutW) {
       if (existingLink.emailVerification) {
         if (existingLink.emailVerification.isVerified) {
