@@ -94,7 +94,7 @@ export const POST = async (req: NextRequest) => {
     );
   }
 
-  const code = Math.floor(100000 + Math.random() * 900000);
+  let code = Math.floor(100000 + Math.random() * 900000);
 
   let existingLink = await db.discordUniversity.findFirst({
     where: {
@@ -189,6 +189,47 @@ export const POST = async (req: NextRequest) => {
             emailVerification: true,
           },
         });
+      }
+    } else if (existingLink.emailVerification) {
+      if (!existingLink.emailCode) {
+        return new NextResponse(
+          JSON.stringify({
+            error:
+              "There was an error attempting to verify your email address, please contact a member of the uowbo! team.",
+          }),
+          {
+            status: 500,
+          }
+        );
+      }
+
+      if (existingLink.emailVerification.email != body.email) {
+        if (!existingLink.emailVerification.isVerified) {
+          existingLink = await db.discordUniversity.update({
+            where: {
+              id: existingLink.id,
+            },
+            data: {
+              emailVerification: {
+                update: {
+                  where: {
+                    id: existingLink.emailVerification.id,
+                  },
+                  data: {
+                    email: body.email,
+                    isVerified: false,
+                  },
+                },
+              },
+              emailCode: code.toString(),
+            },
+            include: {
+              emailVerification: true,
+            },
+          });
+        }
+      } else {
+        code = Number.parseInt(existingLink.emailCode);
       }
     } else {
       return new NextResponse(JSON.stringify({ status: "Not valid" }), {
