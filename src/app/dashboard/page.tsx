@@ -1,8 +1,7 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import styles from "./dashboard.module.css";
 import { Header } from "./_components/header";
-import { useSearchParams } from "next/navigation";
 import { useToken } from "./libs/useToken";
 import { GuildChooser } from "./_components/chooseGuild";
 import { MembersScreen } from "./_components/members";
@@ -53,7 +52,11 @@ const Dashboard = () => {
                         <MembersScreen guildId={guildId} />
                       )}
                       {currentScreen == "logs" && (
-                        <LogsScreen guildId={guildId} />
+                        <LogsScreen
+                          guildId={guildId}
+                          exportedLogs={logs}
+                          exportedFetchNewLogs={fetchNextLogs}
+                        />
                       )}
                       {currentScreen == "setup" && (
                         <SetupScreen guildId={guildId} />
