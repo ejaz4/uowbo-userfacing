@@ -127,13 +127,13 @@ const HandoverPage = () => {
                     />
                   )}
 
-                  {guild.settings[0].allowsBiometricEntry && (
+                  {/* {guild.settings[0].allowsBiometricEntry && (
                     <ChooserOption
                       label="Scan your university card"
                       image={<IdCard size={16} />}
                       href={`/verify/${handoverId}/card`}
                     />
-                  )}
+                  )} */}
 
                   {guild.settings[0].allowsExternalEntry && (
                     <ChooserOption
