@@ -12,6 +12,7 @@ import { LogsScreen } from "./_components/logs";
 import { SetupScreen } from "./_components/setup";
 import { useLogs } from "./libs/useLogs";
 import { GuildLog } from "@prisma/client";
+import { EventsScreen } from "./_components/events";
 
 const Dashboard = () => {
   const token = useToken();
@@ -51,6 +52,9 @@ const Dashboard = () => {
                     <>
                       {currentScreen == "members" && (
                         <MembersScreen guildId={guildId} />
+                      )}
+                      {currentScreen == "events" && (
+                        <EventsScreen guildId={guildId} />
                       )}
                       {currentScreen == "logs" && (
                         <LogsScreen guildId={guildId} />

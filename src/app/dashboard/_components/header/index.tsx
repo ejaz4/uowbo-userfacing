@@ -1,4 +1,9 @@
-import { LogsIcon, Settings2Icon, UsersIcon } from "lucide-react";
+import {
+  CalendarDaysIcon,
+  LogsIcon,
+  Settings2Icon,
+  UsersIcon,
+} from "lucide-react";
 import { HeaderButton } from "./_components/headerButton";
 import styles from "./header.module.css";
 import { ServerSwitcher } from "./_components/switcher";
@@ -26,6 +31,15 @@ export const Header = ({
             >
               <UsersIcon size={16} />
               <p>Members</p>
+            </HeaderButton>
+
+            <HeaderButton
+              current={currentScreen}
+              setCurrent={setCurrentScreen}
+              value={"events"}
+            >
+              <CalendarDaysIcon size={16} />
+              <p>Events</p>
             </HeaderButton>
 
             <HeaderButton

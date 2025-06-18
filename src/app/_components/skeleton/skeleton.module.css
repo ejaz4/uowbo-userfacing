@@ -14,9 +14,9 @@
 @media (prefers-color-scheme: dark) {
   .skeleton {
     background: linear-gradient(
-        90deg,
+        60deg,
         rgba(40, 40, 40, 0.667) 40%,
-        #5d5d5daa,
+        #464646aa,
         rgba(40, 40, 40, 0.667) 60%
       )
       right / 300% 100%;

@@ -14,19 +14,51 @@ datasource db {
 }
 
 model Guilds {
-  id                  String             @id @default(uuid())
-  guildId             String             @unique
-  guildName           String
-  guildIcon           String?
-  members             GuildUser[]
-  settings            GuildSettings[]
-  backgroundImage     String?
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
-  authorityHits       AuthorityHit[]
-  GuildLog            GuildLog[]
-  DiscordUniversity   DiscordUniversity? @relation(fields: [discordUniversityId], references: [id])
-  discordUniversityId String?
+  id              String          @id @default(uuid())
+  guildId         String          @unique
+  guildName       String
+  guildIcon       String?
+  members         GuildUser[]
+  settings        GuildSettings[]
+  backgroundImage String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  authorityHits   AuthorityHit[]
+  GuildLog        GuildLog[]
+  events          Event[]
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  location    String?
+  guilds      Guilds?  @relation(fields: [guildsId], references: [id])
+  guildsId    String?
+  createdAt   DateTime @default(now())
+
+  members EventMember[]
+}
+
+model EventMember {
+  id String @id @default(uuid())
+
+  Event         Event?       @relation(fields: [eventId], references: [id])
+  eventId       String?
+  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
+  discordUserId String?
+
+  isAttending Boolean @default(true)
+  isHost      Boolean @default(false)
+  isGuest     Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // This is used to ensure that a user can only RSVP once per event
+  @@unique([eventId, discordUserId])
 }
 
 model GuildLog {
@@ -94,6 +126,7 @@ model DiscordUser {
   guilds    GuildUser[]
   link      DiscordUniversity[]
   Handover  Handover[]
+  events    EventMember[]
   createdAt DateTime            @default(now())
 }
 
@@ -133,7 +166,6 @@ model DiscordUniversity {
   isVerified Boolean @default(false)
 
   authorityHits AuthorityHit[]
-  Guilds        Guilds[]
 }
 
 model AuthorityHit {
