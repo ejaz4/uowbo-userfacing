@@ -7,10 +7,12 @@ export const DiscordDisplay = ({
   username,
   avatarUrl,
   verified,
+  withSwitcher = true,
 }: {
   username: string;
   avatarUrl: string;
   verified: boolean;
+  withSwitcher?: boolean;
 }) => {
   return (
     <div className={styles.container}>
@@ -20,7 +22,7 @@ export const DiscordDisplay = ({
       {!avatarUrl && <Skeleton width={64} height={64} borderRadius={4} />}
       <div className={styles.right}>
         <h2>{username || <Skeleton width={100} height={16} />}</h2>
-        {username && (
+        {username && withSwitcher && (
           <Link className={styles.a} href={"/verify/discord"}>
             Not {username}?
           </Link>

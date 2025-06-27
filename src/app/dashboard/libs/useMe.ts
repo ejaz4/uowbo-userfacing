@@ -1,4 +1,4 @@
-import { GuildUser } from "@prisma/client";
+import { GuildUser, DiscordUser } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { useToken } from "./useToken";
 
@@ -21,10 +21,24 @@ export const useMe = (guildId: string) => {
         }
         return res.json();
       })
-      .then((data: Partial<GuildUser>) => {
+      .then((data: Partial<GuildUser & { DiscordUser: DiscordUser }>) => {
         setMe(data);
+        localStorage.setItem("@me", JSON.stringify(data.DiscordUser));
       });
   }, [guildId, token]);
 
   return me;
+};
+
+export const useCachedMe = () => {
+  const [cachedMe, setCachedMe] = useState<Partial<DiscordUser> | null>(null);
+
+  useEffect(() => {
+    const cached = localStorage.getItem("@me");
+    if (cached) {
+      setCachedMe(JSON.parse(cached));
+    }
+  }, []);
+
+  return cachedMe;
 };

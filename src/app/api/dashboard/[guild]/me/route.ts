@@ -69,6 +69,15 @@ export const GET = async (
         discordId: user,
       },
     },
+    select: {
+      DiscordUser: {
+        select: {
+          discordId: true,
+          username: true,
+          avatar: true,
+        },
+      },
+    },
   });
 
   if (!guildUser) {

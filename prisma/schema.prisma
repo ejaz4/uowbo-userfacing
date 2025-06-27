@@ -29,17 +29,32 @@ model Guilds {
 }
 
 model Event {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   description String?
-  startTime   DateTime
-  endTime     DateTime
-  location    String?
-  guilds      Guilds?  @relation(fields: [guildsId], references: [id])
-  guildsId    String?
-  createdAt   DateTime @default(now())
+
+  startTime DateTime
+  endTime   DateTime
+
+  location String?
+
+  guilds   Guilds? @relation(fields: [guildsId], references: [id])
+  guildsId String?
+
+  createdAt DateTime @default(now())
+
+  isAcceptingExternals Boolean @default(false)
+  isAcceptingInternals Boolean @default(true)
+
+  guestLimit Int @default(0)
 
   members EventMember[]
+}
+
+enum EventRole {
+  ATENDEE
+  HOST
+  ORGANISER
 }
 
 model EventMember {
@@ -50,9 +65,9 @@ model EventMember {
   DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
   discordUserId String?
 
-  isAttending Boolean @default(true)
-  isHost      Boolean @default(false)
-  isGuest     Boolean @default(false)
+  role EventRole @default(ATENDEE)
+
+  securityCode String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

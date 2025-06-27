@@ -10,9 +10,12 @@ import { useGuildSettings } from "./libs/useGuild";
 import { Onboarding } from "./_components/onboarding";
 import { LogsScreen } from "./_components/logs";
 import { SetupScreen } from "./_components/setup";
+import popup from "@/app/dashboard/popups.module.css";
 import { useLogs } from "./libs/useLogs";
 import { GuildLog } from "@prisma/client";
 import { EventsScreen } from "./_components/events";
+import { DiscordDisplay } from "../_components/profileDisplay/discord";
+import { useCachedMe } from "./libs/useMe";
 
 const Dashboard = () => {
   const token = useToken();
@@ -25,6 +28,7 @@ const Dashboard = () => {
     fetchNextLogs: () => void,
     finished: boolean
   ];
+  const cachedMe = useCachedMe();
 
   return (
     <div className={styles.dashboard}>
@@ -72,6 +76,44 @@ const Dashboard = () => {
                 </>
               )}
             </>
+          )}
+
+          {!token && (
+            <div className={popup.container}>
+              {!cachedMe && (
+                <div className={popup.card}>
+                  <h2>Keyless Authentication</h2>
+                  <p>To login to the dashboard:</p>
+                  <ol>
+                    <li>Go to any Discord server with uowbo! verify</li>
+                    <li>
+                      Run <code>/dashboard</code>
+                    </li>
+                    <li>Click the magic link</li>
+                  </ol>
+                </div>
+              )}
+              {cachedMe && (
+                <div className={popup.card}>
+                  <h2>Log in again</h2>
+                  <p>We couldn&apos;t access your account at the moment.</p>
+                  <DiscordDisplay
+                    username={cachedMe.username || "Discord user"}
+                    avatarUrl={cachedMe.avatar || ""}
+                    verified={true}
+                    withSwitcher={false}
+                  />
+                  <p>Log in again to the dashboard:</p>
+                  <ol>
+                    <li>Go to any Discord server with uowbo! verify</li>
+                    <li>
+                      Run <code>/dashboard</code>
+                    </li>
+                    <li>Click the magic link</li>
+                  </ol>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </Suspense>

@@ -12,15 +12,24 @@ export const useGuild = (guildId: string) => {
 
   useEffect(() => {
     setLoaded(false);
+    const cachedGuild = localStorage.getItem(`guild-${guildId}`);
+    const randomlyGrabGuildInfo = Math.floor(Math.random() * 5);
 
-    fetch(`/api/dashboard/${guildId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setGuild(data);
-        setTimeout(() => {
-          setLoaded(true);
-        }, 1000);
-      });
+    if (cachedGuild && randomlyGrabGuildInfo < 3) {
+      setGuild(JSON.parse(cachedGuild));
+      setLoaded(true);
+      return;
+    } else {
+      fetch(`/api/dashboard/${guildId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setGuild(data);
+          localStorage.setItem(`guild-${guildId}`, JSON.stringify(data));
+          setTimeout(() => {
+            setLoaded(true);
+          }, 1000);
+        });
+    }
   }, [guildId, loaded]);
 
   return guild;
