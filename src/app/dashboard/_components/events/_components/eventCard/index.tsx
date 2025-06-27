@@ -1,5 +1,6 @@
 import { Event } from "@prisma/client";
 import { useEffect, useState } from "react";
+import styles from "../../events.module.css";
 
 export const EventCard = ({
   event,
@@ -34,12 +35,24 @@ export const EventCard = ({
         setTimeString(`Starts in ${minutes} minute${minutes > 1 ? "s" : ""}`);
       }
     }
+
+    // If the event has ended, display the end time
+    if (end.getTime() < now.getTime()) {
+      setTimeString(
+        `Ended at ${end.toLocaleDateString()} ${end.toLocaleTimeString()}`
+      );
+    }
+
+    // If the event is happening now, display "Happening Now"
+    if (start.getTime() <= now.getTime() && end.getTime() >= now.getTime()) {
+      setTimeString("Now");
+    }
   }, [event]);
 
   return (
-    <div>
+    <button className={styles.eventCard}>
       <h3>{event.name}</h3>
       <p>{timeString}</p>
-    </div>
+    </button>
   );
 };

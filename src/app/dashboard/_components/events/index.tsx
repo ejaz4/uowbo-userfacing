@@ -11,18 +11,32 @@ export const EventsScreen = ({ guildId }: { guildId: string }) => {
   const [creating, setCreating] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
   const [pastEvents, setPastEvents] = useState<Event[]>([]);
+  const [eventsHappeningNow, setEventsHappeningNow] = useState<Event[]>([]);
+  const [now, setNow] = useState<Date>(new Date());
   const events = useEvents(guildId);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (!events) return;
 
-    const now = new Date();
     const upcoming = events.filter((event) => new Date(event.startTime) >= now);
-    const past = events.filter((event) => new Date(event.startTime) < now);
+    const past = events.filter((event) => new Date(event.endTime) < now);
+    const happeningNow = events.filter(
+      (event) =>
+        new Date(event.startTime) <= now && new Date(event.endTime) >= now
+    );
 
+    setEventsHappeningNow(happeningNow);
     setUpcomingEvents(upcoming);
     setPastEvents(past);
-  }, [events]);
+  }, [events, now]);
 
   return (
     <>
@@ -35,15 +49,43 @@ export const EventsScreen = ({ guildId }: { guildId: string }) => {
             onclick={() => setCreating(true)}
           />
         </div>
-        {upcomingEvents.length > 0 && (
-          <div>
-            <h1>Upcoming Events</h1>
-            {upcomingEvents.map((event) => (
-              <EventCard key={event.id} event={event} guildId={guildId} />
-            ))}
-          </div>
-        )}
-        {!events && <p>No events found. Create one to get started!</p>}
+
+        <div className={screenStyles.eventList}>
+          {eventsHappeningNow.length > 0 && (
+            <>
+              <h2>Happening Now</h2>
+              <div className={screenStyles.grid}>
+                {eventsHappeningNow.map((event) => (
+                  <EventCard key={event.id} event={event} guildId={guildId} />
+                ))}
+              </div>
+            </>
+          )}
+
+          {upcomingEvents.length > 0 && (
+            <>
+              <h2>Upcoming</h2>
+              <div className={screenStyles.grid}>
+                {upcomingEvents.map((event) => (
+                  <EventCard key={event.id} event={event} guildId={guildId} />
+                ))}
+              </div>
+            </>
+          )}
+
+          {pastEvents.length > 0 && (
+            <>
+              <h2>Previous</h2>
+              <div className={screenStyles.grid}>
+                {pastEvents.map((event) => (
+                  <EventCard key={event.id} event={event} guildId={guildId} />
+                ))}
+              </div>
+            </>
+          )}
+
+          {!events && <p>No events found. Create one to get started!</p>}
+        </div>
       </div>
 
       {creating && <EventsWizard guildId={guildId} setPopup={setCreating} />}
