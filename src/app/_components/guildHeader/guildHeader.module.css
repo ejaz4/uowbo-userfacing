@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.guildIdentity {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 16px;
+  align-items: center;
+}
+
+.guildIcon {
+  width: 36px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.guildIcon img {
+  width: inherit;
+  display: block;
+}

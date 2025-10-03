@@ -85,7 +85,9 @@ export const EventsWizard = ({
 
         <p>Description</p>
         <textarea
-          onChange={(e) => setDescription(e.currentTarget.value.trim())}
+          onChange={(e) => {
+            setDescription(e.currentTarget.value.trim());
+          }}
           name="description"
         ></textarea>
 

@@ -74,6 +74,10 @@
   flex-direction: column;
 }
 
+.eventCard:active {
+  background-color: var(--active-color);
+}
+
 .eventCard h3 {
   margin: 0;
 }
