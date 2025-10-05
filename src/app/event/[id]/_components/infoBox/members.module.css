@@ -1,0 +1,12 @@
+.member {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.member img {
+  width: 24px;
+  border-radius: 50px;
+  display: block;
+}

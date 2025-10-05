@@ -5,6 +5,33 @@ import { GuildHeader } from "@/app/_components/guildHeader";
 import moment from "moment";
 import { TimeInfoBox } from "./_components/infoBox/time";
 import { MembersInfoBox } from "./_components/infoBox/members";
+import { useEffect } from "react";
+
+export const generateMetadata = async ({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { id: string };
+}) => {
+  const event = await db.event.findUnique({
+    where: {
+      id: (await params).id,
+    },
+    include: {
+      guilds: true,
+    },
+  });
+
+  if (!event) {
+    return notFound();
+  }
+
+  return {
+    title: `${event.name} on uowbo! events`,
+    description: event.description,
+  };
+};
 
 const EventPage = async ({
   params,
@@ -13,7 +40,7 @@ const EventPage = async ({
     id: string;
   };
 }) => {
-  const id = params.id;
+  const id = (await params).id;
 
   const event = await db.event.findUnique({
     where: {
@@ -64,25 +91,30 @@ const EventPage = async ({
 
       <div className={styles.eventMeta}>
         <h1>{event.name}</h1>
-        {event.description && (
-          <div className={styles.infoBox}>
-            <span className="label">Description</span>
-            {event.description.split("\n").map((item, _) => (
-              <p key={_}>{item}</p>
-            ))}
-          </div>
-        )}
 
-        <TimeInfoBox startTime={event.startTime} endTime={event.endTime} />
-        <MembersInfoBox
-          members={event.members.map((member, _) => {
-            return {
-              username: member.DiscordUser?.username,
-              avatar: member.DiscordUser?.avatar ?? undefined,
-              role: member.role,
-            };
-          })}
-        />
+        <div className={styles.eventInfoBoxes}>
+          {event.description && (
+            <div className={styles.infoBox}>
+              <span className="label">Description</span>
+              {event.description.split("\n").map((item, _) => (
+                <p key={_}>{item}</p>
+              ))}
+            </div>
+          )}
+
+          <div className={styles.eventInfoBoxesVertical}>
+            <TimeInfoBox startTime={event.startTime} endTime={event.endTime} />
+            <MembersInfoBox
+              members={event.members.map((member, _) => {
+                return {
+                  username: member.DiscordUser?.username,
+                  avatar: member.DiscordUser?.avatar ?? undefined,
+                  role: member.role,
+                };
+              })}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

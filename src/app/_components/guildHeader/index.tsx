@@ -1,4 +1,6 @@
+import { useToken } from "@/app/dashboard/libs/useToken";
 import styles from "./guildHeader.module.css";
+import { HeaderProfileDisplay } from "../profileDisplay/header";
 
 export const GuildHeader = ({
   icon,
@@ -17,6 +19,8 @@ export const GuildHeader = ({
         )}
         <p>{name}</p>
       </div>
+
+      <HeaderProfileDisplay />
     </div>
   );
 };

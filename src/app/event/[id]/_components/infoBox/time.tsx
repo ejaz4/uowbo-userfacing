@@ -29,7 +29,7 @@ export const TimeInfoBox = ({
   });
 
   return (
-    <div className={styles.infoBox} style={{ width: "100%" }}>
+    <div className={styles.infoBox}>
       <span className="label">Time</span>
       <p>Starts {start}</p>
       <p>Ends {end}</p>

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Inter, Ubuntu } from "next/font/google";
 import Link from "next/link";
 import { Suspense } from "react";
+import { joinClasses } from "@/libs/joinClasses";
 
 export const metadata: Metadata = {
   title: "uowbo!",
@@ -15,6 +16,13 @@ const inter = Inter({
   variable: "--inter",
 });
 
+const ubuntu = Ubuntu({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--ubuntu",
+  weight: "500",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={joinClasses(inter.className, ubuntu.variable)}>
         <Suspense>{children}</Suspense>
       </body>
     </html>

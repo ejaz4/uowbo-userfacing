@@ -56,3 +56,24 @@
   font-size: 14px;
   color: var(--active-color);
 }
+
+.eventInfoBoxes {
+  display: flex;
+  justify-content: stretch;
+  gap: 16px;
+}
+
+.eventInfoBoxes > .infoBox {
+  width: 100%;
+}
+
+.eventInfoBoxesVertical {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.eventInfoBoxesVertical > .infoBox {
+  width: 100%;
+}
