@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 type MeClient = {
   avatar?: string;
   username: string;
-  guilds: GuildUser & {
+  guilds: (GuildUser & {
     Guild: Guilds;
-  };
+  })[];
 };
 
 export const useMe = (token: string | null) => {

@@ -6,6 +6,8 @@ import moment from "moment";
 import { TimeInfoBox } from "./_components/infoBox/time";
 import { MembersInfoBox } from "./_components/infoBox/members";
 import { useEffect } from "react";
+import { joinClasses } from "@/libs/joinClasses";
+import { EventInfo } from "./_components/eventInfo/eventInfo";
 
 export const generateMetadata = async ({
   params,
@@ -92,7 +94,7 @@ const EventPage = async ({
       <div className={styles.eventMeta}>
         <h1>{event.name}</h1>
 
-        <div className={styles.eventInfoBoxes}>
+        {/* <div className={styles.eventInfoBoxes}>
           {event.description && (
             <div className={styles.infoBox}>
               <span className="label">Description</span>
@@ -114,7 +116,9 @@ const EventPage = async ({
               })}
             />
           </div>
-        </div>
+        </div> */}
+
+        <EventInfo event={event} />
       </div>
     </div>
   );

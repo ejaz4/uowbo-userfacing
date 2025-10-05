@@ -18,7 +18,7 @@ export const MembersInfoBox = ({
   const hosts = members.filter((t) => t.role == "HOST");
 
   return (
-    <div className={styles.infoBox}>
+    <div className={styles.infoBox} style={{ gridRow: "2 span" }}>
       {organisers.length != 0 && (
         <>
           <span className="label">
