@@ -1,9 +1,11 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Ubuntu } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
+import { HydrateClient } from "~/trpc/server";
+import { joinClasses } from "~/libs/joinClasses";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -15,13 +17,20 @@ const geist = Geist({
   subsets: ["latin"],
 });
 
+const ubuntu = Ubuntu({
+  weight: "700",
+  variable: "--font-ubuntu",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={geist.className}>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+      <body className={joinClasses(geist.className, ubuntu.variable)}>
+        <TRPCReactProvider>
+          <HydrateClient>{children}</HydrateClient>
+        </TRPCReactProvider>
       </body>
     </html>
   );
