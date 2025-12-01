@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist, Ubuntu } from "next/font/google";
+import localFont from "next/font/local";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { HydrateClient } from "~/trpc/server";
@@ -22,12 +23,23 @@ const ubuntu = Ubuntu({
   variable: "--font-ubuntu",
 });
 
+const satoshi = localFont({
+  src: "./fonts/Satoshi-Variable.woff2",
+  variable: "--font-satoshi",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={joinClasses(geist.className, ubuntu.variable)}>
+      <body
+        className={joinClasses(
+          geist.className,
+          ubuntu.variable,
+          satoshi.variable,
+        )}
+      >
         <TRPCReactProvider>
           <HydrateClient>{children}</HydrateClient>
         </TRPCReactProvider>
