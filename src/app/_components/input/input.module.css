@@ -1,0 +1,19 @@
+.textInputContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  border: solid 1px var(--card-borders-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.textInputContainer input {
+  width: 100%;
+  padding: 12px 0px;
+  box-sizing: border-box;
+  border: none;
+}
+
+.textInputContainer > input:first-child {
+  padding: 12px;
+}

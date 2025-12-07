@@ -1,0 +1,30 @@
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: popUp 0.5s ease;
+}
+
+.spinner > svg {
+  animation: rotateCw 1s linear infinite;
+}
+
+@keyframes popUp {
+  0% {
+    transform: scale(0.7);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes rotateCw {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

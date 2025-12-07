@@ -64,11 +64,6 @@ export type AuthorityHit = $Result.DefaultSelection<Prisma.$AuthorityHitPayload>
  */
 export type EmailVerification = $Result.DefaultSelection<Prisma.$EmailVerificationPayload>
 /**
- * Model Handover
- * 
- */
-export type Handover = $Result.DefaultSelection<Prisma.$HandoverPayload>
-/**
  * Model BiometricEntry
  * 
  */
@@ -322,16 +317,6 @@ export class PrismaClient<
     * ```
     */
   get emailVerification(): Prisma.EmailVerificationDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.handover`: Exposes CRUD operations for the **Handover** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Handovers
-    * const handovers = await prisma.handover.findMany()
-    * ```
-    */
-  get handover(): Prisma.HandoverDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.biometricEntry`: Exposes CRUD operations for the **BiometricEntry** model.
@@ -793,7 +778,6 @@ export namespace Prisma {
     DiscordUniversity: 'DiscordUniversity',
     AuthorityHit: 'AuthorityHit',
     EmailVerification: 'EmailVerification',
-    Handover: 'Handover',
     BiometricEntry: 'BiometricEntry'
   };
 
@@ -813,7 +797,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "guilds" | "guildLog" | "guildSettings" | "guildUser" | "guildMessage" | "discordUser" | "token" | "discordUniversity" | "authorityHit" | "emailVerification" | "handover" | "biometricEntry"
+      modelProps: "guilds" | "guildLog" | "guildSettings" | "guildUser" | "guildMessage" | "discordUser" | "token" | "discordUniversity" | "authorityHit" | "emailVerification" | "biometricEntry"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1557,80 +1541,6 @@ export namespace Prisma {
           }
         }
       }
-      Handover: {
-        payload: Prisma.$HandoverPayload<ExtArgs>
-        fields: Prisma.HandoverFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.HandoverFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.HandoverFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload>
-          }
-          findFirst: {
-            args: Prisma.HandoverFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.HandoverFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload>
-          }
-          findMany: {
-            args: Prisma.HandoverFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload>[]
-          }
-          create: {
-            args: Prisma.HandoverCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload>
-          }
-          createMany: {
-            args: Prisma.HandoverCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.HandoverCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload>[]
-          }
-          delete: {
-            args: Prisma.HandoverDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload>
-          }
-          update: {
-            args: Prisma.HandoverUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload>
-          }
-          deleteMany: {
-            args: Prisma.HandoverDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.HandoverUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.HandoverUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload>[]
-          }
-          upsert: {
-            args: Prisma.HandoverUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$HandoverPayload>
-          }
-          aggregate: {
-            args: Prisma.HandoverAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateHandover>
-          }
-          groupBy: {
-            args: Prisma.HandoverGroupByArgs<ExtArgs>
-            result: $Utils.Optional<HandoverGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.HandoverCountArgs<ExtArgs>
-            result: $Utils.Optional<HandoverCountAggregateOutputType> | number
-          }
-        }
-      }
       BiometricEntry: {
         payload: Prisma.$BiometricEntryPayload<ExtArgs>
         fields: Prisma.BiometricEntryFieldRefs
@@ -1811,7 +1721,6 @@ export namespace Prisma {
     discordUniversity?: DiscordUniversityOmit
     authorityHit?: AuthorityHitOmit
     emailVerification?: EmailVerificationOmit
-    handover?: HandoverOmit
     biometricEntry?: BiometricEntryOmit
   }
 
@@ -2016,14 +1925,12 @@ export namespace Prisma {
     tokens: number
     guilds: number
     link: number
-    Handover: number
   }
 
   export type DiscordUserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tokens?: boolean | DiscordUserCountOutputTypeCountTokensArgs
     guilds?: boolean | DiscordUserCountOutputTypeCountGuildsArgs
     link?: boolean | DiscordUserCountOutputTypeCountLinkArgs
-    Handover?: boolean | DiscordUserCountOutputTypeCountHandoverArgs
   }
 
   // Custom InputTypes
@@ -2056,13 +1963,6 @@ export namespace Prisma {
    */
   export type DiscordUserCountOutputTypeCountLinkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DiscordUniversityWhereInput
-  }
-
-  /**
-   * DiscordUserCountOutputType without action
-   */
-  export type DiscordUserCountOutputTypeCountHandoverArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: HandoverWhereInput
   }
 
 
@@ -8020,7 +7920,6 @@ export namespace Prisma {
     tokens?: boolean | DiscordUser$tokensArgs<ExtArgs>
     guilds?: boolean | DiscordUser$guildsArgs<ExtArgs>
     link?: boolean | DiscordUser$linkArgs<ExtArgs>
-    Handover?: boolean | DiscordUser$HandoverArgs<ExtArgs>
     _count?: boolean | DiscordUserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["discordUser"]>
 
@@ -8053,7 +7952,6 @@ export namespace Prisma {
     tokens?: boolean | DiscordUser$tokensArgs<ExtArgs>
     guilds?: boolean | DiscordUser$guildsArgs<ExtArgs>
     link?: boolean | DiscordUser$linkArgs<ExtArgs>
-    Handover?: boolean | DiscordUser$HandoverArgs<ExtArgs>
     _count?: boolean | DiscordUserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DiscordUserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -8065,7 +7963,6 @@ export namespace Prisma {
       tokens: Prisma.$TokenPayload<ExtArgs>[]
       guilds: Prisma.$GuildUserPayload<ExtArgs>[]
       link: Prisma.$DiscordUniversityPayload<ExtArgs>[]
-      Handover: Prisma.$HandoverPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8470,7 +8367,6 @@ export namespace Prisma {
     tokens<T extends DiscordUser$tokensArgs<ExtArgs> = {}>(args?: Subset<T, DiscordUser$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     guilds<T extends DiscordUser$guildsArgs<ExtArgs> = {}>(args?: Subset<T, DiscordUser$guildsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GuildUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     link<T extends DiscordUser$linkArgs<ExtArgs> = {}>(args?: Subset<T, DiscordUser$linkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DiscordUniversityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Handover<T extends DiscordUser$HandoverArgs<ExtArgs> = {}>(args?: Subset<T, DiscordUser$HandoverArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8962,30 +8858,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DiscordUniversityScalarFieldEnum | DiscordUniversityScalarFieldEnum[]
-  }
-
-  /**
-   * DiscordUser.Handover
-   */
-  export type DiscordUser$HandoverArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    where?: HandoverWhereInput
-    orderBy?: HandoverOrderByWithRelationInput | HandoverOrderByWithRelationInput[]
-    cursor?: HandoverWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: HandoverScalarFieldEnum | HandoverScalarFieldEnum[]
   }
 
   /**
@@ -13568,1083 +13440,6 @@ export namespace Prisma {
 
 
   /**
-   * Model Handover
-   */
-
-  export type AggregateHandover = {
-    _count: HandoverCountAggregateOutputType | null
-    _min: HandoverMinAggregateOutputType | null
-    _max: HandoverMaxAggregateOutputType | null
-  }
-
-  export type HandoverMinAggregateOutputType = {
-    id: string | null
-    token: string | null
-    discordUserId: string | null
-    isVerified: boolean | null
-    code: string | null
-  }
-
-  export type HandoverMaxAggregateOutputType = {
-    id: string | null
-    token: string | null
-    discordUserId: string | null
-    isVerified: boolean | null
-    code: string | null
-  }
-
-  export type HandoverCountAggregateOutputType = {
-    id: number
-    token: number
-    discordUserId: number
-    isVerified: number
-    code: number
-    _all: number
-  }
-
-
-  export type HandoverMinAggregateInputType = {
-    id?: true
-    token?: true
-    discordUserId?: true
-    isVerified?: true
-    code?: true
-  }
-
-  export type HandoverMaxAggregateInputType = {
-    id?: true
-    token?: true
-    discordUserId?: true
-    isVerified?: true
-    code?: true
-  }
-
-  export type HandoverCountAggregateInputType = {
-    id?: true
-    token?: true
-    discordUserId?: true
-    isVerified?: true
-    code?: true
-    _all?: true
-  }
-
-  export type HandoverAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Handover to aggregate.
-     */
-    where?: HandoverWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Handovers to fetch.
-     */
-    orderBy?: HandoverOrderByWithRelationInput | HandoverOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: HandoverWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Handovers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Handovers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Handovers
-    **/
-    _count?: true | HandoverCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: HandoverMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: HandoverMaxAggregateInputType
-  }
-
-  export type GetHandoverAggregateType<T extends HandoverAggregateArgs> = {
-        [P in keyof T & keyof AggregateHandover]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateHandover[P]>
-      : GetScalarType<T[P], AggregateHandover[P]>
-  }
-
-
-
-
-  export type HandoverGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: HandoverWhereInput
-    orderBy?: HandoverOrderByWithAggregationInput | HandoverOrderByWithAggregationInput[]
-    by: HandoverScalarFieldEnum[] | HandoverScalarFieldEnum
-    having?: HandoverScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: HandoverCountAggregateInputType | true
-    _min?: HandoverMinAggregateInputType
-    _max?: HandoverMaxAggregateInputType
-  }
-
-  export type HandoverGroupByOutputType = {
-    id: string
-    token: string
-    discordUserId: string | null
-    isVerified: boolean
-    code: string | null
-    _count: HandoverCountAggregateOutputType | null
-    _min: HandoverMinAggregateOutputType | null
-    _max: HandoverMaxAggregateOutputType | null
-  }
-
-  type GetHandoverGroupByPayload<T extends HandoverGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<HandoverGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof HandoverGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], HandoverGroupByOutputType[P]>
-            : GetScalarType<T[P], HandoverGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type HandoverSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    token?: boolean
-    discordUserId?: boolean
-    isVerified?: boolean
-    code?: boolean
-    DiscordUser?: boolean | Handover$DiscordUserArgs<ExtArgs>
-  }, ExtArgs["result"]["handover"]>
-
-  export type HandoverSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    token?: boolean
-    discordUserId?: boolean
-    isVerified?: boolean
-    code?: boolean
-    DiscordUser?: boolean | Handover$DiscordUserArgs<ExtArgs>
-  }, ExtArgs["result"]["handover"]>
-
-  export type HandoverSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    token?: boolean
-    discordUserId?: boolean
-    isVerified?: boolean
-    code?: boolean
-    DiscordUser?: boolean | Handover$DiscordUserArgs<ExtArgs>
-  }, ExtArgs["result"]["handover"]>
-
-  export type HandoverSelectScalar = {
-    id?: boolean
-    token?: boolean
-    discordUserId?: boolean
-    isVerified?: boolean
-    code?: boolean
-  }
-
-  export type HandoverOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "token" | "discordUserId" | "isVerified" | "code", ExtArgs["result"]["handover"]>
-  export type HandoverInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    DiscordUser?: boolean | Handover$DiscordUserArgs<ExtArgs>
-  }
-  export type HandoverIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    DiscordUser?: boolean | Handover$DiscordUserArgs<ExtArgs>
-  }
-  export type HandoverIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    DiscordUser?: boolean | Handover$DiscordUserArgs<ExtArgs>
-  }
-
-  export type $HandoverPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Handover"
-    objects: {
-      DiscordUser: Prisma.$DiscordUserPayload<ExtArgs> | null
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      token: string
-      discordUserId: string | null
-      isVerified: boolean
-      code: string | null
-    }, ExtArgs["result"]["handover"]>
-    composites: {}
-  }
-
-  type HandoverGetPayload<S extends boolean | null | undefined | HandoverDefaultArgs> = $Result.GetResult<Prisma.$HandoverPayload, S>
-
-  type HandoverCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<HandoverFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: HandoverCountAggregateInputType | true
-    }
-
-  export interface HandoverDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Handover'], meta: { name: 'Handover' } }
-    /**
-     * Find zero or one Handover that matches the filter.
-     * @param {HandoverFindUniqueArgs} args - Arguments to find a Handover
-     * @example
-     * // Get one Handover
-     * const handover = await prisma.handover.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends HandoverFindUniqueArgs>(args: SelectSubset<T, HandoverFindUniqueArgs<ExtArgs>>): Prisma__HandoverClient<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Handover that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {HandoverFindUniqueOrThrowArgs} args - Arguments to find a Handover
-     * @example
-     * // Get one Handover
-     * const handover = await prisma.handover.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends HandoverFindUniqueOrThrowArgs>(args: SelectSubset<T, HandoverFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HandoverClient<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Handover that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HandoverFindFirstArgs} args - Arguments to find a Handover
-     * @example
-     * // Get one Handover
-     * const handover = await prisma.handover.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends HandoverFindFirstArgs>(args?: SelectSubset<T, HandoverFindFirstArgs<ExtArgs>>): Prisma__HandoverClient<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Handover that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HandoverFindFirstOrThrowArgs} args - Arguments to find a Handover
-     * @example
-     * // Get one Handover
-     * const handover = await prisma.handover.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends HandoverFindFirstOrThrowArgs>(args?: SelectSubset<T, HandoverFindFirstOrThrowArgs<ExtArgs>>): Prisma__HandoverClient<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Handovers that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HandoverFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Handovers
-     * const handovers = await prisma.handover.findMany()
-     * 
-     * // Get first 10 Handovers
-     * const handovers = await prisma.handover.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const handoverWithIdOnly = await prisma.handover.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends HandoverFindManyArgs>(args?: SelectSubset<T, HandoverFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Handover.
-     * @param {HandoverCreateArgs} args - Arguments to create a Handover.
-     * @example
-     * // Create one Handover
-     * const Handover = await prisma.handover.create({
-     *   data: {
-     *     // ... data to create a Handover
-     *   }
-     * })
-     * 
-     */
-    create<T extends HandoverCreateArgs>(args: SelectSubset<T, HandoverCreateArgs<ExtArgs>>): Prisma__HandoverClient<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Handovers.
-     * @param {HandoverCreateManyArgs} args - Arguments to create many Handovers.
-     * @example
-     * // Create many Handovers
-     * const handover = await prisma.handover.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends HandoverCreateManyArgs>(args?: SelectSubset<T, HandoverCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Handovers and returns the data saved in the database.
-     * @param {HandoverCreateManyAndReturnArgs} args - Arguments to create many Handovers.
-     * @example
-     * // Create many Handovers
-     * const handover = await prisma.handover.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Handovers and only return the `id`
-     * const handoverWithIdOnly = await prisma.handover.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends HandoverCreateManyAndReturnArgs>(args?: SelectSubset<T, HandoverCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Handover.
-     * @param {HandoverDeleteArgs} args - Arguments to delete one Handover.
-     * @example
-     * // Delete one Handover
-     * const Handover = await prisma.handover.delete({
-     *   where: {
-     *     // ... filter to delete one Handover
-     *   }
-     * })
-     * 
-     */
-    delete<T extends HandoverDeleteArgs>(args: SelectSubset<T, HandoverDeleteArgs<ExtArgs>>): Prisma__HandoverClient<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Handover.
-     * @param {HandoverUpdateArgs} args - Arguments to update one Handover.
-     * @example
-     * // Update one Handover
-     * const handover = await prisma.handover.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends HandoverUpdateArgs>(args: SelectSubset<T, HandoverUpdateArgs<ExtArgs>>): Prisma__HandoverClient<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Handovers.
-     * @param {HandoverDeleteManyArgs} args - Arguments to filter Handovers to delete.
-     * @example
-     * // Delete a few Handovers
-     * const { count } = await prisma.handover.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends HandoverDeleteManyArgs>(args?: SelectSubset<T, HandoverDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Handovers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HandoverUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Handovers
-     * const handover = await prisma.handover.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends HandoverUpdateManyArgs>(args: SelectSubset<T, HandoverUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Handovers and returns the data updated in the database.
-     * @param {HandoverUpdateManyAndReturnArgs} args - Arguments to update many Handovers.
-     * @example
-     * // Update many Handovers
-     * const handover = await prisma.handover.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Handovers and only return the `id`
-     * const handoverWithIdOnly = await prisma.handover.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends HandoverUpdateManyAndReturnArgs>(args: SelectSubset<T, HandoverUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Handover.
-     * @param {HandoverUpsertArgs} args - Arguments to update or create a Handover.
-     * @example
-     * // Update or create a Handover
-     * const handover = await prisma.handover.upsert({
-     *   create: {
-     *     // ... data to create a Handover
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Handover we want to update
-     *   }
-     * })
-     */
-    upsert<T extends HandoverUpsertArgs>(args: SelectSubset<T, HandoverUpsertArgs<ExtArgs>>): Prisma__HandoverClient<$Result.GetResult<Prisma.$HandoverPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Handovers.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HandoverCountArgs} args - Arguments to filter Handovers to count.
-     * @example
-     * // Count the number of Handovers
-     * const count = await prisma.handover.count({
-     *   where: {
-     *     // ... the filter for the Handovers we want to count
-     *   }
-     * })
-    **/
-    count<T extends HandoverCountArgs>(
-      args?: Subset<T, HandoverCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], HandoverCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Handover.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HandoverAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends HandoverAggregateArgs>(args: Subset<T, HandoverAggregateArgs>): Prisma.PrismaPromise<GetHandoverAggregateType<T>>
-
-    /**
-     * Group by Handover.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {HandoverGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends HandoverGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: HandoverGroupByArgs['orderBy'] }
-        : { orderBy?: HandoverGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, HandoverGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHandoverGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Handover model
-   */
-  readonly fields: HandoverFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Handover.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__HandoverClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    DiscordUser<T extends Handover$DiscordUserArgs<ExtArgs> = {}>(args?: Subset<T, Handover$DiscordUserArgs<ExtArgs>>): Prisma__DiscordUserClient<$Result.GetResult<Prisma.$DiscordUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Handover model
-   */
-  interface HandoverFieldRefs {
-    readonly id: FieldRef<"Handover", 'String'>
-    readonly token: FieldRef<"Handover", 'String'>
-    readonly discordUserId: FieldRef<"Handover", 'String'>
-    readonly isVerified: FieldRef<"Handover", 'Boolean'>
-    readonly code: FieldRef<"Handover", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Handover findUnique
-   */
-  export type HandoverFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    /**
-     * Filter, which Handover to fetch.
-     */
-    where: HandoverWhereUniqueInput
-  }
-
-  /**
-   * Handover findUniqueOrThrow
-   */
-  export type HandoverFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    /**
-     * Filter, which Handover to fetch.
-     */
-    where: HandoverWhereUniqueInput
-  }
-
-  /**
-   * Handover findFirst
-   */
-  export type HandoverFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    /**
-     * Filter, which Handover to fetch.
-     */
-    where?: HandoverWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Handovers to fetch.
-     */
-    orderBy?: HandoverOrderByWithRelationInput | HandoverOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Handovers.
-     */
-    cursor?: HandoverWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Handovers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Handovers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Handovers.
-     */
-    distinct?: HandoverScalarFieldEnum | HandoverScalarFieldEnum[]
-  }
-
-  /**
-   * Handover findFirstOrThrow
-   */
-  export type HandoverFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    /**
-     * Filter, which Handover to fetch.
-     */
-    where?: HandoverWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Handovers to fetch.
-     */
-    orderBy?: HandoverOrderByWithRelationInput | HandoverOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Handovers.
-     */
-    cursor?: HandoverWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Handovers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Handovers.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Handovers.
-     */
-    distinct?: HandoverScalarFieldEnum | HandoverScalarFieldEnum[]
-  }
-
-  /**
-   * Handover findMany
-   */
-  export type HandoverFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    /**
-     * Filter, which Handovers to fetch.
-     */
-    where?: HandoverWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Handovers to fetch.
-     */
-    orderBy?: HandoverOrderByWithRelationInput | HandoverOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Handovers.
-     */
-    cursor?: HandoverWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Handovers from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Handovers.
-     */
-    skip?: number
-    distinct?: HandoverScalarFieldEnum | HandoverScalarFieldEnum[]
-  }
-
-  /**
-   * Handover create
-   */
-  export type HandoverCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Handover.
-     */
-    data?: XOR<HandoverCreateInput, HandoverUncheckedCreateInput>
-  }
-
-  /**
-   * Handover createMany
-   */
-  export type HandoverCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Handovers.
-     */
-    data: HandoverCreateManyInput | HandoverCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Handover createManyAndReturn
-   */
-  export type HandoverCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * The data used to create many Handovers.
-     */
-    data: HandoverCreateManyInput | HandoverCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Handover update
-   */
-  export type HandoverUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Handover.
-     */
-    data: XOR<HandoverUpdateInput, HandoverUncheckedUpdateInput>
-    /**
-     * Choose, which Handover to update.
-     */
-    where: HandoverWhereUniqueInput
-  }
-
-  /**
-   * Handover updateMany
-   */
-  export type HandoverUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Handovers.
-     */
-    data: XOR<HandoverUpdateManyMutationInput, HandoverUncheckedUpdateManyInput>
-    /**
-     * Filter which Handovers to update
-     */
-    where?: HandoverWhereInput
-    /**
-     * Limit how many Handovers to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Handover updateManyAndReturn
-   */
-  export type HandoverUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * The data used to update Handovers.
-     */
-    data: XOR<HandoverUpdateManyMutationInput, HandoverUncheckedUpdateManyInput>
-    /**
-     * Filter which Handovers to update
-     */
-    where?: HandoverWhereInput
-    /**
-     * Limit how many Handovers to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Handover upsert
-   */
-  export type HandoverUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Handover to update in case it exists.
-     */
-    where: HandoverWhereUniqueInput
-    /**
-     * In case the Handover found by the `where` argument doesn't exist, create a new Handover with this data.
-     */
-    create: XOR<HandoverCreateInput, HandoverUncheckedCreateInput>
-    /**
-     * In case the Handover was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<HandoverUpdateInput, HandoverUncheckedUpdateInput>
-  }
-
-  /**
-   * Handover delete
-   */
-  export type HandoverDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-    /**
-     * Filter which Handover to delete.
-     */
-    where: HandoverWhereUniqueInput
-  }
-
-  /**
-   * Handover deleteMany
-   */
-  export type HandoverDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Handovers to delete
-     */
-    where?: HandoverWhereInput
-    /**
-     * Limit how many Handovers to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Handover.DiscordUser
-   */
-  export type Handover$DiscordUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the DiscordUser
-     */
-    select?: DiscordUserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the DiscordUser
-     */
-    omit?: DiscordUserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: DiscordUserInclude<ExtArgs> | null
-    where?: DiscordUserWhereInput
-  }
-
-  /**
-   * Handover without action
-   */
-  export type HandoverDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Handover
-     */
-    select?: HandoverSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Handover
-     */
-    omit?: HandoverOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: HandoverInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model BiometricEntry
    */
 
@@ -15836,17 +14631,6 @@ export namespace Prisma {
   export type EmailVerificationScalarFieldEnum = (typeof EmailVerificationScalarFieldEnum)[keyof typeof EmailVerificationScalarFieldEnum]
 
 
-  export const HandoverScalarFieldEnum: {
-    id: 'id',
-    token: 'token',
-    discordUserId: 'discordUserId',
-    isVerified: 'isVerified',
-    code: 'code'
-  };
-
-  export type HandoverScalarFieldEnum = (typeof HandoverScalarFieldEnum)[keyof typeof HandoverScalarFieldEnum]
-
-
   export const BiometricEntryScalarFieldEnum: {
     id: 'id',
     universityID: 'universityID',
@@ -16308,7 +15092,6 @@ export namespace Prisma {
     tokens?: TokenListRelationFilter
     guilds?: GuildUserListRelationFilter
     link?: DiscordUniversityListRelationFilter
-    Handover?: HandoverListRelationFilter
   }
 
   export type DiscordUserOrderByWithRelationInput = {
@@ -16320,7 +15103,6 @@ export namespace Prisma {
     tokens?: TokenOrderByRelationAggregateInput
     guilds?: GuildUserOrderByRelationAggregateInput
     link?: DiscordUniversityOrderByRelationAggregateInput
-    Handover?: HandoverOrderByRelationAggregateInput
   }
 
   export type DiscordUserWhereUniqueInput = Prisma.AtLeast<{
@@ -16335,7 +15117,6 @@ export namespace Prisma {
     tokens?: TokenListRelationFilter
     guilds?: GuildUserListRelationFilter
     link?: DiscordUniversityListRelationFilter
-    Handover?: HandoverListRelationFilter
   }, "id" | "discordId">
 
   export type DiscordUserOrderByWithAggregationInput = {
@@ -16624,61 +15405,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"EmailVerification"> | string
     email?: StringWithAggregatesFilter<"EmailVerification"> | string
     isVerified?: BoolWithAggregatesFilter<"EmailVerification"> | boolean
-  }
-
-  export type HandoverWhereInput = {
-    AND?: HandoverWhereInput | HandoverWhereInput[]
-    OR?: HandoverWhereInput[]
-    NOT?: HandoverWhereInput | HandoverWhereInput[]
-    id?: StringFilter<"Handover"> | string
-    token?: StringFilter<"Handover"> | string
-    discordUserId?: StringNullableFilter<"Handover"> | string | null
-    isVerified?: BoolFilter<"Handover"> | boolean
-    code?: StringNullableFilter<"Handover"> | string | null
-    DiscordUser?: XOR<DiscordUserNullableScalarRelationFilter, DiscordUserWhereInput> | null
-  }
-
-  export type HandoverOrderByWithRelationInput = {
-    id?: SortOrder
-    token?: SortOrder
-    discordUserId?: SortOrderInput | SortOrder
-    isVerified?: SortOrder
-    code?: SortOrderInput | SortOrder
-    DiscordUser?: DiscordUserOrderByWithRelationInput
-  }
-
-  export type HandoverWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: HandoverWhereInput | HandoverWhereInput[]
-    OR?: HandoverWhereInput[]
-    NOT?: HandoverWhereInput | HandoverWhereInput[]
-    token?: StringFilter<"Handover"> | string
-    discordUserId?: StringNullableFilter<"Handover"> | string | null
-    isVerified?: BoolFilter<"Handover"> | boolean
-    code?: StringNullableFilter<"Handover"> | string | null
-    DiscordUser?: XOR<DiscordUserNullableScalarRelationFilter, DiscordUserWhereInput> | null
-  }, "id">
-
-  export type HandoverOrderByWithAggregationInput = {
-    id?: SortOrder
-    token?: SortOrder
-    discordUserId?: SortOrderInput | SortOrder
-    isVerified?: SortOrder
-    code?: SortOrderInput | SortOrder
-    _count?: HandoverCountOrderByAggregateInput
-    _max?: HandoverMaxOrderByAggregateInput
-    _min?: HandoverMinOrderByAggregateInput
-  }
-
-  export type HandoverScalarWhereWithAggregatesInput = {
-    AND?: HandoverScalarWhereWithAggregatesInput | HandoverScalarWhereWithAggregatesInput[]
-    OR?: HandoverScalarWhereWithAggregatesInput[]
-    NOT?: HandoverScalarWhereWithAggregatesInput | HandoverScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Handover"> | string
-    token?: StringWithAggregatesFilter<"Handover"> | string
-    discordUserId?: StringNullableWithAggregatesFilter<"Handover"> | string | null
-    isVerified?: BoolWithAggregatesFilter<"Handover"> | boolean
-    code?: StringNullableWithAggregatesFilter<"Handover"> | string | null
   }
 
   export type BiometricEntryWhereInput = {
@@ -17079,7 +15805,6 @@ export namespace Prisma {
     tokens?: TokenCreateNestedManyWithoutDiscordUserInput
     guilds?: GuildUserCreateNestedManyWithoutDiscordUserInput
     link?: DiscordUniversityCreateNestedManyWithoutDiscordUserInput
-    Handover?: HandoverCreateNestedManyWithoutDiscordUserInput
   }
 
   export type DiscordUserUncheckedCreateInput = {
@@ -17091,7 +15816,6 @@ export namespace Prisma {
     tokens?: TokenUncheckedCreateNestedManyWithoutDiscordUserInput
     guilds?: GuildUserUncheckedCreateNestedManyWithoutDiscordUserInput
     link?: DiscordUniversityUncheckedCreateNestedManyWithoutDiscordUserInput
-    Handover?: HandoverUncheckedCreateNestedManyWithoutDiscordUserInput
   }
 
   export type DiscordUserUpdateInput = {
@@ -17103,7 +15827,6 @@ export namespace Prisma {
     tokens?: TokenUpdateManyWithoutDiscordUserNestedInput
     guilds?: GuildUserUpdateManyWithoutDiscordUserNestedInput
     link?: DiscordUniversityUpdateManyWithoutDiscordUserNestedInput
-    Handover?: HandoverUpdateManyWithoutDiscordUserNestedInput
   }
 
   export type DiscordUserUncheckedUpdateInput = {
@@ -17115,7 +15838,6 @@ export namespace Prisma {
     tokens?: TokenUncheckedUpdateManyWithoutDiscordUserNestedInput
     guilds?: GuildUserUncheckedUpdateManyWithoutDiscordUserNestedInput
     link?: DiscordUniversityUncheckedUpdateManyWithoutDiscordUserNestedInput
-    Handover?: HandoverUncheckedUpdateManyWithoutDiscordUserNestedInput
   }
 
   export type DiscordUserCreateManyInput = {
@@ -17408,61 +16130,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type HandoverCreateInput = {
-    id?: string
-    token?: string
-    isVerified?: boolean
-    code?: string | null
-    DiscordUser?: DiscordUserCreateNestedOneWithoutHandoverInput
-  }
-
-  export type HandoverUncheckedCreateInput = {
-    id?: string
-    token?: string
-    discordUserId?: string | null
-    isVerified?: boolean
-    code?: string | null
-  }
-
-  export type HandoverUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    code?: NullableStringFieldUpdateOperationsInput | string | null
-    DiscordUser?: DiscordUserUpdateOneWithoutHandoverNestedInput
-  }
-
-  export type HandoverUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    code?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type HandoverCreateManyInput = {
-    id?: string
-    token?: string
-    discordUserId?: string | null
-    isVerified?: boolean
-    code?: string | null
-  }
-
-  export type HandoverUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    code?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type HandoverUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    code?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BiometricEntryCreateInput = {
@@ -17862,21 +16529,11 @@ export namespace Prisma {
     none?: DiscordUniversityWhereInput
   }
 
-  export type HandoverListRelationFilter = {
-    every?: HandoverWhereInput
-    some?: HandoverWhereInput
-    none?: HandoverWhereInput
-  }
-
   export type TokenOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type DiscordUniversityOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type HandoverOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18067,30 +16724,6 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     isVerified?: SortOrder
-  }
-
-  export type HandoverCountOrderByAggregateInput = {
-    id?: SortOrder
-    token?: SortOrder
-    discordUserId?: SortOrder
-    isVerified?: SortOrder
-    code?: SortOrder
-  }
-
-  export type HandoverMaxOrderByAggregateInput = {
-    id?: SortOrder
-    token?: SortOrder
-    discordUserId?: SortOrder
-    isVerified?: SortOrder
-    code?: SortOrder
-  }
-
-  export type HandoverMinOrderByAggregateInput = {
-    id?: SortOrder
-    token?: SortOrder
-    discordUserId?: SortOrder
-    isVerified?: SortOrder
-    code?: SortOrder
   }
 
   export type BiometricEntryCountOrderByAggregateInput = {
@@ -18513,13 +17146,6 @@ export namespace Prisma {
     connect?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
   }
 
-  export type HandoverCreateNestedManyWithoutDiscordUserInput = {
-    create?: XOR<HandoverCreateWithoutDiscordUserInput, HandoverUncheckedCreateWithoutDiscordUserInput> | HandoverCreateWithoutDiscordUserInput[] | HandoverUncheckedCreateWithoutDiscordUserInput[]
-    connectOrCreate?: HandoverCreateOrConnectWithoutDiscordUserInput | HandoverCreateOrConnectWithoutDiscordUserInput[]
-    createMany?: HandoverCreateManyDiscordUserInputEnvelope
-    connect?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
-  }
-
   export type TokenUncheckedCreateNestedManyWithoutDiscordUserInput = {
     create?: XOR<TokenCreateWithoutDiscordUserInput, TokenUncheckedCreateWithoutDiscordUserInput> | TokenCreateWithoutDiscordUserInput[] | TokenUncheckedCreateWithoutDiscordUserInput[]
     connectOrCreate?: TokenCreateOrConnectWithoutDiscordUserInput | TokenCreateOrConnectWithoutDiscordUserInput[]
@@ -18539,13 +17165,6 @@ export namespace Prisma {
     connectOrCreate?: DiscordUniversityCreateOrConnectWithoutDiscordUserInput | DiscordUniversityCreateOrConnectWithoutDiscordUserInput[]
     createMany?: DiscordUniversityCreateManyDiscordUserInputEnvelope
     connect?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
-  }
-
-  export type HandoverUncheckedCreateNestedManyWithoutDiscordUserInput = {
-    create?: XOR<HandoverCreateWithoutDiscordUserInput, HandoverUncheckedCreateWithoutDiscordUserInput> | HandoverCreateWithoutDiscordUserInput[] | HandoverUncheckedCreateWithoutDiscordUserInput[]
-    connectOrCreate?: HandoverCreateOrConnectWithoutDiscordUserInput | HandoverCreateOrConnectWithoutDiscordUserInput[]
-    createMany?: HandoverCreateManyDiscordUserInputEnvelope
-    connect?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
   }
 
   export type TokenUpdateManyWithoutDiscordUserNestedInput = {
@@ -18590,20 +17209,6 @@ export namespace Prisma {
     deleteMany?: DiscordUniversityScalarWhereInput | DiscordUniversityScalarWhereInput[]
   }
 
-  export type HandoverUpdateManyWithoutDiscordUserNestedInput = {
-    create?: XOR<HandoverCreateWithoutDiscordUserInput, HandoverUncheckedCreateWithoutDiscordUserInput> | HandoverCreateWithoutDiscordUserInput[] | HandoverUncheckedCreateWithoutDiscordUserInput[]
-    connectOrCreate?: HandoverCreateOrConnectWithoutDiscordUserInput | HandoverCreateOrConnectWithoutDiscordUserInput[]
-    upsert?: HandoverUpsertWithWhereUniqueWithoutDiscordUserInput | HandoverUpsertWithWhereUniqueWithoutDiscordUserInput[]
-    createMany?: HandoverCreateManyDiscordUserInputEnvelope
-    set?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
-    disconnect?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
-    delete?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
-    connect?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
-    update?: HandoverUpdateWithWhereUniqueWithoutDiscordUserInput | HandoverUpdateWithWhereUniqueWithoutDiscordUserInput[]
-    updateMany?: HandoverUpdateManyWithWhereWithoutDiscordUserInput | HandoverUpdateManyWithWhereWithoutDiscordUserInput[]
-    deleteMany?: HandoverScalarWhereInput | HandoverScalarWhereInput[]
-  }
-
   export type TokenUncheckedUpdateManyWithoutDiscordUserNestedInput = {
     create?: XOR<TokenCreateWithoutDiscordUserInput, TokenUncheckedCreateWithoutDiscordUserInput> | TokenCreateWithoutDiscordUserInput[] | TokenUncheckedCreateWithoutDiscordUserInput[]
     connectOrCreate?: TokenCreateOrConnectWithoutDiscordUserInput | TokenCreateOrConnectWithoutDiscordUserInput[]
@@ -18644,20 +17249,6 @@ export namespace Prisma {
     update?: DiscordUniversityUpdateWithWhereUniqueWithoutDiscordUserInput | DiscordUniversityUpdateWithWhereUniqueWithoutDiscordUserInput[]
     updateMany?: DiscordUniversityUpdateManyWithWhereWithoutDiscordUserInput | DiscordUniversityUpdateManyWithWhereWithoutDiscordUserInput[]
     deleteMany?: DiscordUniversityScalarWhereInput | DiscordUniversityScalarWhereInput[]
-  }
-
-  export type HandoverUncheckedUpdateManyWithoutDiscordUserNestedInput = {
-    create?: XOR<HandoverCreateWithoutDiscordUserInput, HandoverUncheckedCreateWithoutDiscordUserInput> | HandoverCreateWithoutDiscordUserInput[] | HandoverUncheckedCreateWithoutDiscordUserInput[]
-    connectOrCreate?: HandoverCreateOrConnectWithoutDiscordUserInput | HandoverCreateOrConnectWithoutDiscordUserInput[]
-    upsert?: HandoverUpsertWithWhereUniqueWithoutDiscordUserInput | HandoverUpsertWithWhereUniqueWithoutDiscordUserInput[]
-    createMany?: HandoverCreateManyDiscordUserInputEnvelope
-    set?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
-    disconnect?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
-    delete?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
-    connect?: HandoverWhereUniqueInput | HandoverWhereUniqueInput[]
-    update?: HandoverUpdateWithWhereUniqueWithoutDiscordUserInput | HandoverUpdateWithWhereUniqueWithoutDiscordUserInput[]
-    updateMany?: HandoverUpdateManyWithWhereWithoutDiscordUserInput | HandoverUpdateManyWithWhereWithoutDiscordUserInput[]
-    deleteMany?: HandoverScalarWhereInput | HandoverScalarWhereInput[]
   }
 
   export type DiscordUserCreateNestedOneWithoutTokensInput = {
@@ -18946,22 +17537,6 @@ export namespace Prisma {
     update?: DiscordUniversityUpdateWithWhereUniqueWithoutEmailVerificationInput | DiscordUniversityUpdateWithWhereUniqueWithoutEmailVerificationInput[]
     updateMany?: DiscordUniversityUpdateManyWithWhereWithoutEmailVerificationInput | DiscordUniversityUpdateManyWithWhereWithoutEmailVerificationInput[]
     deleteMany?: DiscordUniversityScalarWhereInput | DiscordUniversityScalarWhereInput[]
-  }
-
-  export type DiscordUserCreateNestedOneWithoutHandoverInput = {
-    create?: XOR<DiscordUserCreateWithoutHandoverInput, DiscordUserUncheckedCreateWithoutHandoverInput>
-    connectOrCreate?: DiscordUserCreateOrConnectWithoutHandoverInput
-    connect?: DiscordUserWhereUniqueInput
-  }
-
-  export type DiscordUserUpdateOneWithoutHandoverNestedInput = {
-    create?: XOR<DiscordUserCreateWithoutHandoverInput, DiscordUserUncheckedCreateWithoutHandoverInput>
-    connectOrCreate?: DiscordUserCreateOrConnectWithoutHandoverInput
-    upsert?: DiscordUserUpsertWithoutHandoverInput
-    disconnect?: DiscordUserWhereInput | boolean
-    delete?: DiscordUserWhereInput | boolean
-    connect?: DiscordUserWhereUniqueInput
-    update?: XOR<XOR<DiscordUserUpdateToOneWithWhereWithoutHandoverInput, DiscordUserUpdateWithoutHandoverInput>, DiscordUserUncheckedUpdateWithoutHandoverInput>
   }
 
   export type DiscordUniversityCreateNestedManyWithoutBiometricEntryInput = {
@@ -19645,7 +18220,6 @@ export namespace Prisma {
     createdAt?: Date | string
     tokens?: TokenCreateNestedManyWithoutDiscordUserInput
     link?: DiscordUniversityCreateNestedManyWithoutDiscordUserInput
-    Handover?: HandoverCreateNestedManyWithoutDiscordUserInput
   }
 
   export type DiscordUserUncheckedCreateWithoutGuildsInput = {
@@ -19656,7 +18230,6 @@ export namespace Prisma {
     createdAt?: Date | string
     tokens?: TokenUncheckedCreateNestedManyWithoutDiscordUserInput
     link?: DiscordUniversityUncheckedCreateNestedManyWithoutDiscordUserInput
-    Handover?: HandoverUncheckedCreateNestedManyWithoutDiscordUserInput
   }
 
   export type DiscordUserCreateOrConnectWithoutGuildsInput = {
@@ -19750,7 +18323,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUpdateManyWithoutDiscordUserNestedInput
     link?: DiscordUniversityUpdateManyWithoutDiscordUserNestedInput
-    Handover?: HandoverUpdateManyWithoutDiscordUserNestedInput
   }
 
   export type DiscordUserUncheckedUpdateWithoutGuildsInput = {
@@ -19761,7 +18333,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUncheckedUpdateManyWithoutDiscordUserNestedInput
     link?: DiscordUniversityUncheckedUpdateManyWithoutDiscordUserNestedInput
-    Handover?: HandoverUncheckedUpdateManyWithoutDiscordUserNestedInput
   }
 
   export type GuildMessageUpsertWithWhereUniqueWithoutGuildUserInput = {
@@ -20026,30 +18597,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type HandoverCreateWithoutDiscordUserInput = {
-    id?: string
-    token?: string
-    isVerified?: boolean
-    code?: string | null
-  }
-
-  export type HandoverUncheckedCreateWithoutDiscordUserInput = {
-    id?: string
-    token?: string
-    isVerified?: boolean
-    code?: string | null
-  }
-
-  export type HandoverCreateOrConnectWithoutDiscordUserInput = {
-    where: HandoverWhereUniqueInput
-    create: XOR<HandoverCreateWithoutDiscordUserInput, HandoverUncheckedCreateWithoutDiscordUserInput>
-  }
-
-  export type HandoverCreateManyDiscordUserInputEnvelope = {
-    data: HandoverCreateManyDiscordUserInput | HandoverCreateManyDiscordUserInput[]
-    skipDuplicates?: boolean
-  }
-
   export type TokenUpsertWithWhereUniqueWithoutDiscordUserInput = {
     where: TokenWhereUniqueInput
     update: XOR<TokenUpdateWithoutDiscordUserInput, TokenUncheckedUpdateWithoutDiscordUserInput>
@@ -20125,33 +18672,6 @@ export namespace Prisma {
     isVerified?: BoolFilter<"DiscordUniversity"> | boolean
   }
 
-  export type HandoverUpsertWithWhereUniqueWithoutDiscordUserInput = {
-    where: HandoverWhereUniqueInput
-    update: XOR<HandoverUpdateWithoutDiscordUserInput, HandoverUncheckedUpdateWithoutDiscordUserInput>
-    create: XOR<HandoverCreateWithoutDiscordUserInput, HandoverUncheckedCreateWithoutDiscordUserInput>
-  }
-
-  export type HandoverUpdateWithWhereUniqueWithoutDiscordUserInput = {
-    where: HandoverWhereUniqueInput
-    data: XOR<HandoverUpdateWithoutDiscordUserInput, HandoverUncheckedUpdateWithoutDiscordUserInput>
-  }
-
-  export type HandoverUpdateManyWithWhereWithoutDiscordUserInput = {
-    where: HandoverScalarWhereInput
-    data: XOR<HandoverUpdateManyMutationInput, HandoverUncheckedUpdateManyWithoutDiscordUserInput>
-  }
-
-  export type HandoverScalarWhereInput = {
-    AND?: HandoverScalarWhereInput | HandoverScalarWhereInput[]
-    OR?: HandoverScalarWhereInput[]
-    NOT?: HandoverScalarWhereInput | HandoverScalarWhereInput[]
-    id?: StringFilter<"Handover"> | string
-    token?: StringFilter<"Handover"> | string
-    discordUserId?: StringNullableFilter<"Handover"> | string | null
-    isVerified?: BoolFilter<"Handover"> | boolean
-    code?: StringNullableFilter<"Handover"> | string | null
-  }
-
   export type DiscordUserCreateWithoutTokensInput = {
     id?: string
     discordId: string
@@ -20160,7 +18680,6 @@ export namespace Prisma {
     createdAt?: Date | string
     guilds?: GuildUserCreateNestedManyWithoutDiscordUserInput
     link?: DiscordUniversityCreateNestedManyWithoutDiscordUserInput
-    Handover?: HandoverCreateNestedManyWithoutDiscordUserInput
   }
 
   export type DiscordUserUncheckedCreateWithoutTokensInput = {
@@ -20171,7 +18690,6 @@ export namespace Prisma {
     createdAt?: Date | string
     guilds?: GuildUserUncheckedCreateNestedManyWithoutDiscordUserInput
     link?: DiscordUniversityUncheckedCreateNestedManyWithoutDiscordUserInput
-    Handover?: HandoverUncheckedCreateNestedManyWithoutDiscordUserInput
   }
 
   export type DiscordUserCreateOrConnectWithoutTokensInput = {
@@ -20198,7 +18716,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     guilds?: GuildUserUpdateManyWithoutDiscordUserNestedInput
     link?: DiscordUniversityUpdateManyWithoutDiscordUserNestedInput
-    Handover?: HandoverUpdateManyWithoutDiscordUserNestedInput
   }
 
   export type DiscordUserUncheckedUpdateWithoutTokensInput = {
@@ -20209,7 +18726,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     guilds?: GuildUserUncheckedUpdateManyWithoutDiscordUserNestedInput
     link?: DiscordUniversityUncheckedUpdateManyWithoutDiscordUserNestedInput
-    Handover?: HandoverUncheckedUpdateManyWithoutDiscordUserNestedInput
   }
 
   export type DiscordUserCreateWithoutLinkInput = {
@@ -20220,7 +18736,6 @@ export namespace Prisma {
     createdAt?: Date | string
     tokens?: TokenCreateNestedManyWithoutDiscordUserInput
     guilds?: GuildUserCreateNestedManyWithoutDiscordUserInput
-    Handover?: HandoverCreateNestedManyWithoutDiscordUserInput
   }
 
   export type DiscordUserUncheckedCreateWithoutLinkInput = {
@@ -20231,7 +18746,6 @@ export namespace Prisma {
     createdAt?: Date | string
     tokens?: TokenUncheckedCreateNestedManyWithoutDiscordUserInput
     guilds?: GuildUserUncheckedCreateNestedManyWithoutDiscordUserInput
-    Handover?: HandoverUncheckedCreateNestedManyWithoutDiscordUserInput
   }
 
   export type DiscordUserCreateOrConnectWithoutLinkInput = {
@@ -20439,7 +18953,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUpdateManyWithoutDiscordUserNestedInput
     guilds?: GuildUserUpdateManyWithoutDiscordUserNestedInput
-    Handover?: HandoverUpdateManyWithoutDiscordUserNestedInput
   }
 
   export type DiscordUserUncheckedUpdateWithoutLinkInput = {
@@ -20450,7 +18963,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tokens?: TokenUncheckedUpdateManyWithoutDiscordUserNestedInput
     guilds?: GuildUserUncheckedUpdateManyWithoutDiscordUserNestedInput
-    Handover?: HandoverUncheckedUpdateManyWithoutDiscordUserNestedInput
   }
 
   export type EmailVerificationUpsertWithoutLinkInput = {
@@ -20816,66 +19328,6 @@ export namespace Prisma {
     data: XOR<DiscordUniversityUpdateManyMutationInput, DiscordUniversityUncheckedUpdateManyWithoutEmailVerificationInput>
   }
 
-  export type DiscordUserCreateWithoutHandoverInput = {
-    id?: string
-    discordId: string
-    avatar?: string | null
-    username: string
-    createdAt?: Date | string
-    tokens?: TokenCreateNestedManyWithoutDiscordUserInput
-    guilds?: GuildUserCreateNestedManyWithoutDiscordUserInput
-    link?: DiscordUniversityCreateNestedManyWithoutDiscordUserInput
-  }
-
-  export type DiscordUserUncheckedCreateWithoutHandoverInput = {
-    id?: string
-    discordId: string
-    avatar?: string | null
-    username: string
-    createdAt?: Date | string
-    tokens?: TokenUncheckedCreateNestedManyWithoutDiscordUserInput
-    guilds?: GuildUserUncheckedCreateNestedManyWithoutDiscordUserInput
-    link?: DiscordUniversityUncheckedCreateNestedManyWithoutDiscordUserInput
-  }
-
-  export type DiscordUserCreateOrConnectWithoutHandoverInput = {
-    where: DiscordUserWhereUniqueInput
-    create: XOR<DiscordUserCreateWithoutHandoverInput, DiscordUserUncheckedCreateWithoutHandoverInput>
-  }
-
-  export type DiscordUserUpsertWithoutHandoverInput = {
-    update: XOR<DiscordUserUpdateWithoutHandoverInput, DiscordUserUncheckedUpdateWithoutHandoverInput>
-    create: XOR<DiscordUserCreateWithoutHandoverInput, DiscordUserUncheckedCreateWithoutHandoverInput>
-    where?: DiscordUserWhereInput
-  }
-
-  export type DiscordUserUpdateToOneWithWhereWithoutHandoverInput = {
-    where?: DiscordUserWhereInput
-    data: XOR<DiscordUserUpdateWithoutHandoverInput, DiscordUserUncheckedUpdateWithoutHandoverInput>
-  }
-
-  export type DiscordUserUpdateWithoutHandoverInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    discordId?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tokens?: TokenUpdateManyWithoutDiscordUserNestedInput
-    guilds?: GuildUserUpdateManyWithoutDiscordUserNestedInput
-    link?: DiscordUniversityUpdateManyWithoutDiscordUserNestedInput
-  }
-
-  export type DiscordUserUncheckedUpdateWithoutHandoverInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    discordId?: StringFieldUpdateOperationsInput | string
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    username?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tokens?: TokenUncheckedUpdateManyWithoutDiscordUserNestedInput
-    guilds?: GuildUserUncheckedUpdateManyWithoutDiscordUserNestedInput
-    link?: DiscordUniversityUncheckedUpdateManyWithoutDiscordUserNestedInput
-  }
-
   export type DiscordUniversityCreateWithoutBiometricEntryInput = {
     id?: string
     emailCode?: string | null
@@ -21158,13 +19610,6 @@ export namespace Prisma {
     isVerified?: boolean
   }
 
-  export type HandoverCreateManyDiscordUserInput = {
-    id?: string
-    token?: string
-    isVerified?: boolean
-    code?: string | null
-  }
-
   export type TokenUpdateWithoutDiscordUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
@@ -21249,27 +19694,6 @@ export namespace Prisma {
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
     studentId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type HandoverUpdateWithoutDiscordUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    code?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type HandoverUncheckedUpdateWithoutDiscordUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    code?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type HandoverUncheckedUpdateManyWithoutDiscordUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    code?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DiscordUniversityCreateManyHelperInput = {

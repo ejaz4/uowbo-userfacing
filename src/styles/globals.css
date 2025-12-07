@@ -1,8 +1,11 @@
 :root {
   --accent-color: #c95151;
+  --accent-color-transparent: rgba(201, 81, 81, 0.1);
+  --accent-color-contrast: white;
   --text-color-bare: white;
   --card-color: white;
   --card-text-color: black;
+  --card-borders-color: rgba(0, 0, 0, 0.2);
 }
 
 html,
@@ -20,7 +23,8 @@ h3,
 h4,
 h5,
 h6,
-p {
+p,
+input {
   margin: 0;
   padding: 0;
   font-family: var(--font-satoshi);
@@ -30,7 +34,8 @@ h1 {
   font-size: 1.75rem;
 }
 
-p {
+p,
+input {
   font-size: 1.125rem;
   font-weight: 500;
 }

@@ -91,7 +91,6 @@ model DiscordUser {
   tokens    Token[]
   guilds    GuildUser[]
   link      DiscordUniversity[]
-  Handover  Handover[]
   createdAt DateTime            @default(now())
 }
 
@@ -167,15 +166,6 @@ model EmailVerification {
   email      String              @unique
   link       DiscordUniversity[]
   isVerified Boolean             @default(true)
-}
-
-model Handover {
-  id            String       @id @default(uuid())
-  token         String       @default(uuid())
-  DiscordUser   DiscordUser? @relation(fields: [discordUserId], references: [id])
-  discordUserId String?
-  isVerified    Boolean      @default(false)
-  code          String?
 }
 
 model BiometricEntry {

@@ -212,14 +212,6 @@ exports.Prisma.EmailVerificationScalarFieldEnum = {
   isVerified: 'isVerified'
 };
 
-exports.Prisma.HandoverScalarFieldEnum = {
-  id: 'id',
-  token: 'token',
-  discordUserId: 'discordUserId',
-  isVerified: 'isVerified',
-  code: 'code'
-};
-
 exports.Prisma.BiometricEntryScalarFieldEnum = {
   id: 'id',
   universityID: 'universityID',
@@ -264,7 +256,6 @@ exports.Prisma.ModelName = {
   DiscordUniversity: 'DiscordUniversity',
   AuthorityHit: 'AuthorityHit',
   EmailVerification: 'EmailVerification',
-  Handover: 'Handover',
   BiometricEntry: 'BiometricEntry'
 };
 
