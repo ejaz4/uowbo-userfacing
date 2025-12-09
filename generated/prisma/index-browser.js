@@ -196,6 +196,15 @@ exports.Prisma.DiscordUniversityScalarFieldEnum = {
   isVerified: 'isVerified'
 };
 
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  token: 'token',
+  isOTPVerified: 'isOTPVerified',
+  otpCode: 'otpCode',
+  isVisualVerified: 'isVisualVerified'
+};
+
 exports.Prisma.AuthorityHitScalarFieldEnum = {
   id: 'id',
   discordUniversityId: 'discordUniversityId',
@@ -254,6 +263,7 @@ exports.Prisma.ModelName = {
   DiscordUser: 'DiscordUser',
   Token: 'Token',
   DiscordUniversity: 'DiscordUniversity',
+  Session: 'Session',
   AuthorityHit: 'AuthorityHit',
   EmailVerification: 'EmailVerification',
   BiometricEntry: 'BiometricEntry'

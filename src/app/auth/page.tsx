@@ -6,11 +6,18 @@ import styles from "../index.module.css";
 import { Flow } from "../_components/flow";
 import { ButtonBar } from "../_components/card/buttonBar";
 import { Button } from "../_components/button";
-import { MonitorSmartphone } from "lucide-react";
+import { ArrowRightIcon, MonitorSmartphone } from "lucide-react";
 import { useState } from "react";
+import { api } from "~/trpc/react";
+import { ErrorText } from "../_components/text/error";
 
 export default function AuthenticationPage() {
-  const [loading, setLoading] = useState(false);
+  const requestLogin = api.auth.attemptLogin.useMutation();
+  const [studentId, setStudentId] = useState("");
+
+  const submit = () => {
+    requestLogin.mutate(studentId);
+  };
 
   return (
     <Flow>
@@ -18,28 +25,33 @@ export default function AuthenticationPage() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            submit();
           }}
         >
           <section>
             <h1>Log into uowbo!</h1>
             <p>Enter your email address, username or student ID.</p>
-            <TextInput placeholder="Email address, username, student ID" />
+            <TextInput
+              defaultValue={studentId}
+              onChange={(e) => setStudentId(e.currentTarget.value)}
+              placeholder="Email address, username, student ID"
+            />
+
+            {requestLogin.error && (
+              <ErrorText>{requestLogin.error.message}</ErrorText>
+            )}
           </section>
 
           <ButtonBar>
+            <section></section>
             <section>
-              <Button>
-                <p>hi</p>
-              </Button>
-
               <Button
+                disabled={requestLogin.isPending}
+                loading={requestLogin.isPending}
                 primary
-                loading={loading}
-                onClick={(e) => setLoading((t) => !t)}
-                image={<MonitorSmartphone />}
-              >
-                <p>Continue</p>
-              </Button>
+                image={<ArrowRightIcon />}
+                dir="rtl"
+              ></Button>
             </section>
           </ButtonBar>
         </form>

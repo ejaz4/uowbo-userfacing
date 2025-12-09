@@ -10,7 +10,7 @@ export const Button = ({
   loading,
   ...props
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   image?: React.ReactNode;
   primary?: boolean;
   loading?: boolean;
@@ -19,13 +19,13 @@ export const Button = ({
     <button
       className={joinClasses(
         styles.button ?? "",
-        primary ? (styles.accented ?? "") : "",
+        primary && !props.disabled ? (styles.accented ?? "") : "",
       )}
       {...props}
     >
       {loading && <ActivitySpinner />}
       {image && !loading && image}
-      {children}
+      {children && children}
     </button>
   );
 };
