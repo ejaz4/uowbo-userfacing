@@ -186,7 +186,6 @@ exports.Prisma.DiscordUniversityScalarFieldEnum = {
   id: 'id',
   discordUserId: 'discordUserId',
   emailVerificationId: 'emailVerificationId',
-  emailCode: 'emailCode',
   biometricEntryId: 'biometricEntryId',
   fullName: 'fullName',
   isExternal: 'isExternal',
@@ -218,6 +217,8 @@ exports.Prisma.AuthorityHitScalarFieldEnum = {
 exports.Prisma.EmailVerificationScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  emailCode: 'emailCode',
+  discordUniversityId: 'discordUniversityId',
   isVerified: 'isVerified'
 };
 

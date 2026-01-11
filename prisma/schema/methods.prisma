@@ -1,0 +1,21 @@
+model VerificationMethods {
+  id String @id @default(uuid())
+
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id])
+  studentProfileId String
+
+  emailVerification EmailVerification[]
+}
+
+model EmailVerification {
+  id               String @id @default(uuid())
+  emailAddress     String
+  verificationCode String
+
+  isVerified            Boolean              @default(false)
+  expiresAt             DateTime?
+  verificationMethods   VerificationMethods? @relation(fields: [verificationMethodsId], references: [id])
+  verificationMethodsId String?
+
+  createdAt DateTime @default(now())
+}

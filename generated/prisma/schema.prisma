@@ -112,8 +112,7 @@ model DiscordUniversity {
 
   // Their email verification methods
   emailVerification   EmailVerification? @relation(fields: [emailVerificationId], references: [id], onDelete: SetNull)
-  emailVerificationId String?
-  emailCode           String?
+  emailVerificationId String?            @unique
 
   // Their biometric methods
   BiometricEntry   BiometricEntry? @relation(fields: [biometricEntryId], references: [id], onDelete: SetNull)
@@ -181,10 +180,12 @@ enum HitType {
 }
 
 model EmailVerification {
-  id         String              @id @default(uuid())
-  email      String              @unique
-  link       DiscordUniversity[]
-  isVerified Boolean             @default(true)
+  id                  String             @id @default(uuid())
+  email               String             @unique
+  emailCode           String?
+  link                DiscordUniversity?
+  discordUniversityId String?
+  isVerified          Boolean            @default(true)
 }
 
 model BiometricEntry {

@@ -12,11 +12,11 @@ import { api } from "~/trpc/react";
 import { ErrorText } from "../_components/text/error";
 
 export default function AuthenticationPage() {
-  const requestLogin = api.auth.attemptLogin.useMutation();
+  // const requestLogin = api.auth.attemptLogin.useMutation();
   const [studentId, setStudentId] = useState("");
 
   const submit = () => {
-    requestLogin.mutate(studentId);
+    // requestLogin.mutate(studentId);
   };
 
   return (

@@ -2116,37 +2116,6 @@ export namespace Prisma {
 
 
   /**
-   * Count Type EmailVerificationCountOutputType
-   */
-
-  export type EmailVerificationCountOutputType = {
-    link: number
-  }
-
-  export type EmailVerificationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    link?: boolean | EmailVerificationCountOutputTypeCountLinkArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * EmailVerificationCountOutputType without action
-   */
-  export type EmailVerificationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the EmailVerificationCountOutputType
-     */
-    select?: EmailVerificationCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * EmailVerificationCountOutputType without action
-   */
-  export type EmailVerificationCountOutputTypeCountLinkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: DiscordUniversityWhereInput
-  }
-
-
-  /**
    * Count Type BiometricEntryCountOutputType
    */
 
@@ -10057,7 +10026,6 @@ export namespace Prisma {
     id: string | null
     discordUserId: string | null
     emailVerificationId: string | null
-    emailCode: string | null
     biometricEntryId: string | null
     fullName: string | null
     isExternal: boolean | null
@@ -10071,7 +10039,6 @@ export namespace Prisma {
     id: string | null
     discordUserId: string | null
     emailVerificationId: string | null
-    emailCode: string | null
     biometricEntryId: string | null
     fullName: string | null
     isExternal: boolean | null
@@ -10085,7 +10052,6 @@ export namespace Prisma {
     id: number
     discordUserId: number
     emailVerificationId: number
-    emailCode: number
     biometricEntryId: number
     fullName: number
     isExternal: number
@@ -10101,7 +10067,6 @@ export namespace Prisma {
     id?: true
     discordUserId?: true
     emailVerificationId?: true
-    emailCode?: true
     biometricEntryId?: true
     fullName?: true
     isExternal?: true
@@ -10115,7 +10080,6 @@ export namespace Prisma {
     id?: true
     discordUserId?: true
     emailVerificationId?: true
-    emailCode?: true
     biometricEntryId?: true
     fullName?: true
     isExternal?: true
@@ -10129,7 +10093,6 @@ export namespace Prisma {
     id?: true
     discordUserId?: true
     emailVerificationId?: true
-    emailCode?: true
     biometricEntryId?: true
     fullName?: true
     isExternal?: true
@@ -10216,7 +10179,6 @@ export namespace Prisma {
     id: string
     discordUserId: string | null
     emailVerificationId: string | null
-    emailCode: string | null
     biometricEntryId: string | null
     fullName: string | null
     isExternal: boolean
@@ -10247,7 +10209,6 @@ export namespace Prisma {
     id?: boolean
     discordUserId?: boolean
     emailVerificationId?: boolean
-    emailCode?: boolean
     biometricEntryId?: boolean
     fullName?: boolean
     isExternal?: boolean
@@ -10270,7 +10231,6 @@ export namespace Prisma {
     id?: boolean
     discordUserId?: boolean
     emailVerificationId?: boolean
-    emailCode?: boolean
     biometricEntryId?: boolean
     fullName?: boolean
     isExternal?: boolean
@@ -10288,7 +10248,6 @@ export namespace Prisma {
     id?: boolean
     discordUserId?: boolean
     emailVerificationId?: boolean
-    emailCode?: boolean
     biometricEntryId?: boolean
     fullName?: boolean
     isExternal?: boolean
@@ -10306,7 +10265,6 @@ export namespace Prisma {
     id?: boolean
     discordUserId?: boolean
     emailVerificationId?: boolean
-    emailCode?: boolean
     biometricEntryId?: boolean
     fullName?: boolean
     isExternal?: boolean
@@ -10316,7 +10274,7 @@ export namespace Prisma {
     isVerified?: boolean
   }
 
-  export type DiscordUniversityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "discordUserId" | "emailVerificationId" | "emailCode" | "biometricEntryId" | "fullName" | "isExternal" | "helperId" | "helperCode" | "studentId" | "isVerified", ExtArgs["result"]["discordUniversity"]>
+  export type DiscordUniversityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "discordUserId" | "emailVerificationId" | "biometricEntryId" | "fullName" | "isExternal" | "helperId" | "helperCode" | "studentId" | "isVerified", ExtArgs["result"]["discordUniversity"]>
   export type DiscordUniversityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     DiscordUser?: boolean | DiscordUniversity$DiscordUserArgs<ExtArgs>
     emailVerification?: boolean | DiscordUniversity$emailVerificationArgs<ExtArgs>
@@ -10357,7 +10315,6 @@ export namespace Prisma {
       id: string
       discordUserId: string | null
       emailVerificationId: string | null
-      emailCode: string | null
       biometricEntryId: string | null
       fullName: string | null
       isExternal: boolean
@@ -10799,7 +10756,6 @@ export namespace Prisma {
     readonly id: FieldRef<"DiscordUniversity", 'String'>
     readonly discordUserId: FieldRef<"DiscordUniversity", 'String'>
     readonly emailVerificationId: FieldRef<"DiscordUniversity", 'String'>
-    readonly emailCode: FieldRef<"DiscordUniversity", 'String'>
     readonly biometricEntryId: FieldRef<"DiscordUniversity", 'String'>
     readonly fullName: FieldRef<"DiscordUniversity", 'String'>
     readonly isExternal: FieldRef<"DiscordUniversity", 'Boolean'>
@@ -13607,18 +13563,24 @@ export namespace Prisma {
   export type EmailVerificationMinAggregateOutputType = {
     id: string | null
     email: string | null
+    emailCode: string | null
+    discordUniversityId: string | null
     isVerified: boolean | null
   }
 
   export type EmailVerificationMaxAggregateOutputType = {
     id: string | null
     email: string | null
+    emailCode: string | null
+    discordUniversityId: string | null
     isVerified: boolean | null
   }
 
   export type EmailVerificationCountAggregateOutputType = {
     id: number
     email: number
+    emailCode: number
+    discordUniversityId: number
     isVerified: number
     _all: number
   }
@@ -13627,18 +13589,24 @@ export namespace Prisma {
   export type EmailVerificationMinAggregateInputType = {
     id?: true
     email?: true
+    emailCode?: true
+    discordUniversityId?: true
     isVerified?: true
   }
 
   export type EmailVerificationMaxAggregateInputType = {
     id?: true
     email?: true
+    emailCode?: true
+    discordUniversityId?: true
     isVerified?: true
   }
 
   export type EmailVerificationCountAggregateInputType = {
     id?: true
     email?: true
+    emailCode?: true
+    discordUniversityId?: true
     isVerified?: true
     _all?: true
   }
@@ -13718,6 +13686,8 @@ export namespace Prisma {
   export type EmailVerificationGroupByOutputType = {
     id: string
     email: string
+    emailCode: string | null
+    discordUniversityId: string | null
     isVerified: boolean
     _count: EmailVerificationCountAggregateOutputType | null
     _min: EmailVerificationMinAggregateOutputType | null
@@ -13741,33 +13711,39 @@ export namespace Prisma {
   export type EmailVerificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
+    emailCode?: boolean
+    discordUniversityId?: boolean
     isVerified?: boolean
     link?: boolean | EmailVerification$linkArgs<ExtArgs>
-    _count?: boolean | EmailVerificationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["emailVerification"]>
 
   export type EmailVerificationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
+    emailCode?: boolean
+    discordUniversityId?: boolean
     isVerified?: boolean
   }, ExtArgs["result"]["emailVerification"]>
 
   export type EmailVerificationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
+    emailCode?: boolean
+    discordUniversityId?: boolean
     isVerified?: boolean
   }, ExtArgs["result"]["emailVerification"]>
 
   export type EmailVerificationSelectScalar = {
     id?: boolean
     email?: boolean
+    emailCode?: boolean
+    discordUniversityId?: boolean
     isVerified?: boolean
   }
 
-  export type EmailVerificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "isVerified", ExtArgs["result"]["emailVerification"]>
+  export type EmailVerificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailCode" | "discordUniversityId" | "isVerified", ExtArgs["result"]["emailVerification"]>
   export type EmailVerificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     link?: boolean | EmailVerification$linkArgs<ExtArgs>
-    _count?: boolean | EmailVerificationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EmailVerificationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
   export type EmailVerificationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -13775,11 +13751,13 @@ export namespace Prisma {
   export type $EmailVerificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EmailVerification"
     objects: {
-      link: Prisma.$DiscordUniversityPayload<ExtArgs>[]
+      link: Prisma.$DiscordUniversityPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
+      emailCode: string | null
+      discordUniversityId: string | null
       isVerified: boolean
     }, ExtArgs["result"]["emailVerification"]>
     composites: {}
@@ -14175,7 +14153,7 @@ export namespace Prisma {
    */
   export interface Prisma__EmailVerificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    link<T extends EmailVerification$linkArgs<ExtArgs> = {}>(args?: Subset<T, EmailVerification$linkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DiscordUniversityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    link<T extends EmailVerification$linkArgs<ExtArgs> = {}>(args?: Subset<T, EmailVerification$linkArgs<ExtArgs>>): Prisma__DiscordUniversityClient<$Result.GetResult<Prisma.$DiscordUniversityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14207,6 +14185,8 @@ export namespace Prisma {
   interface EmailVerificationFieldRefs {
     readonly id: FieldRef<"EmailVerification", 'String'>
     readonly email: FieldRef<"EmailVerification", 'String'>
+    readonly emailCode: FieldRef<"EmailVerification", 'String'>
+    readonly discordUniversityId: FieldRef<"EmailVerification", 'String'>
     readonly isVerified: FieldRef<"EmailVerification", 'Boolean'>
   }
     
@@ -14612,11 +14592,6 @@ export namespace Prisma {
      */
     include?: DiscordUniversityInclude<ExtArgs> | null
     where?: DiscordUniversityWhereInput
-    orderBy?: DiscordUniversityOrderByWithRelationInput | DiscordUniversityOrderByWithRelationInput[]
-    cursor?: DiscordUniversityWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: DiscordUniversityScalarFieldEnum | DiscordUniversityScalarFieldEnum[]
   }
 
   /**
@@ -15795,7 +15770,6 @@ export namespace Prisma {
     id: 'id',
     discordUserId: 'discordUserId',
     emailVerificationId: 'emailVerificationId',
-    emailCode: 'emailCode',
     biometricEntryId: 'biometricEntryId',
     fullName: 'fullName',
     isExternal: 'isExternal',
@@ -15836,6 +15810,8 @@ export namespace Prisma {
   export const EmailVerificationScalarFieldEnum: {
     id: 'id',
     email: 'email',
+    emailCode: 'emailCode',
+    discordUniversityId: 'discordUniversityId',
     isVerified: 'isVerified'
   };
 
@@ -16409,7 +16385,6 @@ export namespace Prisma {
     id?: StringFilter<"DiscordUniversity"> | string
     discordUserId?: StringNullableFilter<"DiscordUniversity"> | string | null
     emailVerificationId?: StringNullableFilter<"DiscordUniversity"> | string | null
-    emailCode?: StringNullableFilter<"DiscordUniversity"> | string | null
     biometricEntryId?: StringNullableFilter<"DiscordUniversity"> | string | null
     fullName?: StringNullableFilter<"DiscordUniversity"> | string | null
     isExternal?: BoolFilter<"DiscordUniversity"> | boolean
@@ -16431,7 +16406,6 @@ export namespace Prisma {
     id?: SortOrder
     discordUserId?: SortOrderInput | SortOrder
     emailVerificationId?: SortOrderInput | SortOrder
-    emailCode?: SortOrderInput | SortOrder
     biometricEntryId?: SortOrderInput | SortOrder
     fullName?: SortOrderInput | SortOrder
     isExternal?: SortOrder
@@ -16451,14 +16425,13 @@ export namespace Prisma {
 
   export type DiscordUniversityWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    emailVerificationId?: string
     helperCode?: string
     studentId?: string
     AND?: DiscordUniversityWhereInput | DiscordUniversityWhereInput[]
     OR?: DiscordUniversityWhereInput[]
     NOT?: DiscordUniversityWhereInput | DiscordUniversityWhereInput[]
     discordUserId?: StringNullableFilter<"DiscordUniversity"> | string | null
-    emailVerificationId?: StringNullableFilter<"DiscordUniversity"> | string | null
-    emailCode?: StringNullableFilter<"DiscordUniversity"> | string | null
     biometricEntryId?: StringNullableFilter<"DiscordUniversity"> | string | null
     fullName?: StringNullableFilter<"DiscordUniversity"> | string | null
     isExternal?: BoolFilter<"DiscordUniversity"> | boolean
@@ -16472,13 +16445,12 @@ export namespace Prisma {
     sessions?: SessionListRelationFilter
     authorityHits?: AuthorityHitListRelationFilter
     Guilds?: GuildsListRelationFilter
-  }, "id" | "helperCode" | "studentId">
+  }, "id" | "emailVerificationId" | "helperCode" | "studentId">
 
   export type DiscordUniversityOrderByWithAggregationInput = {
     id?: SortOrder
     discordUserId?: SortOrderInput | SortOrder
     emailVerificationId?: SortOrderInput | SortOrder
-    emailCode?: SortOrderInput | SortOrder
     biometricEntryId?: SortOrderInput | SortOrder
     fullName?: SortOrderInput | SortOrder
     isExternal?: SortOrder
@@ -16498,7 +16470,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"DiscordUniversity"> | string
     discordUserId?: StringNullableWithAggregatesFilter<"DiscordUniversity"> | string | null
     emailVerificationId?: StringNullableWithAggregatesFilter<"DiscordUniversity"> | string | null
-    emailCode?: StringNullableWithAggregatesFilter<"DiscordUniversity"> | string | null
     biometricEntryId?: StringNullableWithAggregatesFilter<"DiscordUniversity"> | string | null
     fullName?: StringNullableWithAggregatesFilter<"DiscordUniversity"> | string | null
     isExternal?: BoolWithAggregatesFilter<"DiscordUniversity"> | boolean
@@ -16642,15 +16613,19 @@ export namespace Prisma {
     NOT?: EmailVerificationWhereInput | EmailVerificationWhereInput[]
     id?: StringFilter<"EmailVerification"> | string
     email?: StringFilter<"EmailVerification"> | string
+    emailCode?: StringNullableFilter<"EmailVerification"> | string | null
+    discordUniversityId?: StringNullableFilter<"EmailVerification"> | string | null
     isVerified?: BoolFilter<"EmailVerification"> | boolean
-    link?: DiscordUniversityListRelationFilter
+    link?: XOR<DiscordUniversityNullableScalarRelationFilter, DiscordUniversityWhereInput> | null
   }
 
   export type EmailVerificationOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
+    emailCode?: SortOrderInput | SortOrder
+    discordUniversityId?: SortOrderInput | SortOrder
     isVerified?: SortOrder
-    link?: DiscordUniversityOrderByRelationAggregateInput
+    link?: DiscordUniversityOrderByWithRelationInput
   }
 
   export type EmailVerificationWhereUniqueInput = Prisma.AtLeast<{
@@ -16659,13 +16634,17 @@ export namespace Prisma {
     AND?: EmailVerificationWhereInput | EmailVerificationWhereInput[]
     OR?: EmailVerificationWhereInput[]
     NOT?: EmailVerificationWhereInput | EmailVerificationWhereInput[]
+    emailCode?: StringNullableFilter<"EmailVerification"> | string | null
+    discordUniversityId?: StringNullableFilter<"EmailVerification"> | string | null
     isVerified?: BoolFilter<"EmailVerification"> | boolean
-    link?: DiscordUniversityListRelationFilter
+    link?: XOR<DiscordUniversityNullableScalarRelationFilter, DiscordUniversityWhereInput> | null
   }, "id" | "email">
 
   export type EmailVerificationOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
+    emailCode?: SortOrderInput | SortOrder
+    discordUniversityId?: SortOrderInput | SortOrder
     isVerified?: SortOrder
     _count?: EmailVerificationCountOrderByAggregateInput
     _max?: EmailVerificationMaxOrderByAggregateInput
@@ -16678,6 +16657,8 @@ export namespace Prisma {
     NOT?: EmailVerificationScalarWhereWithAggregatesInput | EmailVerificationScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"EmailVerification"> | string
     email?: StringWithAggregatesFilter<"EmailVerification"> | string
+    emailCode?: StringNullableWithAggregatesFilter<"EmailVerification"> | string | null
+    discordUniversityId?: StringNullableWithAggregatesFilter<"EmailVerification"> | string | null
     isVerified?: BoolWithAggregatesFilter<"EmailVerification"> | boolean
   }
 
@@ -17188,7 +17169,6 @@ export namespace Prisma {
 
   export type DiscordUniversityCreateInput = {
     id?: string
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperCode?: string | null
@@ -17208,7 +17188,6 @@ export namespace Prisma {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -17224,7 +17203,6 @@ export namespace Prisma {
 
   export type DiscordUniversityUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17244,7 +17222,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -17262,7 +17239,6 @@ export namespace Prisma {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -17274,7 +17250,6 @@ export namespace Prisma {
 
   export type DiscordUniversityUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17286,7 +17261,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -17429,46 +17403,60 @@ export namespace Prisma {
   export type EmailVerificationCreateInput = {
     id?: string
     email: string
+    emailCode?: string | null
+    discordUniversityId?: string | null
     isVerified?: boolean
-    link?: DiscordUniversityCreateNestedManyWithoutEmailVerificationInput
+    link?: DiscordUniversityCreateNestedOneWithoutEmailVerificationInput
   }
 
   export type EmailVerificationUncheckedCreateInput = {
     id?: string
     email: string
+    emailCode?: string | null
+    discordUniversityId?: string | null
     isVerified?: boolean
-    link?: DiscordUniversityUncheckedCreateNestedManyWithoutEmailVerificationInput
+    link?: DiscordUniversityUncheckedCreateNestedOneWithoutEmailVerificationInput
   }
 
   export type EmailVerificationUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
+    discordUniversityId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    link?: DiscordUniversityUpdateManyWithoutEmailVerificationNestedInput
+    link?: DiscordUniversityUpdateOneWithoutEmailVerificationNestedInput
   }
 
   export type EmailVerificationUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
+    discordUniversityId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
-    link?: DiscordUniversityUncheckedUpdateManyWithoutEmailVerificationNestedInput
+    link?: DiscordUniversityUncheckedUpdateOneWithoutEmailVerificationNestedInput
   }
 
   export type EmailVerificationCreateManyInput = {
     id?: string
     email: string
+    emailCode?: string | null
+    discordUniversityId?: string | null
     isVerified?: boolean
   }
 
   export type EmailVerificationUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
+    discordUniversityId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type EmailVerificationUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
+    discordUniversityId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
   }
 
@@ -17956,7 +17944,6 @@ export namespace Prisma {
     id?: SortOrder
     discordUserId?: SortOrder
     emailVerificationId?: SortOrder
-    emailCode?: SortOrder
     biometricEntryId?: SortOrder
     fullName?: SortOrder
     isExternal?: SortOrder
@@ -17970,7 +17957,6 @@ export namespace Prisma {
     id?: SortOrder
     discordUserId?: SortOrder
     emailVerificationId?: SortOrder
-    emailCode?: SortOrder
     biometricEntryId?: SortOrder
     fullName?: SortOrder
     isExternal?: SortOrder
@@ -17984,7 +17970,6 @@ export namespace Prisma {
     id?: SortOrder
     discordUserId?: SortOrder
     emailVerificationId?: SortOrder
-    emailCode?: SortOrder
     biometricEntryId?: SortOrder
     fullName?: SortOrder
     isExternal?: SortOrder
@@ -18093,18 +18078,24 @@ export namespace Prisma {
   export type EmailVerificationCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
+    emailCode?: SortOrder
+    discordUniversityId?: SortOrder
     isVerified?: SortOrder
   }
 
   export type EmailVerificationMaxOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
+    emailCode?: SortOrder
+    discordUniversityId?: SortOrder
     isVerified?: SortOrder
   }
 
   export type EmailVerificationMinOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
+    emailCode?: SortOrder
+    discordUniversityId?: SortOrder
     isVerified?: SortOrder
   }
 
@@ -18935,46 +18926,36 @@ export namespace Prisma {
     update?: XOR<XOR<GuildsUpdateToOneWithWhereWithoutAuthorityHitsInput, GuildsUpdateWithoutAuthorityHitsInput>, GuildsUncheckedUpdateWithoutAuthorityHitsInput>
   }
 
-  export type DiscordUniversityCreateNestedManyWithoutEmailVerificationInput = {
-    create?: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput> | DiscordUniversityCreateWithoutEmailVerificationInput[] | DiscordUniversityUncheckedCreateWithoutEmailVerificationInput[]
-    connectOrCreate?: DiscordUniversityCreateOrConnectWithoutEmailVerificationInput | DiscordUniversityCreateOrConnectWithoutEmailVerificationInput[]
-    createMany?: DiscordUniversityCreateManyEmailVerificationInputEnvelope
-    connect?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
+  export type DiscordUniversityCreateNestedOneWithoutEmailVerificationInput = {
+    create?: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput>
+    connectOrCreate?: DiscordUniversityCreateOrConnectWithoutEmailVerificationInput
+    connect?: DiscordUniversityWhereUniqueInput
   }
 
-  export type DiscordUniversityUncheckedCreateNestedManyWithoutEmailVerificationInput = {
-    create?: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput> | DiscordUniversityCreateWithoutEmailVerificationInput[] | DiscordUniversityUncheckedCreateWithoutEmailVerificationInput[]
-    connectOrCreate?: DiscordUniversityCreateOrConnectWithoutEmailVerificationInput | DiscordUniversityCreateOrConnectWithoutEmailVerificationInput[]
-    createMany?: DiscordUniversityCreateManyEmailVerificationInputEnvelope
-    connect?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
+  export type DiscordUniversityUncheckedCreateNestedOneWithoutEmailVerificationInput = {
+    create?: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput>
+    connectOrCreate?: DiscordUniversityCreateOrConnectWithoutEmailVerificationInput
+    connect?: DiscordUniversityWhereUniqueInput
   }
 
-  export type DiscordUniversityUpdateManyWithoutEmailVerificationNestedInput = {
-    create?: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput> | DiscordUniversityCreateWithoutEmailVerificationInput[] | DiscordUniversityUncheckedCreateWithoutEmailVerificationInput[]
-    connectOrCreate?: DiscordUniversityCreateOrConnectWithoutEmailVerificationInput | DiscordUniversityCreateOrConnectWithoutEmailVerificationInput[]
-    upsert?: DiscordUniversityUpsertWithWhereUniqueWithoutEmailVerificationInput | DiscordUniversityUpsertWithWhereUniqueWithoutEmailVerificationInput[]
-    createMany?: DiscordUniversityCreateManyEmailVerificationInputEnvelope
-    set?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
-    disconnect?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
-    delete?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
-    connect?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
-    update?: DiscordUniversityUpdateWithWhereUniqueWithoutEmailVerificationInput | DiscordUniversityUpdateWithWhereUniqueWithoutEmailVerificationInput[]
-    updateMany?: DiscordUniversityUpdateManyWithWhereWithoutEmailVerificationInput | DiscordUniversityUpdateManyWithWhereWithoutEmailVerificationInput[]
-    deleteMany?: DiscordUniversityScalarWhereInput | DiscordUniversityScalarWhereInput[]
+  export type DiscordUniversityUpdateOneWithoutEmailVerificationNestedInput = {
+    create?: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput>
+    connectOrCreate?: DiscordUniversityCreateOrConnectWithoutEmailVerificationInput
+    upsert?: DiscordUniversityUpsertWithoutEmailVerificationInput
+    disconnect?: DiscordUniversityWhereInput | boolean
+    delete?: DiscordUniversityWhereInput | boolean
+    connect?: DiscordUniversityWhereUniqueInput
+    update?: XOR<XOR<DiscordUniversityUpdateToOneWithWhereWithoutEmailVerificationInput, DiscordUniversityUpdateWithoutEmailVerificationInput>, DiscordUniversityUncheckedUpdateWithoutEmailVerificationInput>
   }
 
-  export type DiscordUniversityUncheckedUpdateManyWithoutEmailVerificationNestedInput = {
-    create?: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput> | DiscordUniversityCreateWithoutEmailVerificationInput[] | DiscordUniversityUncheckedCreateWithoutEmailVerificationInput[]
-    connectOrCreate?: DiscordUniversityCreateOrConnectWithoutEmailVerificationInput | DiscordUniversityCreateOrConnectWithoutEmailVerificationInput[]
-    upsert?: DiscordUniversityUpsertWithWhereUniqueWithoutEmailVerificationInput | DiscordUniversityUpsertWithWhereUniqueWithoutEmailVerificationInput[]
-    createMany?: DiscordUniversityCreateManyEmailVerificationInputEnvelope
-    set?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
-    disconnect?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
-    delete?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
-    connect?: DiscordUniversityWhereUniqueInput | DiscordUniversityWhereUniqueInput[]
-    update?: DiscordUniversityUpdateWithWhereUniqueWithoutEmailVerificationInput | DiscordUniversityUpdateWithWhereUniqueWithoutEmailVerificationInput[]
-    updateMany?: DiscordUniversityUpdateManyWithWhereWithoutEmailVerificationInput | DiscordUniversityUpdateManyWithWhereWithoutEmailVerificationInput[]
-    deleteMany?: DiscordUniversityScalarWhereInput | DiscordUniversityScalarWhereInput[]
+  export type DiscordUniversityUncheckedUpdateOneWithoutEmailVerificationNestedInput = {
+    create?: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput>
+    connectOrCreate?: DiscordUniversityCreateOrConnectWithoutEmailVerificationInput
+    upsert?: DiscordUniversityUpsertWithoutEmailVerificationInput
+    disconnect?: DiscordUniversityWhereInput | boolean
+    delete?: DiscordUniversityWhereInput | boolean
+    connect?: DiscordUniversityWhereUniqueInput
+    update?: XOR<XOR<DiscordUniversityUpdateToOneWithWhereWithoutEmailVerificationInput, DiscordUniversityUpdateWithoutEmailVerificationInput>, DiscordUniversityUncheckedUpdateWithoutEmailVerificationInput>
   }
 
   export type DiscordUniversityCreateNestedManyWithoutBiometricEntryInput = {
@@ -19283,7 +19264,6 @@ export namespace Prisma {
 
   export type DiscordUniversityCreateWithoutGuildsInput = {
     id?: string
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperCode?: string | null
@@ -19302,7 +19282,6 @@ export namespace Prisma {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -19445,7 +19424,6 @@ export namespace Prisma {
 
   export type DiscordUniversityUpdateWithoutGuildsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19464,7 +19442,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -19999,7 +19976,6 @@ export namespace Prisma {
 
   export type DiscordUniversityCreateWithoutDiscordUserInput = {
     id?: string
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperCode?: string | null
@@ -20017,7 +19993,6 @@ export namespace Prisma {
   export type DiscordUniversityUncheckedCreateWithoutDiscordUserInput = {
     id?: string
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -20106,7 +20081,6 @@ export namespace Prisma {
     id?: StringFilter<"DiscordUniversity"> | string
     discordUserId?: StringNullableFilter<"DiscordUniversity"> | string | null
     emailVerificationId?: StringNullableFilter<"DiscordUniversity"> | string | null
-    emailCode?: StringNullableFilter<"DiscordUniversity"> | string | null
     biometricEntryId?: StringNullableFilter<"DiscordUniversity"> | string | null
     fullName?: StringNullableFilter<"DiscordUniversity"> | string | null
     isExternal?: BoolFilter<"DiscordUniversity"> | boolean
@@ -20200,12 +20174,16 @@ export namespace Prisma {
   export type EmailVerificationCreateWithoutLinkInput = {
     id?: string
     email: string
+    emailCode?: string | null
+    discordUniversityId?: string | null
     isVerified?: boolean
   }
 
   export type EmailVerificationUncheckedCreateWithoutLinkInput = {
     id?: string
     email: string
+    emailCode?: string | null
+    discordUniversityId?: string | null
     isVerified?: boolean
   }
 
@@ -20235,7 +20213,6 @@ export namespace Prisma {
 
   export type DiscordUniversityCreateWithoutHelperInput = {
     id?: string
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperCode?: string | null
@@ -20254,7 +20231,6 @@ export namespace Prisma {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -20279,7 +20255,6 @@ export namespace Prisma {
 
   export type DiscordUniversityCreateWithoutExternalsHelpedInput = {
     id?: string
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperCode?: string | null
@@ -20298,7 +20273,6 @@ export namespace Prisma {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -20453,12 +20427,16 @@ export namespace Prisma {
   export type EmailVerificationUpdateWithoutLinkInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
+    discordUniversityId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type EmailVerificationUncheckedUpdateWithoutLinkInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
+    discordUniversityId?: NullableStringFieldUpdateOperationsInput | string | null
     isVerified?: BoolFieldUpdateOperationsInput | boolean
   }
 
@@ -20516,7 +20494,6 @@ export namespace Prisma {
 
   export type DiscordUniversityUpdateWithoutExternalsHelpedInput = {
     id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20535,7 +20512,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -20624,7 +20600,6 @@ export namespace Prisma {
 
   export type DiscordUniversityCreateWithoutSessionsInput = {
     id?: string
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperCode?: string | null
@@ -20643,7 +20618,6 @@ export namespace Prisma {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -20674,7 +20648,6 @@ export namespace Prisma {
 
   export type DiscordUniversityUpdateWithoutSessionsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20693,7 +20666,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -20708,7 +20680,6 @@ export namespace Prisma {
 
   export type DiscordUniversityCreateWithoutAuthorityHitsInput = {
     id?: string
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperCode?: string | null
@@ -20727,7 +20698,6 @@ export namespace Prisma {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -20791,7 +20761,6 @@ export namespace Prisma {
 
   export type DiscordUniversityUpdateWithoutAuthorityHitsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20810,7 +20779,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -20864,7 +20832,6 @@ export namespace Prisma {
 
   export type DiscordUniversityCreateWithoutEmailVerificationInput = {
     id?: string
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperCode?: string | null
@@ -20882,7 +20849,6 @@ export namespace Prisma {
   export type DiscordUniversityUncheckedCreateWithoutEmailVerificationInput = {
     id?: string
     discordUserId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -20901,30 +20867,51 @@ export namespace Prisma {
     create: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput>
   }
 
-  export type DiscordUniversityCreateManyEmailVerificationInputEnvelope = {
-    data: DiscordUniversityCreateManyEmailVerificationInput | DiscordUniversityCreateManyEmailVerificationInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type DiscordUniversityUpsertWithWhereUniqueWithoutEmailVerificationInput = {
-    where: DiscordUniversityWhereUniqueInput
+  export type DiscordUniversityUpsertWithoutEmailVerificationInput = {
     update: XOR<DiscordUniversityUpdateWithoutEmailVerificationInput, DiscordUniversityUncheckedUpdateWithoutEmailVerificationInput>
     create: XOR<DiscordUniversityCreateWithoutEmailVerificationInput, DiscordUniversityUncheckedCreateWithoutEmailVerificationInput>
+    where?: DiscordUniversityWhereInput
   }
 
-  export type DiscordUniversityUpdateWithWhereUniqueWithoutEmailVerificationInput = {
-    where: DiscordUniversityWhereUniqueInput
+  export type DiscordUniversityUpdateToOneWithWhereWithoutEmailVerificationInput = {
+    where?: DiscordUniversityWhereInput
     data: XOR<DiscordUniversityUpdateWithoutEmailVerificationInput, DiscordUniversityUncheckedUpdateWithoutEmailVerificationInput>
   }
 
-  export type DiscordUniversityUpdateManyWithWhereWithoutEmailVerificationInput = {
-    where: DiscordUniversityScalarWhereInput
-    data: XOR<DiscordUniversityUpdateManyMutationInput, DiscordUniversityUncheckedUpdateManyWithoutEmailVerificationInput>
+  export type DiscordUniversityUpdateWithoutEmailVerificationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    isExternal?: BoolFieldUpdateOperationsInput | boolean
+    helperCode?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    DiscordUser?: DiscordUserUpdateOneWithoutLinkNestedInput
+    BiometricEntry?: BiometricEntryUpdateOneWithoutLinkNestedInput
+    externalsHelped?: DiscordUniversityUpdateManyWithoutHelperNestedInput
+    helper?: DiscordUniversityUpdateOneWithoutExternalsHelpedNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    authorityHits?: AuthorityHitUpdateManyWithoutDiscordUniversityNestedInput
+    Guilds?: GuildsUpdateManyWithoutDiscordUniversityNestedInput
+  }
+
+  export type DiscordUniversityUncheckedUpdateWithoutEmailVerificationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    isExternal?: BoolFieldUpdateOperationsInput | boolean
+    helperId?: NullableStringFieldUpdateOperationsInput | string | null
+    helperCode?: NullableStringFieldUpdateOperationsInput | string | null
+    studentId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    externalsHelped?: DiscordUniversityUncheckedUpdateManyWithoutHelperNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    authorityHits?: AuthorityHitUncheckedUpdateManyWithoutDiscordUniversityNestedInput
+    Guilds?: GuildsUncheckedUpdateManyWithoutDiscordUniversityNestedInput
   }
 
   export type DiscordUniversityCreateWithoutBiometricEntryInput = {
     id?: string
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperCode?: string | null
@@ -20943,7 +20930,6 @@ export namespace Prisma {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperId?: string | null
@@ -21196,7 +21182,6 @@ export namespace Prisma {
   export type DiscordUniversityCreateManyDiscordUserInput = {
     id?: string
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -21249,7 +21234,6 @@ export namespace Prisma {
 
   export type DiscordUniversityUpdateWithoutDiscordUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21267,7 +21251,6 @@ export namespace Prisma {
   export type DiscordUniversityUncheckedUpdateWithoutDiscordUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -21284,7 +21267,6 @@ export namespace Prisma {
   export type DiscordUniversityUncheckedUpdateManyWithoutDiscordUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -21298,7 +21280,6 @@ export namespace Prisma {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     biometricEntryId?: string | null
     fullName?: string | null
     isExternal?: boolean
@@ -21336,7 +21317,6 @@ export namespace Prisma {
 
   export type DiscordUniversityUpdateWithoutHelperInput = {
     id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21355,7 +21335,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -21372,7 +21351,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
@@ -21470,71 +21448,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type DiscordUniversityCreateManyEmailVerificationInput = {
-    id?: string
-    discordUserId?: string | null
-    emailCode?: string | null
-    biometricEntryId?: string | null
-    fullName?: string | null
-    isExternal?: boolean
-    helperId?: string | null
-    helperCode?: string | null
-    studentId?: string | null
-    isVerified?: boolean
-  }
-
-  export type DiscordUniversityUpdateWithoutEmailVerificationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    isExternal?: BoolFieldUpdateOperationsInput | boolean
-    helperCode?: NullableStringFieldUpdateOperationsInput | string | null
-    studentId?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    DiscordUser?: DiscordUserUpdateOneWithoutLinkNestedInput
-    BiometricEntry?: BiometricEntryUpdateOneWithoutLinkNestedInput
-    externalsHelped?: DiscordUniversityUpdateManyWithoutHelperNestedInput
-    helper?: DiscordUniversityUpdateOneWithoutExternalsHelpedNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    authorityHits?: AuthorityHitUpdateManyWithoutDiscordUniversityNestedInput
-    Guilds?: GuildsUpdateManyWithoutDiscordUniversityNestedInput
-  }
-
-  export type DiscordUniversityUncheckedUpdateWithoutEmailVerificationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
-    biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    isExternal?: BoolFieldUpdateOperationsInput | boolean
-    helperId?: NullableStringFieldUpdateOperationsInput | string | null
-    helperCode?: NullableStringFieldUpdateOperationsInput | string | null
-    studentId?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-    externalsHelped?: DiscordUniversityUncheckedUpdateManyWithoutHelperNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-    authorityHits?: AuthorityHitUncheckedUpdateManyWithoutDiscordUniversityNestedInput
-    Guilds?: GuildsUncheckedUpdateManyWithoutDiscordUniversityNestedInput
-  }
-
-  export type DiscordUniversityUncheckedUpdateManyWithoutEmailVerificationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
-    biometricEntryId?: NullableStringFieldUpdateOperationsInput | string | null
-    fullName?: NullableStringFieldUpdateOperationsInput | string | null
-    isExternal?: BoolFieldUpdateOperationsInput | boolean
-    helperId?: NullableStringFieldUpdateOperationsInput | string | null
-    helperCode?: NullableStringFieldUpdateOperationsInput | string | null
-    studentId?: NullableStringFieldUpdateOperationsInput | string | null
-    isVerified?: BoolFieldUpdateOperationsInput | boolean
-  }
-
   export type DiscordUniversityCreateManyBiometricEntryInput = {
     id?: string
     discordUserId?: string | null
     emailVerificationId?: string | null
-    emailCode?: string | null
     fullName?: string | null
     isExternal?: boolean
     helperId?: string | null
@@ -21545,7 +21462,6 @@ export namespace Prisma {
 
   export type DiscordUniversityUpdateWithoutBiometricEntryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperCode?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21564,7 +21480,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21581,7 +21496,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     discordUserId?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerificationId?: NullableStringFieldUpdateOperationsInput | string | null
-    emailCode?: NullableStringFieldUpdateOperationsInput | string | null
     fullName?: NullableStringFieldUpdateOperationsInput | string | null
     isExternal?: BoolFieldUpdateOperationsInput | boolean
     helperId?: NullableStringFieldUpdateOperationsInput | string | null

@@ -1,0 +1,19 @@
+model LinkedAccounts {
+  id String @id @default(uuid())
+
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id])
+  studentProfileId String         @unique
+
+  discord DiscordAccountLink?
+}
+
+model DiscordAccountLink {
+  id        String  @id
+  username  String  @unique
+  avatarUrl String?
+
+  linkedAccounts   LinkedAccounts? @relation(fields: [linkedAccountsId], references: [id])
+  linkedAccountsId String?         @unique
+
+  guilds DiscordGuildMember[]
+}

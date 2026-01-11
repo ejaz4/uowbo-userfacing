@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model StudentProfile {
+  id String @id @default(uuid())
+
+  // Full name may be obtained via another service which could fill it in.
+  fullName String?
+
+  studentId  String? @unique
+  isVerified Boolean @default(false)
+
+  verificationMethods VerificationMethods[]
+  linkedAccounts      LinkedAccounts?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserSettings {
+  id String @id @default(uuid())
+
+  language String @default("en")
+}

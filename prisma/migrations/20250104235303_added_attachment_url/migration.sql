@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "GuildMessage" ADD COLUMN     "attachmentUrl" TEXT,
-ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
