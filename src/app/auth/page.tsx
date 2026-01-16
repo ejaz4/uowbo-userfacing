@@ -37,17 +37,17 @@ export default function AuthenticationPage() {
               placeholder="Email address, username, student ID"
             />
 
-            {requestLogin.error && (
+            {/* {requestLogin.error && (
               <ErrorText>{requestLogin.error.message}</ErrorText>
-            )}
+            )} */}
           </section>
 
           <ButtonBar>
             <section></section>
             <section>
               <Button
-                disabled={requestLogin.isPending}
-                loading={requestLogin.isPending}
+                // disabled={requestLogin.isPending}
+                // loading={requestLogin.isPending}
                 primary
                 image={<ArrowRightIcon />}
                 dir="rtl"
