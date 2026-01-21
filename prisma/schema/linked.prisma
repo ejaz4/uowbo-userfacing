@@ -15,5 +15,21 @@ model DiscordAccountLink {
   linkedAccounts   LinkedAccounts? @relation(fields: [linkedAccountsId], references: [id])
   linkedAccountsId String?         @unique
 
+  sessions DiscordSession[]
+
   guilds DiscordGuildMember[]
+}
+
+model DiscordSession {
+  id String @id @default(uuid())
+
+  token String @unique
+
+  escalationSecret String
+
+  isAuthenticated Boolean @default(false)
+  isRevoked       Boolean @default(false)
+
+  discordAccountLink   DiscordAccountLink? @relation(fields: [discordAccountLinkId], references: [id])
+  discordAccountLinkId String?
 }

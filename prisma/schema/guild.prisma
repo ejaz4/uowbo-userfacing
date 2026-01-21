@@ -39,6 +39,7 @@ model DiscordGuildMember {
   discordAccountLinkId String
 
   messages DiscordGuildMessage[]
+  isOwner  Boolean               @default(false)
 
   joinedAt DateTime @default(now())
 
