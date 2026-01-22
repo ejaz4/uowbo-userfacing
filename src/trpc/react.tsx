@@ -9,6 +9,8 @@ import SuperJSON from "superjson";
 
 import { type AppRouter } from "~/server/api/root";
 import { createQueryClient } from "./query-client";
+import { getAccessToken } from "~/libs/tokenUtil";
+import { secureFetch } from "~/libs/secureFetch";
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined;
 const getQueryClient = () => {
@@ -52,10 +54,46 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
         httpBatchStreamLink({
           transformer: SuperJSON,
           url: getBaseUrl() + "/api/trpc",
-          headers: () => {
-            const headers = new Headers();
-            headers.set("x-trpc-source", "nextjs-react");
-            return headers;
+          // --- DYNAMIC HEADER INJECTION ---
+          async headers(opts) {
+            // 1. Always attempt to attach the Main Token to standard Auth header
+            const mainToken = getAccessToken("main");
+
+            const headerList: Record<string, string> = {
+              ...(mainToken ? { Authorization: `Bearer ${mainToken}` } : {}),
+            };
+
+            // 2. Check Context for Extra Tokens (Multi-Token Logic)
+            // We iterate through operations to see if any requested extra headers.
+            opts.opList.forEach((op) => {
+              const { tokenMap } = op.context as {
+                tokenMap?: Record<string, string>;
+              };
+
+              // Example Usage in Component:
+              // context: { tokenMap: { 'X-OTP-Token': 'auth_temp' } }
+              if (tokenMap) {
+                Object.entries(tokenMap).forEach(
+                  ([headerName, registryKey]) => {
+                    const extraToken = getAccessToken(registryKey);
+                    if (extraToken) {
+                      headerList[headerName] = extraToken;
+                    }
+                  },
+                );
+              }
+            });
+
+            headerList["x-trpc-source"] = "nextjs-react";
+
+            return headerList;
+          },
+          // --------------------------------
+
+          // --- PLUG IN CUSTOM FETCH ---
+          // This ensures tRPC uses our wrapper for networking
+          fetch: async (url, options) => {
+            return secureFetch(url as string, options as any);
           },
         }),
       ],

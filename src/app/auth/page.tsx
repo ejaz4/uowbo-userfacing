@@ -19,7 +19,11 @@ export default function AuthenticationPage() {
     e.preventDefault();
     if (discordAuth.isPending) return;
 
-    discordAuth.mutate(input);
+    discordAuth.mutate(input, {
+      onSuccess: (response) => {
+        localStorage.setItem("discordToken", response.token);
+      },
+    });
   };
 
   return (
