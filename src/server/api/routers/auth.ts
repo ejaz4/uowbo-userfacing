@@ -3,6 +3,8 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import crypto from "node:crypto";
+import { cookies } from "next/headers";
+import { serialize } from "cookie";
 
 export const authRouter = createTRPCRouter({
   requestDiscordAuthentication: publicProcedure
@@ -23,7 +25,9 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      const rawToken = crypto.randomBytes(48).toString("hex");
+      const rawToken = crypto.randomBytes(128).toString("hex");
+      const temporaryToken = crypto.randomBytes(128).toString("hex");
+
       const code = [
         "NG",
         String(crypto.randomInt(0, 100_000_000)).padStart(8, "0"),
@@ -33,6 +37,8 @@ export const authRouter = createTRPCRouter({
         await ctx.db.discordSession.create({
           data: {
             token: rawToken,
+            accessToken: temporaryToken,
+            accessTokenExpiry: new Date(Date.now() + 10 * 60 * 1000),
             escalationSecret: code,
             discordAccountLink: {
               connect: {
@@ -65,6 +71,20 @@ export const authRouter = createTRPCRouter({
         });
       }
 
-      return session;
+      ctx.resHeaders.append(
+        "Set-Cookie",
+        serialize("discordRefreshToken", rawToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "lax",
+          maxAge: 30 * 24 * 60 * 60, // 30 days
+          path: "/",
+        }),
+      );
+
+      return {
+        accessToken: session.accessToken,
+        accessTokenExpiry: session.accessTokenExpiry,
+      };
     }),
 });

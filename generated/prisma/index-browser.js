@@ -172,6 +172,8 @@ exports.Prisma.DiscordAccountLinkScalarFieldEnum = {
 exports.Prisma.DiscordSessionScalarFieldEnum = {
   id: 'id',
   token: 'token',
+  accessToken: 'accessToken',
+  accessTokenExpiry: 'accessTokenExpiry',
   escalationSecret: 'escalationSecret',
   isAuthenticated: 'isAuthenticated',
   isRevoked: 'isRevoked',

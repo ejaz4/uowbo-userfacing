@@ -23,7 +23,9 @@ model DiscordAccountLink {
 model DiscordSession {
   id String @id @default(uuid())
 
-  token String @unique
+  token             String    @unique
+  accessToken       String?   @unique
+  accessTokenExpiry DateTime?
 
   escalationSecret String
 

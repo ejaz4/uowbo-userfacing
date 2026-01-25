@@ -9676,6 +9676,8 @@ export namespace Prisma {
   export type DiscordSessionMinAggregateOutputType = {
     id: string | null
     token: string | null
+    accessToken: string | null
+    accessTokenExpiry: Date | null
     escalationSecret: string | null
     isAuthenticated: boolean | null
     isRevoked: boolean | null
@@ -9685,6 +9687,8 @@ export namespace Prisma {
   export type DiscordSessionMaxAggregateOutputType = {
     id: string | null
     token: string | null
+    accessToken: string | null
+    accessTokenExpiry: Date | null
     escalationSecret: string | null
     isAuthenticated: boolean | null
     isRevoked: boolean | null
@@ -9694,6 +9698,8 @@ export namespace Prisma {
   export type DiscordSessionCountAggregateOutputType = {
     id: number
     token: number
+    accessToken: number
+    accessTokenExpiry: number
     escalationSecret: number
     isAuthenticated: number
     isRevoked: number
@@ -9705,6 +9711,8 @@ export namespace Prisma {
   export type DiscordSessionMinAggregateInputType = {
     id?: true
     token?: true
+    accessToken?: true
+    accessTokenExpiry?: true
     escalationSecret?: true
     isAuthenticated?: true
     isRevoked?: true
@@ -9714,6 +9722,8 @@ export namespace Prisma {
   export type DiscordSessionMaxAggregateInputType = {
     id?: true
     token?: true
+    accessToken?: true
+    accessTokenExpiry?: true
     escalationSecret?: true
     isAuthenticated?: true
     isRevoked?: true
@@ -9723,6 +9733,8 @@ export namespace Prisma {
   export type DiscordSessionCountAggregateInputType = {
     id?: true
     token?: true
+    accessToken?: true
+    accessTokenExpiry?: true
     escalationSecret?: true
     isAuthenticated?: true
     isRevoked?: true
@@ -9805,6 +9817,8 @@ export namespace Prisma {
   export type DiscordSessionGroupByOutputType = {
     id: string
     token: string
+    accessToken: string | null
+    accessTokenExpiry: Date | null
     escalationSecret: string
     isAuthenticated: boolean
     isRevoked: boolean
@@ -9831,6 +9845,8 @@ export namespace Prisma {
   export type DiscordSessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     token?: boolean
+    accessToken?: boolean
+    accessTokenExpiry?: boolean
     escalationSecret?: boolean
     isAuthenticated?: boolean
     isRevoked?: boolean
@@ -9841,6 +9857,8 @@ export namespace Prisma {
   export type DiscordSessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     token?: boolean
+    accessToken?: boolean
+    accessTokenExpiry?: boolean
     escalationSecret?: boolean
     isAuthenticated?: boolean
     isRevoked?: boolean
@@ -9851,6 +9869,8 @@ export namespace Prisma {
   export type DiscordSessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     token?: boolean
+    accessToken?: boolean
+    accessTokenExpiry?: boolean
     escalationSecret?: boolean
     isAuthenticated?: boolean
     isRevoked?: boolean
@@ -9861,13 +9881,15 @@ export namespace Prisma {
   export type DiscordSessionSelectScalar = {
     id?: boolean
     token?: boolean
+    accessToken?: boolean
+    accessTokenExpiry?: boolean
     escalationSecret?: boolean
     isAuthenticated?: boolean
     isRevoked?: boolean
     discordAccountLinkId?: boolean
   }
 
-  export type DiscordSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "token" | "escalationSecret" | "isAuthenticated" | "isRevoked" | "discordAccountLinkId", ExtArgs["result"]["discordSession"]>
+  export type DiscordSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "token" | "accessToken" | "accessTokenExpiry" | "escalationSecret" | "isAuthenticated" | "isRevoked" | "discordAccountLinkId", ExtArgs["result"]["discordSession"]>
   export type DiscordSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     discordAccountLink?: boolean | DiscordSession$discordAccountLinkArgs<ExtArgs>
   }
@@ -9886,6 +9908,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       token: string
+      accessToken: string | null
+      accessTokenExpiry: Date | null
       escalationSecret: string
       isAuthenticated: boolean
       isRevoked: boolean
@@ -10316,6 +10340,8 @@ export namespace Prisma {
   interface DiscordSessionFieldRefs {
     readonly id: FieldRef<"DiscordSession", 'String'>
     readonly token: FieldRef<"DiscordSession", 'String'>
+    readonly accessToken: FieldRef<"DiscordSession", 'String'>
+    readonly accessTokenExpiry: FieldRef<"DiscordSession", 'DateTime'>
     readonly escalationSecret: FieldRef<"DiscordSession", 'String'>
     readonly isAuthenticated: FieldRef<"DiscordSession", 'Boolean'>
     readonly isRevoked: FieldRef<"DiscordSession", 'Boolean'>
@@ -15054,6 +15080,8 @@ export namespace Prisma {
   export const DiscordSessionScalarFieldEnum: {
     id: 'id',
     token: 'token',
+    accessToken: 'accessToken',
+    accessTokenExpiry: 'accessTokenExpiry',
     escalationSecret: 'escalationSecret',
     isAuthenticated: 'isAuthenticated',
     isRevoked: 'isRevoked',
@@ -15569,6 +15597,8 @@ export namespace Prisma {
     NOT?: DiscordSessionWhereInput | DiscordSessionWhereInput[]
     id?: StringFilter<"DiscordSession"> | string
     token?: StringFilter<"DiscordSession"> | string
+    accessToken?: StringNullableFilter<"DiscordSession"> | string | null
+    accessTokenExpiry?: DateTimeNullableFilter<"DiscordSession"> | Date | string | null
     escalationSecret?: StringFilter<"DiscordSession"> | string
     isAuthenticated?: BoolFilter<"DiscordSession"> | boolean
     isRevoked?: BoolFilter<"DiscordSession"> | boolean
@@ -15579,6 +15609,8 @@ export namespace Prisma {
   export type DiscordSessionOrderByWithRelationInput = {
     id?: SortOrder
     token?: SortOrder
+    accessToken?: SortOrderInput | SortOrder
+    accessTokenExpiry?: SortOrderInput | SortOrder
     escalationSecret?: SortOrder
     isAuthenticated?: SortOrder
     isRevoked?: SortOrder
@@ -15589,19 +15621,23 @@ export namespace Prisma {
   export type DiscordSessionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     token?: string
+    accessToken?: string
     AND?: DiscordSessionWhereInput | DiscordSessionWhereInput[]
     OR?: DiscordSessionWhereInput[]
     NOT?: DiscordSessionWhereInput | DiscordSessionWhereInput[]
+    accessTokenExpiry?: DateTimeNullableFilter<"DiscordSession"> | Date | string | null
     escalationSecret?: StringFilter<"DiscordSession"> | string
     isAuthenticated?: BoolFilter<"DiscordSession"> | boolean
     isRevoked?: BoolFilter<"DiscordSession"> | boolean
     discordAccountLinkId?: StringNullableFilter<"DiscordSession"> | string | null
     discordAccountLink?: XOR<DiscordAccountLinkNullableScalarRelationFilter, DiscordAccountLinkWhereInput> | null
-  }, "id" | "token">
+  }, "id" | "token" | "accessToken">
 
   export type DiscordSessionOrderByWithAggregationInput = {
     id?: SortOrder
     token?: SortOrder
+    accessToken?: SortOrderInput | SortOrder
+    accessTokenExpiry?: SortOrderInput | SortOrder
     escalationSecret?: SortOrder
     isAuthenticated?: SortOrder
     isRevoked?: SortOrder
@@ -15617,6 +15653,8 @@ export namespace Prisma {
     NOT?: DiscordSessionScalarWhereWithAggregatesInput | DiscordSessionScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"DiscordSession"> | string
     token?: StringWithAggregatesFilter<"DiscordSession"> | string
+    accessToken?: StringNullableWithAggregatesFilter<"DiscordSession"> | string | null
+    accessTokenExpiry?: DateTimeNullableWithAggregatesFilter<"DiscordSession"> | Date | string | null
     escalationSecret?: StringWithAggregatesFilter<"DiscordSession"> | string
     isAuthenticated?: BoolWithAggregatesFilter<"DiscordSession"> | boolean
     isRevoked?: BoolWithAggregatesFilter<"DiscordSession"> | boolean
@@ -16201,6 +16239,8 @@ export namespace Prisma {
   export type DiscordSessionCreateInput = {
     id?: string
     token: string
+    accessToken?: string | null
+    accessTokenExpiry?: Date | string | null
     escalationSecret: string
     isAuthenticated?: boolean
     isRevoked?: boolean
@@ -16210,6 +16250,8 @@ export namespace Prisma {
   export type DiscordSessionUncheckedCreateInput = {
     id?: string
     token: string
+    accessToken?: string | null
+    accessTokenExpiry?: Date | string | null
     escalationSecret: string
     isAuthenticated?: boolean
     isRevoked?: boolean
@@ -16219,6 +16261,8 @@ export namespace Prisma {
   export type DiscordSessionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     escalationSecret?: StringFieldUpdateOperationsInput | string
     isAuthenticated?: BoolFieldUpdateOperationsInput | boolean
     isRevoked?: BoolFieldUpdateOperationsInput | boolean
@@ -16228,6 +16272,8 @@ export namespace Prisma {
   export type DiscordSessionUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     escalationSecret?: StringFieldUpdateOperationsInput | string
     isAuthenticated?: BoolFieldUpdateOperationsInput | boolean
     isRevoked?: BoolFieldUpdateOperationsInput | boolean
@@ -16237,6 +16283,8 @@ export namespace Prisma {
   export type DiscordSessionCreateManyInput = {
     id?: string
     token: string
+    accessToken?: string | null
+    accessTokenExpiry?: Date | string | null
     escalationSecret: string
     isAuthenticated?: boolean
     isRevoked?: boolean
@@ -16246,6 +16294,8 @@ export namespace Prisma {
   export type DiscordSessionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     escalationSecret?: StringFieldUpdateOperationsInput | string
     isAuthenticated?: BoolFieldUpdateOperationsInput | boolean
     isRevoked?: BoolFieldUpdateOperationsInput | boolean
@@ -16254,6 +16304,8 @@ export namespace Prisma {
   export type DiscordSessionUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     escalationSecret?: StringFieldUpdateOperationsInput | string
     isAuthenticated?: BoolFieldUpdateOperationsInput | boolean
     isRevoked?: BoolFieldUpdateOperationsInput | boolean
@@ -16814,9 +16866,22 @@ export namespace Prisma {
     linkedAccountsId?: SortOrder
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type DiscordSessionCountOrderByAggregateInput = {
     id?: SortOrder
     token?: SortOrder
+    accessToken?: SortOrder
+    accessTokenExpiry?: SortOrder
     escalationSecret?: SortOrder
     isAuthenticated?: SortOrder
     isRevoked?: SortOrder
@@ -16826,6 +16891,8 @@ export namespace Prisma {
   export type DiscordSessionMaxOrderByAggregateInput = {
     id?: SortOrder
     token?: SortOrder
+    accessToken?: SortOrder
+    accessTokenExpiry?: SortOrder
     escalationSecret?: SortOrder
     isAuthenticated?: SortOrder
     isRevoked?: SortOrder
@@ -16835,10 +16902,26 @@ export namespace Prisma {
   export type DiscordSessionMinOrderByAggregateInput = {
     id?: SortOrder
     token?: SortOrder
+    accessToken?: SortOrder
+    accessTokenExpiry?: SortOrder
     escalationSecret?: SortOrder
     isAuthenticated?: SortOrder
     isRevoked?: SortOrder
     discordAccountLinkId?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EmailVerificationListRelationFilter = {
@@ -16864,17 +16947,6 @@ export namespace Prisma {
   export type VerificationMethodsMinOrderByAggregateInput = {
     id?: SortOrder
     studentProfileId?: SortOrder
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type VerificationMethodsNullableScalarRelationFilter = {
@@ -16910,20 +16982,6 @@ export namespace Prisma {
     expiresAt?: SortOrder
     verificationMethodsId?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type VerificationMethodsListRelationFilter = {
@@ -17426,6 +17484,10 @@ export namespace Prisma {
     connect?: DiscordAccountLinkWhereUniqueInput
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type DiscordAccountLinkUpdateOneWithoutSessionsNestedInput = {
     create?: XOR<DiscordAccountLinkCreateWithoutSessionsInput, DiscordAccountLinkUncheckedCreateWithoutSessionsInput>
     connectOrCreate?: DiscordAccountLinkCreateOrConnectWithoutSessionsInput
@@ -17496,10 +17558,6 @@ export namespace Prisma {
     create?: XOR<VerificationMethodsCreateWithoutEmailVerificationInput, VerificationMethodsUncheckedCreateWithoutEmailVerificationInput>
     connectOrCreate?: VerificationMethodsCreateOrConnectWithoutEmailVerificationInput
     connect?: VerificationMethodsWhereUniqueInput
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type VerificationMethodsUpdateOneWithoutEmailVerificationNestedInput = {
@@ -18364,6 +18422,8 @@ export namespace Prisma {
   export type DiscordSessionCreateWithoutDiscordAccountLinkInput = {
     id?: string
     token: string
+    accessToken?: string | null
+    accessTokenExpiry?: Date | string | null
     escalationSecret: string
     isAuthenticated?: boolean
     isRevoked?: boolean
@@ -18372,6 +18432,8 @@ export namespace Prisma {
   export type DiscordSessionUncheckedCreateWithoutDiscordAccountLinkInput = {
     id?: string
     token: string
+    accessToken?: string | null
+    accessTokenExpiry?: Date | string | null
     escalationSecret: string
     isAuthenticated?: boolean
     isRevoked?: boolean
@@ -18456,6 +18518,8 @@ export namespace Prisma {
     NOT?: DiscordSessionScalarWhereInput | DiscordSessionScalarWhereInput[]
     id?: StringFilter<"DiscordSession"> | string
     token?: StringFilter<"DiscordSession"> | string
+    accessToken?: StringNullableFilter<"DiscordSession"> | string | null
+    accessTokenExpiry?: DateTimeNullableFilter<"DiscordSession"> | Date | string | null
     escalationSecret?: StringFilter<"DiscordSession"> | string
     isAuthenticated?: BoolFilter<"DiscordSession"> | boolean
     isRevoked?: BoolFilter<"DiscordSession"> | boolean
@@ -18856,6 +18920,8 @@ export namespace Prisma {
   export type DiscordSessionCreateManyDiscordAccountLinkInput = {
     id?: string
     token: string
+    accessToken?: string | null
+    accessTokenExpiry?: Date | string | null
     escalationSecret: string
     isAuthenticated?: boolean
     isRevoked?: boolean
@@ -18871,6 +18937,8 @@ export namespace Prisma {
   export type DiscordSessionUpdateWithoutDiscordAccountLinkInput = {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     escalationSecret?: StringFieldUpdateOperationsInput | string
     isAuthenticated?: BoolFieldUpdateOperationsInput | boolean
     isRevoked?: BoolFieldUpdateOperationsInput | boolean
@@ -18879,6 +18947,8 @@ export namespace Prisma {
   export type DiscordSessionUncheckedUpdateWithoutDiscordAccountLinkInput = {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     escalationSecret?: StringFieldUpdateOperationsInput | string
     isAuthenticated?: BoolFieldUpdateOperationsInput | boolean
     isRevoked?: BoolFieldUpdateOperationsInput | boolean
@@ -18887,6 +18957,8 @@ export namespace Prisma {
   export type DiscordSessionUncheckedUpdateManyWithoutDiscordAccountLinkInput = {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
+    accessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    accessTokenExpiry?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     escalationSecret?: StringFieldUpdateOperationsInput | string
     isAuthenticated?: BoolFieldUpdateOperationsInput | boolean
     isRevoked?: BoolFieldUpdateOperationsInput | boolean

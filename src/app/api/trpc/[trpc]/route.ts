@@ -9,18 +9,25 @@ import { createTRPCContext } from "~/server/api/trpc";
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
  * handling a HTTP request (e.g. when you make requests from Client Components).
  */
-const createContext = async (req: NextRequest) => {
+// 1. ADDED `resHeaders: Headers` as the second argument
+const createContext = async (req: NextRequest, resHeaders: Headers) => {
   return createTRPCContext({
     headers: req.headers,
+    resHeaders: resHeaders, // 2. PASS the response headers to your internal context
   });
 };
 
-const handler = (req: NextRequest) =>
-  fetchRequestHandler({
+const handler = async (req: NextRequest) => {
+  // 3. CREATE the Headers object to capture outgoing cookies
+  const resHeaders = new Headers();
+
+  const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     req,
     router: appRouter,
-    createContext: () => createContext(req),
+    // 4. PASS the headers into the context creator
+    createContext: () => createContext(req, resHeaders),
+    // 5. INJECT the headers into the final Next.js response
     onError:
       env.NODE_ENV === "development"
         ? ({ path, error }) => {
@@ -30,5 +37,13 @@ const handler = (req: NextRequest) =>
           }
         : undefined,
   });
+
+  // 4. FORCE INJECT the cookies into the final response
+  resHeaders.forEach((value, key) => {
+    response.headers.append(key, value);
+  });
+
+  return response;
+};
 
 export { handler as GET, handler as POST };
