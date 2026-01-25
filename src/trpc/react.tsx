@@ -1,7 +1,12 @@
 "use client";
 
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
-import { httpBatchStreamLink, loggerLink } from "@trpc/client";
+import {
+  httpBatchStreamLink,
+  httpLink,
+  loggerLink,
+  splitLink,
+} from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import { useState } from "react";
@@ -43,22 +48,39 @@ export type RouterOutputs = inferRouterOutputs<AppRouter>;
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
 
+  // Create a reusable fetch handler so we don't repeat the credentials logic
+  const customFetch = (input: RequestInfo | URL, init?: RequestInit) => {
+    init = { ...init, credentials: "include" };
+    return fetch(input, init);
+  };
+
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
+        // 1. Your existing logger stays the same
         loggerLink({
           enabled: (op) =>
             process.env.NODE_ENV === "development" ||
             (op.direction === "down" && op.result instanceof Error),
         }),
-        httpBatchStreamLink({
-          transformer: SuperJSON,
-          url: getBaseUrl() + "/api/trpc",
 
-          fetch: (input, init) => {
-            init = { ...init, credentials: "include" };
-            return fetch(input, init);
-          },
+        // 2. The new Traffic Controller (splitLink)
+        splitLink({
+          condition: (op) => op.type === "query",
+
+          // TRUE: It's a query -> Use fast HTTP Streaming
+          true: httpBatchStreamLink({
+            transformer: SuperJSON,
+            url: getBaseUrl() + "/api/trpc",
+            fetch: customFetch,
+          }),
+
+          // FALSE: It's a mutation/subscription -> Use standard Fetch (Cookie safe!)
+          false: httpLink({
+            transformer: SuperJSON,
+            url: getBaseUrl() + "/api/trpc",
+            fetch: customFetch,
+          }),
         }),
       ],
     }),

@@ -1,5 +1,5 @@
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 import { env } from "~/env";
 import { appRouter } from "~/server/api/root";
@@ -18,32 +18,28 @@ const createContext = async (req: NextRequest, resHeaders: Headers) => {
 };
 
 const handler = async (req: NextRequest) => {
-  // 3. CREATE the Headers object to capture outgoing cookies
   const resHeaders = new Headers();
 
-  const response = await fetchRequestHandler({
+  // 1. Get the raw response from tRPC
+  const trpcResponse = await fetchRequestHandler({
     endpoint: "/api/trpc",
     req,
     router: appRouter,
-    // 4. PASS the headers into the context creator
     createContext: () => createContext(req, resHeaders),
-    // 5. INJECT the headers into the final Next.js response
-    onError:
-      env.NODE_ENV === "development"
-        ? ({ path, error }) => {
-            console.error(
-              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,
-            );
-          }
-        : undefined,
   });
 
-  // 4. FORCE INJECT the cookies into the final response
+  // 2. Combine tRPC's default headers with your custom cookie headers
+  const finalHeaders = new Headers(trpcResponse.headers);
   resHeaders.forEach((value, key) => {
-    response.headers.append(key, value);
+    finalHeaders.append(key, value);
   });
 
-  return response;
+  // 3. 🚀 FORCE Next.js to send the headers using its native NextResponse object
+  return new NextResponse(trpcResponse.body, {
+    status: trpcResponse.status,
+    statusText: trpcResponse.statusText,
+    headers: finalHeaders,
+  });
 };
 
 export { handler as GET, handler as POST };
