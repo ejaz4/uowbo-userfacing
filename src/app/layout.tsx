@@ -7,6 +7,8 @@ import localFont from "next/font/local";
 import { TRPCReactProvider } from "~/trpc/react";
 import { HydrateClient } from "~/trpc/server";
 import { joinClasses } from "~/libs/joinClasses";
+import { AuthContext } from "./_components/ctx/authContext";
+import { AuthProvider } from "./_components/ctx/authProvider";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -41,7 +43,9 @@ export default function RootLayout({
         )}
       >
         <TRPCReactProvider>
-          <HydrateClient>{children}</HydrateClient>
+          <AuthProvider>
+            <HydrateClient>{children}</HydrateClient>
+          </AuthProvider>
         </TRPCReactProvider>
       </body>
     </html>

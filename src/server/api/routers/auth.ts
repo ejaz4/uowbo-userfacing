@@ -4,7 +4,9 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import crypto from "node:crypto";
 import { cookies } from "next/headers";
-import { serialize } from "cookie";
+import { parseCookie, serialize } from "cookie";
+import type { AuthContextType, AuthTokens } from "~/const/authContextType";
+import { db } from "~/server/db";
 
 export const authRouter = createTRPCRouter({
   requestDiscordAuthentication: publicProcedure
@@ -87,4 +89,50 @@ export const authRouter = createTRPCRouter({
         accessTokenExpiry: session.accessTokenExpiry,
       };
     }),
+
+  obtainAccessToken: publicProcedure.mutation(async ({ ctx }) => {
+    const headers = ctx.headers;
+    const cookie = headers.get("Cookie");
+
+    if (!cookie) {
+      throw new TRPCError({
+        message: "Header not sent",
+        code: "FORBIDDEN",
+      });
+    }
+
+    const cookieParsed = parseCookie(cookie);
+    console.log(cookieParsed);
+
+    let discordRefreshToken = cookieParsed["discordRefreshToken"];
+
+    const accessTokens = await db.$transaction(async (tx) => {
+      const [discordToken] = await Promise.all([
+        discordRefreshToken
+          ? tx.discordSession.findUnique({
+              where: {
+                token: discordRefreshToken,
+              },
+              select: {
+                accessToken: true,
+                accessTokenExpiry: true,
+                isRevoked: true,
+              },
+            })
+          : null,
+      ]);
+
+      return {
+        discordAccessToken:
+          discordToken && !discordToken.isRevoked
+            ? {
+                token: discordToken.accessToken,
+                expiry: discordToken.accessTokenExpiry,
+              }
+            : undefined,
+      } as AuthTokens;
+    });
+
+    return accessTokens;
+  }),
 });
